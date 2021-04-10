@@ -1,0 +1,66 @@
+<!--Categories-->
+{% if category_id == 1 %}
+
+<div class="sidebar_widget categories">
+    <div class="widget-title"><h2>Одежда</h2></div>
+        <div class="widget-content" style="">
+            <ul class="sidebar_categories">
+            {% for category in categories %}
+            <li class="lvl-1"><a href="{{ category.get_absolute_url }}" class="site-nav">{{ category.name }}</a></li>
+            {% endfor %}
+            </ul>
+    </div>
+</div>
+
+<div class="sidebar_widget categories">
+    <div><h2><a href="{% url 'category' category_slug='shoes' %}">Обувь</a></h2></div>
+</div>
+
+<div class="sidebar_widget categories">
+    <div><h2><a href="{% url 'category' category_slug='accessories' %}">Аксессуары</a></h2></div>
+</div>
+
+{% elif category_id == 2 %}
+
+<div class="sidebar_widget categories">
+    <div><h2><a href="{% url 'category' category_slug='clothes' %}">Одежда</a></h2></div>
+</div>
+
+<div class="sidebar_widget categories">
+    <div class="widget-title"><h2>Обувь</h2></div>
+        <div class="widget-content" style="">
+            <ul class="sidebar_categories">
+            {% for category in categories %}
+            <li class="lvl-1"><a href="{{ category.get_absolute_url }}" class="site-nav">{{ category.name }}</a></li>
+            {% endfor %}
+            </ul>
+    </div>
+</div>
+
+<div class="sidebar_widget categories">
+    <div><h2><a href="{% url 'category' category_slug='accessories' %}">Аксессуары</a></h2></div>
+</div>
+
+{% elif category_id == 3 %}
+
+<div class="sidebar_widget categories">
+    <div><h2><a href="{% url 'category' category_slug='clothes' %}">Одежда</a></h2></div>
+</div>
+
+<div class="sidebar_widget categories">
+    <div><h2><a href="{% url 'category' category_slug='shoes' %}">Обувь</a></h2></div>
+</div>
+
+<div class="sidebar_widget categories">
+    <div class="widget-title"><h2>Акссессуары</h2></div>
+        <div class="widget-content" style="">
+            <ul class="sidebar_categories">
+            {% for category in categories %}
+            <li class="lvl-1"><a href="{{ category.get_absolute_url }}" class="site-nav">{{ category.name }}</a></li>
+            {% endfor %}
+            </ul>
+    </div>
+</div>
+
+{% endif %}
+<!--End Categories-->

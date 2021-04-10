@@ -1,0 +1,97 @@
+{% load static %}
+<!--Header-->
+    <header class="header animated d-flex align-items-center header-4">
+	    <div class="container">
+            <div class="row">
+            	<!--Mobile Icons-->
+            	<div class="col-4 col-sm-4 col-md-4 d-block d-lg-none mobile-icons">
+                    <!--Mobile Toggle-->
+                    <button type="button" class="btn--link site-header__menu js-mobile-nav-toggle mobile-nav--open">
+                        <i class="icon anm anm-times-l"></i>
+                        <i class="anm anm-bars-r"></i>
+                    </button>
+                    <!--End Mobile Toggle-->
+
+                </div>
+                <!--Mobile Icons-->
+
+                <!--Desktop Logo-->
+                <div class="logo col-4 col-sm-4 col-md-4 col-lg-2 align-self-center">
+                    <a href="{% url 'home' %}">
+                        <img src="{% static 'assets/images/avon-logo.svg' %}" alt="Mila&Iris" title="Mila&Iris" />
+                    </a>
+                </div>
+                <!--End Desktop Logo-->
+
+                <div class="col-1 col-sm-1 col-md-1 col-lg-8 align-self-center d-menu-col">
+                    <!--Desktop Menu-->
+                    <nav class="grid__item" id="AccessibleNav">
+                        <ul id="siteNav" class="site-nav medium center hidearrow">
+                            {% for category in links %}
+                            <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+                            {% endfor %}
+                      </ul>
+                    </nav>
+                </div>
+                <!--End Desktop Menu-->
+
+                <div class="col-4 col-sm-4 col-md-4 col-lg-2 align-self-center icons-col text-right">
+                    {% if not request.user.is_authenticated %}
+                    <!--Setting Dropdown-->
+                    <div class="setting-link iconset">
+                    	<i class="icon icon-settings"></i>
+                    </div>
+                    <div id="settingsBox">
+                    	<div class="customer-links">
+                        	<p><a href="{% url 'login' %}" class="btn">Войти</a></p>
+                            <p class="text-center"><a href="{% url 'registration' %}" class="register">Создать новый аккаунт</a></p>
+                        </div>
+                   	</div>
+                    {% endif %}
+                    {% if request.user.is_authenticated %}
+                    <div class="setting-link iconset">
+                    	<i class="icon icon-settings"></i>
+                    </div>
+                    <div id="settingsBox">
+                    	<div class="customer-links">
+                            <p class="text-center">Здравствуйте, <a href="">{{ request.user.username }}</a></p>
+                            <hr>
+                            <p><a href="" class="btn">Выйти</a></p>
+                        </div>
+                   	</div>
+                    {% endif %}
+                    <!--End Setting Dropdown-->
+
+                    <!--Wishlist-->
+                    <div class="wishlist-link iconset">
+                        <i class="icon anm anm-heart-l"></i>
+                        <span class="wishlist-count">0</span>
+                    </div>
+                    <!--End Wishlist-->
+
+                    <!--Minicart Dropdown-->
+                    <div class="header-cart iconset">
+                        <a href="#" class="site-header__cart btn-minicart" data-toggle="modal" data-target="#minicart-drawer">
+                            <i class="icon anm anm-bag-l"></i>
+                            <span class="site-cart-count">2</span>
+                        </a>
+                    </div>
+                    <!--End Minicart Dropdown-->
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--End Header-->
+
+    <!--Mobile Menu-->
+    <div class="mobile-nav-wrapper" role="navigation">
+		<div class="closemobileMenu"><i class="icon anm anm-times-l pull-right"></i> Закрыть</div>
+        <ul id="MobileNav" class="mobile-nav">
+        	<li class="lvl1 parent megamenu"><a href="{% url 'home' %}">Главная</a>
+            {% for category in categories %}
+            <li class="lvl1 parent megamenu"><a href="">{{ category }}</a>
+            {% endfor %}
+        </li>
+      </ul>
+	</div>
+	<!--End Mobile Menu-->

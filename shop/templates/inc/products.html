@@ -1,0 +1,85 @@
+{% for product in products %}
+<div class="col-6 col-sm-6 col-md-4 col-lg-4 item">
+    <!-- start product image -->
+    <div class="product-image">
+        <!-- start product image -->
+        <a href="{{ product.get_absolute_url }}" class="product-img">
+            <!-- image -->
+            <img class="primary blur-up lazyload" data-src="{{ product.images.url }}" src="{{ product.images.url }}" alt="" title="">
+            <!-- End image -->
+            <!-- Hover image -->
+<!--            <img class="hover blur-up lazyload" data-src="{{ product.img2.url }}" src="{{ product.img2.url }}" alt="" title="">-->
+            <!-- End hover image -->
+
+            <!-- product label -->
+            {% if product.discount %}
+                <div class="product-labels"><span class="lbl on-sale">Sale</span></div>
+            {% elif product.views > 100 %}
+            <div class="product-labels"><span class="lbl pr-label2">Hot</span></div>
+            {% elif product.get_new_product %}
+            <div class="product-labels"><span class="lbl pr-label1">New</span></div>
+            {% endif %}
+            <!-- End product label -->
+        </a>
+        <!-- end product image -->
+
+        <!--Product Button-->
+        <div class="button-set style1">
+            <ul>
+                <li>
+                    <!--Cart Button-->
+                    <form class="add" action="" method="post">
+                        <button class="btn-icon btn btn-addto-cart" type="button" tabindex="0">
+                            <i class="icon anm anm-cart-l"></i>
+                            <span class="tooltip-label">В корзину</span>
+                        </button>
+                    </form>
+                    <!--end Cart Button-->
+                </li>
+
+                <li>
+                    <!--Quick View Button-->
+                    <a href="#quickView-modal" title="Quick View" class="btn-icon quick-view-popup">
+                        <i class="icon anm anm-search-plus-l"></i>
+                        <span class="tooltip-label">Подробнее</span>
+                    </a>
+                    <!--End Quick View Button-->
+                </li>
+
+                <li>
+                    <!--Wishlist Button-->
+                    <div class="wishlist-btn">
+                        <a class="btn-icon wishlist add-to-wishlist" href="my-wishlist.html">
+                            <i class="icon anm anm-heart-l"></i>
+                            <span class="tooltip-label">В избранное</span>
+                        </a>
+                    </div>
+                    <!--End Wishlist Button-->
+                </li>
+
+            </ul>
+        </div>
+        <!--End Product Button-->
+    </div>
+    <!-- end product image -->
+
+        <!--start product details -->
+        <div class="product-details text-center">
+            <!-- product name -->
+            <div class="product-name">
+                <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+        </div>
+        <!-- End product name -->
+
+        <!-- product price -->
+        <div class="product-price">
+            <p class="product-price grid-view-item__meta">
+                <span class="price">&#8376;{{ product.price }}</span>
+            </p>
+        </div>
+        <!-- End product price -->
+
+    </div>
+    <!-- End product details -->
+</div>
+{% endfor %}
