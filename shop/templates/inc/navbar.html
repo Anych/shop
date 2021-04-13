@@ -11,7 +11,11 @@
                         <i class="anm anm-bars-r"></i>
                     </button>
                     <!--End Mobile Toggle-->
-
+                    <!--Search-->
+                    <div class="site-search iconset">
+                        <i class="icon anm anm-search-l"></i>
+                    </div>
+                    <!--End Search-->
                 </div>
                 <!--Mobile Icons-->
 
@@ -36,44 +40,61 @@
                 <!--End Desktop Menu-->
 
                 <div class="col-4 col-sm-4 col-md-4 col-lg-2 align-self-center icons-col text-right">
-                    {% if not request.user.is_authenticated %}
+                    <!--Search-->
+                    <div class="site-search iconset">
+                        <i class="icon anm anm-search-l"></i>
+                    </div>
+                    <div class="search-drawer">
+                    	<div class="container">
+                            <span class="closeSearch anm anm-times-l"></span>
+                            <h3 class="title">Что Вы ищите?</h3>
+                            <div class="block block-search">
+                                <div class="block block-content">
+                                    <form class="form minisearch" id="header-search" action="{% url 'search' %}" method="GET">
+                                        <label for="search" class="label"><span>Search</span></label>
+                                        <div class="control">
+                                            <div class="searchField">
+                                                <div class="input-box">
+                                                    <input id="search" type="text" name="keyword" placeholder="Поиск продуктов, брендов ..." class="input-text">
+                                                    <button type="submit" title="Поиск" class="action search"><i class="icon anm anm-search-l"></i></button>
+                                                </div>
+                                            </div>
+                                      </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Search-->
                     <!--Setting Dropdown-->
+                    {% if user.id is None %}
                     <div class="setting-link iconset">
                     	<i class="icon icon-settings"></i>
                     </div>
                     <div id="settingsBox">
                     	<div class="customer-links">
                         	<p><a href="{% url 'login' %}" class="btn">Войти</a></p>
-                            <p class="text-center"><a href="{% url 'registration' %}" class="register">Создать новый аккаунт</a></p>
+                            <p class="text-center"><a href="{% url 'register' %}" class="register">Создать новый аккаунт</a></p>
                         </div>
                    	</div>
-                    {% endif %}
-                    {% if request.user.is_authenticated %}
+                    {% else %}
                     <div class="setting-link iconset">
                     	<i class="icon icon-settings"></i>
                     </div>
                     <div id="settingsBox">
                     	<div class="customer-links">
-                            <p class="text-center">Здравствуйте, <a href="">{{ request.user.username }}</a></p>
+                            <p class="text-center">Здравствуйте, <a href="{% url 'dashboard' %}">{{ user.first_name }}</a></p>
                             <hr>
-                            <p><a href="" class="btn">Выйти</a></p>
+                            <p><a href="{% url 'logout' %}" class="btn">Выйти</a></p>
                         </div>
                    	</div>
-                    {% endif %}
                     <!--End Setting Dropdown-->
-
-                    <!--Wishlist-->
-                    <div class="wishlist-link iconset">
-                        <i class="icon anm anm-heart-l"></i>
-                        <span class="wishlist-count">0</span>
-                    </div>
-                    <!--End Wishlist-->
-
+                    {% endif %}
                     <!--Minicart Dropdown-->
                     <div class="header-cart iconset">
-                        <a href="#" class="site-header__cart btn-minicart" data-toggle="modal" data-target="#minicart-drawer">
+                        <a href="{% url 'cart' %}" class="site-header__cart btn-minicart" data-toggle="modal" data-target="#minicart-drawer">
                             <i class="icon anm anm-bag-l"></i>
-                            <span class="site-cart-count">2</span>
+                            <span class="site-cart-count">{{ cart_count }}</span>
                         </a>
                     </div>
                     <!--End Minicart Dropdown-->

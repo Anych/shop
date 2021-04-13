@@ -27,3 +27,32 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('product_detail', kwargs={'category_slug': self.category.slug, 'product_slug': self.slug})
+
+
+class VariationManager(models.Manager):
+
+    def colors(self):
+        return super(VariationManager, self).filter(variation_category='color', is_active=True)
+
+    def sizes(self):
+        return super(VariationManager, self).filter(variation_category='size', is_active=True)
+
+
+VARIATION_CATEGORY_CHOICE = (
+    ('color', 'Цвет'),
+    ('size', 'Размер'),
+)
+
+
+class Variation(models.Model):
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
+    variation_category = models.CharField(max_length=100, choices=VARIATION_CATEGORY_CHOICE)
+    variation_value = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
+    created_date = models.DateTimeField(auto_now=True)
+
+    objects = VariationManager()
+
+    def __str__(self):
+        return self.variation_value

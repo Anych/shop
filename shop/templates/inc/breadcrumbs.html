@@ -1,14 +1,14 @@
 <!--Breadcrumbs-->
 <div class="breadcrumbs-wrapper">
     <div class="container">
-        <div class="breadcrumbs"><a href="{% url 'home' %}" title="Back to the home page">Главная</a>
+        <div class="breadcrumbs"><a href="{% url 'home' %}" title="На главную">Главная</a>
             {% if ancestor %}
             <span aria-hidden="true">|</span> <span>{{ ancestor }}</span>
             <span aria-hidden="true">|</span> <span>{{ category.name }}</span></div>
-            {% elif bread %}
-            <span aria-hidden="true">|</span> <span>{{ bread }}</span></div>
+            {% elif 'search' in request.path %}
+            <span aria-hidden="true">|</span> <span>Результаты поиска</span></div>
             {% else %}
-            <span aria-hidden="true">|</span> <span>{{ category.name }}</span></div>
+            <span aria-hidden="true">|</span> <span><a href="{{ category.get_absolute_url }}" title="К категории">{{ category.name }}</a></span></div>
             {% endif %}
     </div>
 </div>

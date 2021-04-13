@@ -61,6 +61,16 @@
             </ul>
     </div>
 </div>
+{% elif 'search' in request.path %}
+<div class="sidebar_widget categories">
+    <div><h2><a href="{% url 'category' category_slug='clothes' %}">Одежда</a></h2></div>
+</div>
 
+<div class="sidebar_widget categories">
+    <div><h2><a href="{% url 'category' category_slug='shoes' %}">Обувь</a></h2></div>
+</div>
+<div class="sidebar_widget categories">
+    <div><h2><a href="{% url 'category' category_slug='accessories' %}">Аксессуары</a></h2></div>
+</div>
 {% endif %}
 <!--End Categories-->

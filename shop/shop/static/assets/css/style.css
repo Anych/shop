@@ -1796,7 +1796,7 @@ white-space:nowrap; -ms-transform:translateX(-50%); -webkit-transform:translateX
 	border-radius:0; -ms-transition:all 0.5s ease-in-out; -webkit-transition:all 0.5s ease-in-out; transition:all 0.5s ease-in-out; cursor:pointer; }
 .product-form .swatch .swatchInput { display:none; }
 
-.product-action { width:100%; display:block; margin:5px 0 10px; padding:0 5px; }
+.product-action { width:100%; display:block; margin:5px 0 20px; padding:0 5px; }
 .product-action .quantity { float:left; margin:0 10px 10px 0; }
 .product-action .add-to-cart { width:auto; overflow:hidden; }
 .product-action .add-to-cart .button-cart { width:100%; padding:6px 15px; min-height:42px; }
@@ -1937,7 +1937,7 @@ table { margin-bottom:15px; width:100%; border-collapse:collapse; border-spacing
 .product-action .qtyField a { background-color:#fff; color:#000; border:0; }
 .product-action .qtyField a .fa { font-size:12px; line-height:21px; }
 .product-action .qtyField > a, .product-action .qtyField > span, .qtyField input { display:table-cell; line-height:normal; text-align:center; padding:3px 6px; border:1px solid #f5f5f5; }
-.product-form__item--submit { width:auto; overflow:hidden; padding-left:15px; }
+.product-form__item--submit { width:auto; overflow:hidden; }
 .product-form__item--submit .btn { width:100%; padding:11px 15px 10px 15px; min-height:42px; }
 .agree-check { margin:15px 0 10px; }
 .agree-check .checkbox { margin-right:3px; }

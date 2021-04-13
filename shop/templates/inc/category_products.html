@@ -29,10 +29,12 @@
                 <li>
                     <!--Cart Button-->
                     <form class="add" action="" method="post">
+                        <a href="{% url 'add_cart' product.id %}">
                         <button class="btn-icon btn btn-addto-cart" type="button" tabindex="0">
                             <i class="icon anm anm-cart-l"></i>
                             <span class="tooltip-label">В корзину</span>
                         </button>
+                        </a>
                     </form>
                     <!--end Cart Button-->
                 </li>

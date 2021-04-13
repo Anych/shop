@@ -192,6 +192,15 @@
 
             <!--Main Content-->
             <div class="col-12 col-sm-12 col-md-9 col-lg-9 main-col">
+                {% if 'search' in request.path %}
+                <div class="page-title"><h1>Результаты поиска</h1></div>
+                <div class="category-banner">
+                    <img src="assets/images/collection-banner/collection-banner.jpg" data-src="assets/images/collection-banner/collection-banner.jpg" alt="">
+                </div>
+                <div class="category-description">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing.</p>
+                </div>
+                {% else %}
                 <div class="page-title"><h1>Shop Left Sidebar</h1></div>
                 <div class="category-banner">
                     <img src="assets/images/collection-banner/collection-banner.jpg" data-src="assets/images/collection-banner/collection-banner.jpg" alt="">
@@ -199,7 +208,7 @@
                 <div class="category-description">
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing.</p>
                 </div>
-
+                {% endif %}
                 <!--Toolbar-->
                 <button type="button" class="btn btn-filter d-block d-md-none d-lg-none"> Product Filters</button>
                 <div class="toolbar">
@@ -213,25 +222,25 @@
                                     <i class="anm anm-th-list" aria-hidden="true"></i>
                                 </a>
                             </div>
+                            {% if products %}
                             <div class="col-4 col-md-4 col-lg-4 text-center filters-toolbar__item filters-toolbar__item--count d-flex justify-content-center align-items-center">
-                                <span class="filters-toolbar__product-count">Showing: 15 Results</span>
+                                <span class="filters-toolbar__product-count">Найдено: {{ products_count }} товаров</span>
                             </div>
-                            <div class="col-4 col-md-4 col-lg-4 text-right">
-                                <div class="filters-toolbar__item">
-                                    <label for="SortBy" class="hidden">Sort</label>
-                                    <select name="SortBy" id="SortBy" class="filters-toolbar__input filters-toolbar__input--sort">
-                                        <option value="title-ascending" selected="selected">Sort</option>
-                                        <option>Best Selling</option>
-                                        <option>Alphabetically, A-Z</option>
-                                        <option>Alphabetically, Z-A</option>
-                                        <option>Price, low to high</option>
-                                        <option>Price, high to low</option>
-                                        <option>Date, new to old</option>
-                                        <option>Date, old to new</option>
-                                    </select>
-                                    <input class="collection-header__default-sort" type="hidden" value="manual">
-                                </div>
+                            {% else %}
+                            <div class="col-4 col-md-4 col-lg-4 text-center filters-toolbar__item filters-toolbar__item--count d-flex justify-content-center align-items-center">
+                                <span class="filters-toolbar__product-count">Найдено: {{ products_count }} товаров</span>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="grid-products grid--view-items">
+                        <div class="container">
+                            <div>
+                                <h2 class="text-center">Товары не найдены. Попробуйте позже.</h2>
+                            </div>
+                        </div>
+                    </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -240,21 +249,12 @@
                 <!--Product Grid-->
                     <div class="grid-products grid--view-items">
                         <div class="row">
-                        {% include 'inc/products.html' %}
+                        {% include 'inc/category_products.html' %}
                         </div>
                     <!--End Product Grid-->
                     <!--Pagination Classic-->
                     <hr class="clear">
-                    <div class="pagination">
-                        <ul>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">...</a></li>
-                            <li><a href="#">5</a></li>
-                            <li class="next"><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
+                        {% include 'inc/category_pagination.html' %}
                     <!--End Pagination Classic-->
                 </div>
             </div>
