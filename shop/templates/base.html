@@ -30,7 +30,9 @@
 </div>
 <div class="page-wrapper">
     {% include 'inc/navbar.html' %}
-    {% block content %}{% endblock %}
+    {% block content %}
+
+    {% endblock %}
 
     <!--Footer-->
    	<div class="footer footer-10">
@@ -100,7 +102,9 @@
     <!-- Including Javascript -->
     <script src="{% static 'assets/js/plugins.js' %}"></script>
     <script src="{% static 'assets/js/main.js' %}"></script>
-    {% block script %}{% endblock %}
+    {% block script %}
+
+    {% endblock %}
 </div>
 </body>
 </html>

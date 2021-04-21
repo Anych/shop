@@ -109,8 +109,8 @@
 		<div class="closemobileMenu"><i class="icon anm anm-times-l pull-right"></i> Закрыть</div>
         <ul id="MobileNav" class="mobile-nav">
         	<li class="lvl1 parent megamenu"><a href="{% url 'home' %}">Главная</a>
-            {% for category in categories %}
-            <li class="lvl1 parent megamenu"><a href="">{{ category }}</a>
+            {% for category in links %}
+            <li class="lvl1 parent megamenu"><a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
             {% endfor %}
         </li>
       </ul>
