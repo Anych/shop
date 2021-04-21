@@ -406,7 +406,7 @@ body.index-demo3, html .index-demo3, .index-demo3 button, .index-demo3 input, .i
 .index-demo3 .section-header p { font-size:15px; }
 .index-demo3 .search-drawer .title { font-size:18px; text-transform:uppercase; }
 
-body.index-demo4, html .index-demo4, .index-demo4 button, .index-demo4 input, .index-demo4 select, .index-demo4 textarea, .index-demo4 .btn { font-family: 'Work Sans', sans-serif; }
+body.index-demo4, html .index-demo4, .index-demo4 button, .index-demo4 input, .index-demo4 select, .index-demo4 textarea, .index-demo4 .btn { font-family: verdana, 'Work Sans', sans-serif; }
 .index-demo4 h1, .index-demo4 .h1, .index-demo4 h2, .index-demo4 .h2, .index-demo4 h3, .index-demo4 .h3, 
 .index-demo4 h4, .index-demo4 .h4, .index-demo4 h5, .index-demo4 .h5, .index-demo4 h6, .index-demo4 .h6, 
 .index-demo4 #siteNav > li .megamenu .menu-title { font-family: 'Bitter', sans-serif; font-weight:700; letter-spacing:0.2px; text-transform:none; }

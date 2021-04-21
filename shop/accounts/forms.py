@@ -1,6 +1,6 @@
 from django import forms
 
-from accounts.models import Account
+from accounts.models import Account, UserProfile
 
 
 class RegistrationForm(forms.ModelForm):
@@ -37,3 +37,20 @@ class RegistrationForm(forms.ModelForm):
         if Account.objects.filter(email=email).exists():
             raise forms.ValidationError('Данный почтовый ящик уже зарегестрирован в системе')
         return email
+
+
+class UserForm(forms.ModelForm):
+
+    class Meta:
+        model = Account
+        fields = ('first_name', 'last_name', 'phone_number')
+
+
+class UserProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = ('address_line1', 'address_line2', 'city', 'state', 'country', 'profile_picture')
+
+    profile_picture = forms.ImageField(required=False, error_messages={'Ошибка': "Можно загружать только картинки"},
+                                       widget=forms.FileInput)

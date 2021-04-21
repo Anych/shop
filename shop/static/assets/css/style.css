@@ -1796,7 +1796,7 @@ white-space:nowrap; -ms-transform:translateX(-50%); -webkit-transform:translateX
 	border-radius:0; -ms-transition:all 0.5s ease-in-out; -webkit-transition:all 0.5s ease-in-out; transition:all 0.5s ease-in-out; cursor:pointer; }
 .product-form .swatch .swatchInput { display:none; }
 
-.product-action { width:100%; display:block; margin:5px 0 10px; padding:0 5px; }
+.product-action { width:100%; display:block; margin:5px 0 20px; padding:0 5px; }
 .product-action .quantity { float:left; margin:0 10px 10px 0; }
 .product-action .add-to-cart { width:auto; overflow:hidden; }
 .product-action .add-to-cart .button-cart { width:100%; padding:6px 15px; min-height:42px; }

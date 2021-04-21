@@ -6,11 +6,13 @@ from django.urls import path, include
 from shop import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    path('mila-host/', admin.site.urls),
     path('', views.BaseView.as_view(), name='home'),
     path('store/', include('store.urls')),
     path('cart/', include('cart.urls')),
     path('accounts/', include('accounts.urls')),
+    path('orders/', include('orders.urls')),
 ]
 
 if settings.DEBUG:

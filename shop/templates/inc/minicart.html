@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<!--MiniCart Drawer-->
+<div class="minicart-right-drawer modal right fade" id="minicart-drawer">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="cart-drawer" class="block block-cart">
+                <a href="javascript:void(0);" class="close-cart" data-dismiss="modal" aria-label="Close"><i class="anm anm-times-r"></i></a>
+                <h4>Ваша корзина ({{ cart_count }} вещи)</h4>
+                <div class="minicart-content">
+                    <ul class="clearfix">
+                      {% for cart_item in cart_items %}
+                        <li class="item clearfix">
+                            <a class="product-image" href="{{ cart_item.product.get_absolute_url }}">
+                                <img src="{{ cart_item.product.images.url }}" alt="" title="">
+                            </a>
+                            <div class="product-details">
+                                <a href="#" class="remove"><i class="anm anm-times-sql" aria-hidden="true"></i></a>
+                                <a class="product-title" href="cart-style1.html">Backpack With Contrast Bow</a>
+                                <div class="variant-cart">Black / XL</div>
+                                <div class="wrapQtyBtn">
+                                    <div class="qtyField">
+                                        <a class="qtyBtn minus" href="javascript:void(0);"><i class="anm anm-minus-r" aria-hidden="true"></i></a>
+                                        <input type="text"  name="quantity" value="1" class="qty">
+                                        <a class="qtyBtn plus" href="javascript:void(0);"><i class="anm anm-plus-r" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                                <div class="priceRow">
+                                    <div class="product-price">
+                                        <span class="money">$59.00</span>
+                                    </div>
+                                 </div>
+                            </div>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                </div>
+                <div class="minicart-bottom">
+                    <div class="subtotal list">
+                        <span>Доставка</span>
+                        <span class="product-price">&#8376;  {{ delivery }}</span>
+                    </div>
+                    <div class="subtotal">
+                        <span>Всего:</span>
+                        <span class="product-price">&#8376; {{ grand_total }}</span>
+                    </div>
+                    <a href="{% url 'checkout' %}"><button type="button" class="btn proceed-to-checkout">Оформление заказа</button></a>
+                    <a href="{% url 'cart' %}"><button type="button" class="btn btn-secondary cart-btn">Корзина</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End MiniCart Drawer-->

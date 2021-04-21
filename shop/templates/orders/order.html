@@ -1,10 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div id="page-content">
+    <!--Body Container-->
+    <!--Breadcrumbs-->
+    <div class="breadcrumbs-wrapper">
+        <div class="container">
+            <div class="breadcrumbs"><a href="{% url 'home' %}" title="Back to the home page">Главная</a>
+                <span aria-hidden="true">|</span> <span>Заказ</span></div>
+        </div>
+    </div>
+    <!--End Breadcrumbs-->
+<!--Page Title with Image-->
+    <!--Page Title with Image-->
+    <!--End Page Title with Image-->
+        <div class="container">
+            <div class="row">
+				<!--Main Content-->
+				<div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
+                	<div class="cart style2">
+                		<table>
+                            <thead class="cart__row cart__header">
+                                <tr>
+                                    <th colspan="2" class="text-center">Название</th>
+                                    <th class="text-center">Цена</th>
+                                    <th class="text-center">Колличество</th>
+                                    <th class="text-center">Сумма</th>
+                                </tr>
+                            </thead>
+                    		<tbody>
+                            {% for order_product in order_products %}
+                                <tr class="cart__row border-bottom line1 cart-flex border-top">
+                                    <td class="cart__image-wrapper cart-flex-item">
+                                        <a href="{{ order_product.product.get_absolute_url }}"><img class="cart__image" src="{{ order_product.product.images.url }}" alt="{{ cart_item.product.name }}"></a>
+                                    </td>
+                                    <td class="cart__meta small--text-left cart-flex-item">
+                                        <div class="list-view-item__title">
+                                            <a href="#">{{ order_product.product.name }}</a>
+                                        </div>
+                                    {% if order_product.variations.all %}
+                                    {% for item in order_product.variations.all %}
+                                    <div class="cart__meta-text">
+                                        {{ item.variation_category | capfirst }}: {{ item.variation_value | capfirst }} <br>
+                                    </div>
+                                    {% endfor %}
+                                    {% endif %}
+                                    </td>
+                                    <td class="cart__price-wrapper cart-flex-item text-center">
+                                        <span class="money">&#8376; {{ order_product.product.price }}</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span>Единиц товара: {{ order_product.quantity }}</span>
+                                    </td>
+                                    <td class="small--hide cart-price text-center">
+                                        <div><span class="">&#8376; {{ order_product.sub_total }}</span></div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" class="text-left"><a href="{% url 'store' %}" class="btn btn--link btn--small cart-continue"><i class="anm anm-chevron-cir-left"></i> Продолжить покупки</a></td>
+                                    <td colspan="2" class="text-right h5">Доставка</td>
+                                    <td class="text-center h5"> &#8376; {{ order.delivery }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="text-right h5">Итого</td>
+                                    <td class="text-center h5">&#8376; {{ order.order_total }}</td>
+                                </tr>
+                            </tfoot>
+                    </table>
+                    </div>
+               	</div>
+				<!--End Main Content-->
+			</div>
+
+        </div><!--End Body Container-->
+
+</div><!--End Page Wrapper-->
+{% endblock content %}

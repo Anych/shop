@@ -1,10 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div id="page-content">
+    <!--Body Container-->
+    <!--Breadcrumbs-->
+    <div class="breadcrumbs-wrapper">
+        <div class="container">
+            <div class="breadcrumbs"><a href="{% url 'home' %}" title="Back to the home page">Главная</a>
+                <span aria-hidden="true">|</span> <span>Завершение покупки</span></div>
+        </div>
+    </div>
+    <!--End Breadcrumbs-->
+<!--Page Title with Image-->
+    <!--Page Title with Image-->
+    <!--End Page Title with Image-->
+    <div class="container">
+        <center><i class="fa fa-check-circle" style="font-size: 72px;margin-bottom: 20px;color: #28A745;"></i></center>
+        <h1 class="text-center">Заказ принят! Спасибо за покупку!</h1><br>
+        <h3 class="text-center">В ближайшее время с Вами свяжется оператор</h3>
+    </div><br>
+    <div class="text-center">
+		<a href="{% url 'store' %}" class="btn btn-success">Продолжить покупки</a>
+	</div>
+            <!--End Main Content-->
+        </div>
+    </div><!--End Body Container-->
+
+</div><!--End Page Wrapper-->
+{% endblock content %}

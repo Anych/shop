@@ -16,7 +16,7 @@
     <div class="page-title"><h1>Оформление заказа</h1></div>
     <!--End Page Title with Image-->
     <div class="container">
-        <form action="" method="POST">
+        <form action="{% url 'place_order' %}" method="POST">
         <div class="row billing-fields">
             {% csrf_token %}
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 sm-margin-30px-bottom">
@@ -24,38 +24,48 @@
                             <h2 class="login-title mb-3">Детали доставки</h2>
                             <div class="row">
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                    <label for="input-firstname">Имя <span class="required-f">*</span></label>
-                                    <input name="firstname" value="" id="input-firstname" type="text">
+                                    <label for="input-first_name">Имя <span class="required-f">*</span></label>
+                                    <input name="first_name" value="" id="input-first_name" type="text">
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                    <label for="input-lastname">Фамилия <span class="required-f">*</span></label>
-                                    <input name="lastname" value="" id="input-lastname" type="text">
+                                    <label for="input-last_name">Фамилия <span class="required-f">*</span></label>
+                                    <input name="last_name" value="" id="input-last_name" type="text" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
                                     <label for="input-email">Электронная почта <span class="required-f">*</span></label>
-                                    <input name="email" value="" id="input-email" type="email">
+                                    <input name="email" value="" id="input-email" type="email" required>
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
                                     <label for="input-telephone">Телефон <span class="required-f">*</span></label>
-                                    <input name="telephone" value="" id="input-telephone" type="tel">
+                                    <input name="phone" value="" id="input-telephone" type="tel" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                    <label for="input-address-1">Адрес доставки <span class="required-f">*</span></label>
-                                    <input name="address_1" value="" id="input-address-1" type="text">
+                                    <label for="input-address">Адрес доставки <span class="required-f">*</span></label>
+                                    <input name="address" value="" id="input-address" type="text" required>
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                    <label for="input-city">Страна <span class="required-f">*</span></label>
+                                    <input name="country" value="" id="input-country" type="text" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                    <label for="input-state">Область <span class="required-f">*</span></label>
+                                    <input name="state" value="" id="input-state" type="text" required>
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
                                     <label for="input-city">Город <span class="required-f">*</span></label>
-                                    <input name="city" value="" id="input-city" type="text">
+                                    <input name="city" value="" id="input-city" type="text" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12 col-lg-12 col-xl-12">
-                                    <label for="">Примечания <span class="required-f">*</span></label>
-                                    <textarea class="form-control resize-both" rows="3"></textarea>
+                                    <label for="">Примечания </label>
+                                    <textarea class="form-control resize-both" rows="3" name="order_note"></textarea>
                                 </div>
                             </div>
                 </div>
@@ -82,11 +92,11 @@
                                         <td>{{ cart_item.product.price }}</td>
                                         <td>{{ cart_item.quantity }}</td>
                                     {% if cart_item.variations.all %}
-                                    {% for item in cart_item.variations.all %}
                                     <td>
+                                    {% for item in cart_item.variations.all %}
                                         {{ item.variation_category | capfirst }}: {{ item.variation_value | capfirst }} <br>
-                                    </td>
                                     {% endfor %}
+                                    </td>
                                     {% else %}
                                     <td></td>
                                     {% endif %}
@@ -96,8 +106,12 @@
                                 </tbody>
                                 <tfoot class="font-weight-600">
                                     <tr>
+                                        <td colspan="4" class="text-right">Доставка</td>
+                                        <td>&#8376; {{ delivery }}</td>
+                                    </tr>
+                                    <tr>
                                         <td colspan="4" class="text-right">Итого</td>
-                                        <td>&#8376; {{ total }}</td>
+                                        <td>&#8376; {{ grand_total }}</td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -113,6 +127,5 @@
         </form>
         <!--End Main Content-->
     </div><!--End Body Container-->
-
 </div><!--End Page Wrapper-->
 {% endblock content %}

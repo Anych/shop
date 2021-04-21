@@ -160,6 +160,7 @@ def remove_cart_item(request, product_id, cart_item_id):
 def cart(request, total=0, quantity=0, cart_items=None):
 
     try:
+        delivery = 2000
         if request.user.is_authenticated:
             cart_items = CartItem.objects.filter(user=request.user, is_active=True)
         else:
@@ -168,6 +169,9 @@ def cart(request, total=0, quantity=0, cart_items=None):
         for cart_item in cart_items:
             total += (cart_item.product.price * cart_item.quantity)
             quantity += cart_item.quantity
+        if total > 50000:
+            delivery = 0
+        grand_total = delivery + total
     except ObjectDoesNotExist:
         pass
 
@@ -175,6 +179,8 @@ def cart(request, total=0, quantity=0, cart_items=None):
         'total': total,
         'quantity': quantity,
         'cart_items': cart_items,
+        'delivery': delivery,
+        'grand_total': grand_total,
     }
     return render(request, 'store/cart.html', context)
 
@@ -182,6 +188,7 @@ def cart(request, total=0, quantity=0, cart_items=None):
 @login_required(login_url='login')
 def checkout(request, total=0, quantity=0, cart_items=None):
     try:
+        delivery = 2000
         if request.user.is_authenticated:
             cart_items = CartItem.objects.filter(user=request.user, is_active=True)
         else:
@@ -190,6 +197,9 @@ def checkout(request, total=0, quantity=0, cart_items=None):
         for cart_item in cart_items:
             total += (cart_item.product.price * cart_item.quantity)
             quantity += cart_item.quantity
+        if total > 50000:
+            delivery = 0
+        grand_total = delivery + total
     except ObjectDoesNotExist:
         pass
 
@@ -197,5 +207,7 @@ def checkout(request, total=0, quantity=0, cart_items=None):
         'total': total,
         'quantity': quantity,
         'cart_items': cart_items,
+        'delivery': delivery,
+        'grand_total': grand_total,
     }
     return render(request, 'store/checkout.html', context)

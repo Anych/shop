@@ -92,8 +92,8 @@
                     {% endif %}
                     <!--Minicart Dropdown-->
                     <div class="header-cart iconset">
-                        <a href="{% url 'cart' %}" class="site-header__cart btn-minicart" data-toggle="modal" data-target="#minicart-drawer">
-                            <i class="icon anm anm-bag-l"></i>
+<!--                        <a href="{% url 'cart' %}" class="site-header__cart btn-minicart" data-toggle="modal" data-target="#minicart-drawer">-->
+                            <a href="{% url 'cart' %}"><i class="icon anm anm-bag-l"></i></a>
                             <span class="site-cart-count">{{ cart_count }}</span>
                         </a>
                     </div>

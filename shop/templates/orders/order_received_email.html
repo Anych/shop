@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% autoescape off %}
+
+Здравствуйте, {{ user.first_name }}.
+
+Ваш заказ принят! Номер заказа: {{ order.order_number }}
+
+{% endautoescape %}

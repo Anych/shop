@@ -8,143 +8,182 @@
     <!--Breadcrumbs-->
     <div class="breadcrumbs-wrapper">
         <div class="container">
-            <div class="breadcrumbs"><a href="index.html" title="Back to the home page">Home</a> <span aria-hidden="true">|</span> <span>My Account</span></div>
+            <div class="breadcrumbs"><a href="{% url 'home' %}" title="Веррнуться на главную">Главная</a> <span aria-hidden="true">|</span> <span>Мой аккаунт</span></div>
         </div>
     </div>
     <!--End Breadcrumbs-->
     <div class="container">
         <div class="page-title"><h1>My Account</h1></div>
+        {% include 'inc/alerts.html' %}
         <div class="dashboard-upper-info">
             <div class="row align-items-center no-gutters">
             <div class="col-xl-3 col-lg-3 col-md-12">
                 <div class="d-single-info">
-                    <p class="user-name">Hello <span class="font-weight-600">yourmail@info</span></p>
-                    <p>(not yourmail@info? <a class="font-weight-600" href="{% url 'logout' %}">Выйти</a>)</p>
+                    <p class="user-name text-center">Здравствуйте, {{ user.full_name }}</p>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-4 col-md-12">
-                <div class="d-single-info">
-                    <p>Need Assistance? Customer service at.</p>
-                    <p>admin@yoursite.com.</p>
+                <div class="d-single-info text-center">
+                    <p>Нужна помощь? Поддержка пользователей.</p>
+                    <p>admin@mila-iris.kz</p>
                 </div>
             </div>
             <div class="col-xl-3 col-lg-3 col-md-12">
-                <div class="d-single-info">
-                    <p>E-mail them at </p>
-                    <p>support@yoursite.com</p>
+                <div class="d-single-info text-center">
+                    <p>Напишите на </p>
+                    <p>support@mila-iris.kz</p>
                 </div>
             </div>
             <div class="col-xl-2 col-lg-2 col-md-12">
-                <div class="d-single-info text-lg-center">
-                    <a class="view-cart" href="cart-style1.html"><i class="icon anm anm-bag-l"></i> View Cart</a>
+                <div class="d-single-info text-center">
+                    <a class="view-cart" href="{% url 'cart' %}"><i class="icon anm anm-bag-l"></i><b> Просмотреть корзину</b></a>
                 </div>
             </div>
         </div>
         </div>
         <div class="row mb-5">
-            <div class="col-xl-2 col-lg-2 col-md-12 md-margin-20px-bottom">
-                <!-- Nav tabs -->
-                <ul class="nav flex-column dashboard-list" role="tablist">
-                    <li><a class="nav-link active" data-toggle="tab" href="#dashboard">Dashboard</a></li>
-                    <li><a class="nav-link" data-toggle="tab" href="#orders">Orders</a></li>
-                    <li><a class="nav-link" data-toggle="tab" href="#downloads">Downloads</a></li>
-                    <li><a class="nav-link" data-toggle="tab" href="#address">Addresses</a></li>
-                    <li><a class="nav-link" data-toggle="tab" href="#account-details">Account details</a></li>
-                    <li><a class="nav-link" href="{% url 'logut' %}">Выйти</a></li>
-                </ul>
-                <!-- End Nav tabs -->
-            </div>
+        {% include 'inc/dashboard_sidebar.html' %}
 
             <div class="col-xs-10 col-lg-10 col-md-12">
                 <!-- Tab panes -->
-                <div class="tab-content dashboard-content padding-30px-all md-padding-15px-all" style="">
+                <div class="tab-content padding-30px-all md-padding-15px-all">
                     <!-- Dashboard -->
                     <div id="dashboard" class="tab-pane fade active show">
-                        <h3>Dashboard </h3>
-                        <p>From your account dashboard. you can easily check &amp; view your
-                            <a class="text-decoration-underline" href="#">recent orders</a>, manage your
-                            <a class="text-decoration-underline" href="#">shipping and billing addresses</a> and
-                            <a class="text-decoration-underline" href="#">edit your password and account details.</a>
-                        </p>
+                        <div class="d-inline-block dashboard-content col-xs-6 col-lg-6 col-md-6">
+                        <img src="{{ user_profile.profile_picture.url }}" alt="Фото пользователя" width="50" height="50" style="border-radius:50%;" class="rounded mx-auto d-block">
+                            <br>
+                            <p class="text-center">{{ user.email }}</p>
+                            <p class="text-center">{{ user.phone_number }}123</p>
+                            </div>
+                        <div class="d-inline-block dashboard-content col-xs-6 col-lg-6 col-md-6 float-right" style="display:inline-block;">
+                            <h3 class="text-center">Всего заказов </h3>
+                            <h4 class="text-center">{{ orders_count }}</h4>
+                            <a href="" class="text-center"><p class="text-center">Посмотреть заказы</p></a>
+                        </div>
                     </div>
                     <!-- End Dashboard -->
 
                     <!-- Orders -->
-                    <div id="orders" class="product-order tab-pane fade">
-                        <h3>Orders</h3>
+                    <div id="orders" class="product-order tab-pane fade dashboard-content">
+                        <h3 class="text-center">Заказы</h3>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead class="alt-font">
                                     <tr>
-                                        <th>Order</th>
-                                        <th>Product</th>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                        <th>Total</th>
-                                        <th>Actions</th>
+                                        <th>Номер заказа</th>
+                                        <th>Данные получателя</th>
+                                        <th>Сумма</th>
+                                        <th>Статус</th>
+                                        <th>Дата</th>
+                                        <th>Просмотреть</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for order in orders %}
                                     <tr>
-                                        <td>1</td>
-                                        <td>Minerva Dress black</td>
-                                        <td>March 04, 2018</td>
-                                        <td>Processing</td>
-                                        <td>$165.00 for 1 item </td>
-                                        <td><a class="view" href="cart-style1.html">view</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Sueded Cotton Pant in Khaki</td>
-                                        <td>May 19, 2018</td>
-                                        <td>Processing</td>
-                                        <td>$150.00 for 1 item </td>
-                                        <td><a class="view" href="cart-style1.html">view</a></td>
+                                        <td>{{ order.order_number }}</td>
+                                        <td>{{ order.full_name }}</td>
+                                        <td>{{ order.order_total }}</td>
+                                        <td>{{ order.status }}</td>
+                                        <td>{{ order.created_at }} </td>
+                                        <td><a class="text-center" href="{{ order.get_absolute_url }}">На заказ</a></td>
                                     </tr>
                                 </tbody>
+                                {% endfor %}
                             </table>
                         </div>
                     </div>
                     <!-- End Orders -->
 
-                    <!-- Downloads -->
-                    <div id="downloads" class="product-order tab-pane fade">
-                        <h3>Downloads</h3>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Downloads remaining</th>
-                                        <th>Expires</th>
-                                        <th>Download</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Minerva Dress black</td>
-                                        <td>July 22, 2018</td>
-                                        <td>never</td>
-                                        <td><a class="view" href="#">Click Here To Download Your File</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sueded Cotton Pant in Khaki</td>
-                                        <td>Dec 17, 2018</td>
-                                        <td>never</td>
-                                        <td><a class="view" href="#">Click Here To Download Your File</a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <!-- Edit profile -->
+                    <div id="edit-profile" class="product-order tab-pane fade dashboard-content">
+                        <h3>Изменить профиль</h3>
+                            <div class="card-body">
+                                <div class="text-right">
+                                    <img src="{{ user_profile.profile_picture.url }}" alt="Фото пользователя" width="50" style="border-radius:50px;">
+                                </div>
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <form action="{% url 'dashboard' %}" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>First Name</label>
+                                                {{ user_form.first_name }}
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Last Name</label>
+                                                {{ user_form.last_name }}
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>Phone Number</label>
+                                                {{ user_form.phone_number }}
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Profile Picture</label>
+                                                {{ profile_form.profile_picture }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Address Line 1</label>
+                                            {{ profile_form.address_line1 }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Address Line 2</label>
+                                            {{ profile_form.address_line2 }}
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label>City</label>
+                                                {{ profile_form.city }}
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>State</label>
+                                                {{ profile_form.state }}
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Country</label>
+                                                {{ profile_form.country }}
+                                            </div>
+                                        </div>
+                                        <input type="submit" value="Сохранить" class="btn btn-primary">
+                                    </form>
+                                </div>
+
+                                </div> <!-- row.// -->
+                            </div> <!-- card-body .// -->
                     </div>
-                    <!-- End Downloads -->
+                    <!-- End Edit profile -->
 
                     <!-- Address -->
-                    <div id="address" class="address tab-pane">
-                        <p class="xs-fon-13 margin-10px-bottom">The following addresses will be used on the checkout page by default.</p>
-                        <h4 class="billing-address">Billing address</h4>
-                        <a class="view margin-5px-bottom" href="#">edit</a>
-                        <p>No 40 Baria Sreet <br> 133/2 NewYork City, <br> NY, United States.</p>
+                    <div id="address" class="address tab-pane dashboard-content">
+                        <div class="card-body">
+                            <div class="row">
+                            <div class="col-md-12">
+                                <form action="{% url 'change_password' %}" method="POST">
+                                    {% csrf_token %}
+
+                                    <div class="form-group">
+                                        <label>Текущий пароль</label>
+                                        <input type="password" name="current_password" placeholder="Текущий пароль" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Новый пароль</label>
+                                        <input type="password" name="new_password" placeholder="Новый пароль" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Подтвердите новый пароль</label>
+                                        <input type="password" name="confirm_password" placeholder="Confirm New Password" class="form-control" required>
+                                    </div>
+
+                                    <input type="submit" value="Submit" class="btn btn-primary">
+                                </form>
+                            </div>
+
+                            </div> <!-- row.// -->
+                        </div> <!-- card-body .// -->
                     </div>
                     <!-- End Address -->
 

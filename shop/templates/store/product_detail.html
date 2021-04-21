@@ -9,55 +9,36 @@
     <!--End Breadcrumbs-->
     <div class="container">
         <div class="product-detail-container product-single-style1">
+            {% include 'inc/alerts.html' %}
             <div class="product-single">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                         <div class="product-details-img product-horizontal-style">
                             <div class="zoompro-wrap product-zoom-right pl-20">
                                 <div class="zoompro-span">
-                                    <img id="zoompro" class="zoompro prlightbox" src="{{ product.images.url }}" data-zoom-image="assets/images/product-images/product1.jpg" alt="" />
+                                    <img id="zoompro" class="zoompro prlightbox" src="{{ product.images.url }}" data-zoom-image="{{ product.images.url }}" alt="" />
                                 </div>
                                 <div class="product-labels"><span class="lbl on-sale">Sale</span></div>
                                 <div class="product-buttons">
-                                    <a href="#" class="btn prlightbox" title="Zoom">
+                                    <a href="{{ product.images.url }}" class="btn prlightbox" title="Увеличить">
                                         <i class="icon anm anm-expand-l-arrows" aria-hidden="true"></i>
-                                        <span class="tooltip-label">Zoom Image</span>
+                                        <span class="tooltip-label">Увеличить изображение</span>
                                     </a>
                                 </div>
                             </div>
                             <div class="product-thumb product-horizontal-thumb">
                                 <div id="gallery" class="product-thumb-style1">
-                                    <a data-image="assets/images/product-images/product1.jpg" data-zoom-image="assets/images/product-images/product1.jpg" class="slick-slide slick-cloned" data-slick-index="-4" aria-hidden="true" tabindex="-1">
-                                        <img class="blur-up lazyload" data-src="assets/images/product-images/product1.jpg" src="assets/images/product-images/product1.jpg" alt="" />
+                                    {% for image in product_gallery %}
+                                    <a data-image="{{ image.images.url }}" data-zoom-image="{{ image.images.url }}" class="slick-slide slick-cloned" data-slick-index="-4" aria-hidden="true" tabindex="-1">
+                                        <img class="blur-up lazyload" data-src="{{ image.images.url }}" src="{{ image.images.url }}" alt="" />
                                     </a>
-                                    <a data-image="assets/images/product-images/product1.jpg" data-zoom-image="assets/images/product-images/product1.jpg" class="slick-slide slick-cloned" data-slick-index="-3" aria-hidden="true" tabindex="-1">
-                                        <img class="blur-up lazyload" data-src="assets/images/product-images/product1.jpg" src="assets/images/product-images/product1.jpg" alt="" />
-                                    </a>
-                                    <a data-image="assets/images/product-images/product1.jpg" data-zoom-image="assets/images/product-images/product1.jpg" class="slick-slide slick-cloned" data-slick-index="-2" aria-hidden="true" tabindex="-1">
-                                        <img class="blur-up lazyload" data-src="assets/images/product-images/product1.jpg" src="assets/images/product-images/product1.jpg" alt="" />
-                                    </a>
-                                    <a data-image="assets/images/product-images/product1.jpg" data-zoom-image="assets/images/product-images/product1.jpg" class="slick-slide slick-cloned" data-slick-index="-1" aria-hidden="true" tabindex="-1">
-                                        <img class="blur-up lazyload" data-src="assets/images/product-images/product1.jpg" src="assets/images/product-images/product1.jpg" alt="" />
-                                    </a>
-                                    <a data-image="assets/images/product-images/product1.jpg" data-zoom-image="assets/images/product-images/product1.jpg" class="slick-slide slick-cloned" data-slick-index="0" aria-hidden="true" tabindex="-1">
-                                        <img class="blur-up lazyload" data-src="assets/images/product-images/product1.jpg" src="assets/images/product-images/product1.jpg" alt="" />
-                                    </a>
-                                    <a data-image="assets/images/product-images/product1.jpg" data-zoom-image="assets/images/product-images/product1.jpg" class="slick-slide slick-cloned" data-slick-index="1" aria-hidden="true" tabindex="-1">
-                                        <img class="blur-up lazyload" data-src="assets/images/product-images/product1.jpg" src="assets/images/product-images/product1.jpg" alt="" />
-                                    </a>
-                                    <a data-image="assets/images/product-images/product1.jpg" data-zoom-image="assets/images/product-images/product1.jpg" class="slick-slide slick-cloned" data-slick-index="2" aria-hidden="true" tabindex="-1">
-                                        <img class="blur-up lazyload" data-src="assets/images/product-images/product1.jpg" src="assets/images/product-images/product1.jpg" alt="" />
-                                    </a>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <div class="lightboximages">
-                                <a href="assets/images/product-images/product1.jpg" data-size="1000x1280"></a>
-                                <a href="assets/images/product-images/product1.jpg" data-size="1000x1280"></a>
-                                <a href="assets/images/product-images/product1.jpg" data-size="1000x1280"></a>
-                                <a href="assets/images/product-images/product1.jpg" data-size="1000x1280"></a>
-                                <a href="assets/images/product-images/product1.jpg" data-size="1000x1280"></a>
-                                <a href="assets/images/product-images/product1.jpg" data-size="1000x1280"></a>
-                                <a href="assets/images/product-images/product1.jpg" data-size="1000x1280"></a>
+                                {% for image in product_gallery %}
+                                <a href="{{ image.images.url }}" data-size="1000x1280"></a>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -65,16 +46,23 @@
                         <div class="product-single__meta">
                             <h1 class="product-single__title">{{ product.name }}</h1>
                             <div class="prInfoRow">
-                                <div class="product-review"><a class="reviewLink" href="#tab2"><i class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i><i class="font-13 fa fa-star-o"></i><i class="font-13 fa fa-star-o"></i><span class="spr-badge-caption">6 reviews</span></a></div>
-                                <div class="product-sku">SKU: <span class="variant-sku">19115-rdxs</span></div>
-                                <div class="product-stock">
-                                {% if product.stock > 0 %}
-                                <span class="instock">В наличии</span>
-                                {% else %}
-                                <span class="outstock">Нет в наличии</span>
-                                {% endif %}
+                                <span class="product-review">
+                                    <span class="reviewLink">
+                                        <i class="font-13 fa fa-star{% if product.average_review < 0.5 %}-o{% elif product.average_review >= 0.5 and product.average_review < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="font-13 fa fa-star{% if product.average_review < 1.5 %}-o{% elif product.average_review >= 1.5 and product.average_review < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="font-13 fa fa-star{% if product.average_review < 2.5 %}-o{% elif product.average_review >= 2.5 and product.average_review < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="font-13 fa fa-star{% if product.average_review < 3.5 %}-o{% elif product.average_review >= 3.5 and product.average_review < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="font-13 fa fa-star{% if product.average_review < 4.5 %}-o{% elif product.average_review >= 4.5 and product.average_review < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <span class="spr-badge-caption"><b>{{ product.count_review }} {% if product.count_review == 1 %} отзыв {% elif product.count_review == 2 or product.count_review == 3 or product.count_review == 4 %} отзыва{% else %} отзывов {% endif %}</b></span>
+                                    </span>
+                                </span>
+                                <div class="product-stock float-right">
+                                    {% if product.stock > 0 %}
+                                        <span class="instock"><b>В наличии</b></span>
+                                    {% else %}
+                                        <span class="outstock"><b>Нет в наличии</b></span>
+                                    {% endif %}
                                 </div>
-
                             </div>
                             <p class="product-single__price product-single__price-product-template">
                                 <span class="visually-hidden">Regular price</span>
@@ -202,81 +190,68 @@
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-4">
                             <div class="spr-form clearfix">
-                                <form method="post" action="#" id="new-review-form" class="new-review-form">
-                                    <h3 class="spr-form-title">Write Your Own Review</h3>
+                                <form method="POST" action="{% url 'submit_review' product.id %}" id="new-review-form" class="new-review-form">
+                                    {% csrf_token %}
+                                    <h3 class="spr-form-title">Оставьте отзыв</h3>
                                     <fieldset class="spr-form-contact">
                                         <div class="spr-form-review-rating">
-                                            <label class="spr-form-label">How do you rate this product?<span class="required">*</span></label>
-                                            <div class="spr-form-input spr-starrating">
-                                              <div class="product-review"><a class="reviewLink" href="#"><i class="fa fa-star-o"></i><i class="font-13 fa fa-star-o"></i><i class="font-13 fa fa-star-o"></i><i class="font-13 fa fa-star-o"></i><i class="font-13 fa fa-star-o"></i></a></div>
+                                            <label class="spr-form-label">Как Вы оценивате продукт?<span class="required">*</span></label>
+                                            <div class="rate">
+                                                <input type="radio" name="rating" id="rating10" value="5" required><label for="rating10" title="5"></label>
+                                                <input type="radio" name="rating" id="rating9" value="4.5" required><label for="rating9" title="4.5" class="half"></label>
+                                                <input type="radio" name="rating" id="rating8" value="4" required><label for="rating8" title="4"></label>
+                                                <input type="radio" name="rating" id="rating7" value="3.5" required><label for="rating7" title="3.5" class="half"></label>
+                                                <input type="radio" name="rating" id="rating6" value="3" required><label for="rating6" title="3"></label>
+                                                <input type="radio" name="rating" id="rating5" value="2.5" required><label for="rating5" title="2.5" class="half"></label>
+                                                <input type="radio" name="rating" id="rating4" value="2" required><label for="rating4" title="2"></label>
+                                                <input type="radio" name="rating" id="rating3" value="1.5" required><label for="rating3" title="1.5" class="half"></label>
+                                                <input type="radio" name="rating" id="rating2" value="1" required><label for="rating2" title="1"></label>
+                                                <input type="radio" name="rating" id="rating1" value="0.5" required><label for="rating1" title="0.5" class="half"></label>
                                             </div>
                                         </div>
-                                        <div class="spr-form-contact-name">
-                                          <label class="spr-form-label" for="name">What's your nickname?<span class="required">*</span></label>
-                                          <input class="spr-form-input spr-form-input-text" type="text" name="name" value="">
-                                        </div>
-                                        <div class="spr-form-contact-email">
-                                          <label class="spr-form-label" for="email">Email Address<span class="required">*</span></label>
-                                          <input class="spr-form-input spr-form-input-email " id="email" type="email" name="email" value="">
+                                        <div class="spr-form-review-title">
+                                        <label class="spr-form-label">Отзыв</label>
+                                          <textarea class="spr-form-input spr-form-input-textarea " name="review" rows="4" required></textarea>
                                         </div>
                                     </fieldset>
-                                    <fieldset class="spr-form-review">
-                                      <div class="spr-form-review-title">
-                                        <label class="spr-form-label" for="review">Review Title</label>
-                                        <input class="spr-form-input spr-form-input-text " id="review" type="text" name="review" value="">
-                                      </div>
-
-                                      <div class="spr-form-review-body">
-                                        <label class="spr-form-label" for="message">Body of Review <span class="spr-form-review-body-charactersremaining">(1500) characters remaining</span></label>
-                                        <div class="spr-form-input">
-                                          <textarea class="spr-form-input spr-form-input-textarea " id="message" name="message" rows="5"></textarea>
-                                        </div>
-                                      </div>
-                                    </fieldset>
+                                    {% if user.is_authenticated %}
+                                        {% if order_product %}
                                     <div class="spr-form-actions">
-                                        <input type="submit" class="spr-button spr-button-primary button button-primary btn btn-primary" value="Submit Review">
+                                        <input type="submit" class="spr-button spr-button-primary button button-primary btn btn-primary" value="Оставить отзыв">
                                     </div>
+                                        {% else %}
+                                            <p>Чтобы оставить отзыв, сначала приобретите продукт</p>
+                                        {% endif %}
+                                    {% else %}
+                                    <p>Чтобы оставить отзыв авторизуйтесь. <span><a href="{% url 'login' %}"><b>Авторизоваться</b></a></span></p>
+                                    {% endif %}
                                 </form>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="spr-reviews">
-                                <h3 class="spr-form-title">Customer Reviews</h3>
+                                <h3 class="spr-form-title text-center">Отзывы покупателей</h3><br>
                                 <div class="review-inner">
+                                {% for review in reviews %}
                                 <div class="spr-review">
                                     <div class="spr-review-header">
-                                        <span class="product-review spr-starratings spr-review-header-starratings"><span class="reviewLink"><i class="fa fa-star"></i><i class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i><i class="font-13 fa fa-star-o"></i><i class="font-13 fa fa-star-o"></i></span></span>
-                                        <h3 class="spr-review-header-title">Lorem ipsum dolor sit amet</h3>
-                                        <span class="spr-review-header-byline"><strong>dsacc</strong> on <strong>Apr 09, 2019</strong></span>
+                                    <h4 class="spr-review-header-title">{{ review.user.full_name }}<span class="spr-review-header-byline float-right">{{ review.updated_at }}</span></h4>
+                                        <span class="product-review spr-starratings spr-review-header-starratings">
+                                            <span class="reviewLink">
+                                                <i class="font-13 fa fa-star{% if review.rating == 0.5 %}-half-o{% elif review.rating < 1 %}-o {% endif %}" aria-hidden="true"></i>
+                                                <i class="font-13 fa fa-star{% if review.rating == 1.5 %}-half-o{% elif review.rating < 2 %}-o {% endif %}" aria-hidden="true"></i>
+                                                <i class="font-13 fa fa-star{% if review.rating == 2.5 %}-half-o{% elif review.rating < 3 %}-o {% endif %}" aria-hidden="true"></i>
+                                                <i class="font-13 fa fa-star{% if review.rating == 3.5 %}-half-o{% elif review.rating < 4 %}-o {% endif %}" aria-hidden="true"></i>
+                                                <i class="font-13 fa fa-star{% if review.rating == 4.5 %}-half-o{% elif review.rating < 5 %}-o {% endif %}" aria-hidden="true"></i>
+                                            </span>
+                                        </span>
+
                                     </div>
                                     <div class="spr-review-content">
-                                        <p class="spr-review-content-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                        <p class="spr-review-content-body">{{ review.review }}</p>
                                     </div>
                                 </div>
-                                <div class="spr-review">
-                                  <div class="spr-review-header">
-                                    <span class="product-review spr-starratings spr-review-header-starratings"><span class="reviewLink"><i class="fa fa-star"></i><i class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i></span></span>
-                                    <h3 class="spr-review-header-title">Lorem Ipsum is simply dummy text of the printing</h3>
-                                    <span class="spr-review-header-byline"><strong>larrydude</strong> on <strong>Dec 30, 2018</strong></span>
-                                  </div>
-
-                                  <div class="spr-review-content">
-                                    <p class="spr-review-content-body">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                                    </p>
-                                  </div>
-                                </div>
-                                <div class="spr-review">
-                                  <div class="spr-review-header">
-                                    <span class="product-review spr-starratings spr-review-header-starratings"><span class="reviewLink"><i class="fa fa-star"></i><i class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i></span></span>
-                                    <h3 class="spr-review-header-title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</h3>
-                                    <span class="spr-review-header-byline"><strong>quoctri1905</strong> on <strong>Dec 30, 2018</strong></span>
-                                  </div>
-
-                                  <div class="spr-review-content">
-                                    <p class="spr-review-content-body">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.<br>
-                                    <br>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                  </div>
-                                </div>
+                                {% endfor %}
                                 </div>
                             </div>
                         </div>
@@ -1202,5 +1177,81 @@
     </a>
     <!--End Product Navigation-->
 </div><!--End Page Wrapper-->
-
 {% endblock content %}
+
+{% block script %}
+<script src="{% static 'assets/js/vendor/photoswipe.min.js' %}"></script>
+<script>
+    $(function(){
+        var $pswp = $('.pswp')[0],
+            image = [],
+            getItems = function() {
+                var items = [];
+                $('.lightboximages a').each(function() {
+                    var $href   = $(this).attr('href'),
+                        $size   = $(this).data('size').split('x'),
+                        item = {
+                            src : $href,
+                            w: $size[0],
+                            h: $size[1]
+                        }
+                        items.push(item);
+                });
+                return items;
+            }
+        var items = getItems();
+
+        $.each(items, function(index, value) {
+            image[index]     = new Image();
+            image[index].src = value['src'];
+        });
+        $('.prlightbox').on('click', function (event) {
+            event.preventDefault();
+
+            var $index = $(".active-thumb").parent().attr('data-slick-index');
+            $index++;
+            $index = $index-1;
+
+            var options = {
+                index: $index,
+                bgOpacity: 0.9,
+                showHideOpacity: true
+            }
+            var lightBox = new PhotoSwipe($pswp, PhotoSwipeUI_Default, items, options);
+            lightBox.init();
+        });
+    });
+    </script>
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="pswp__bg"></div>
+    <div class="pswp__scroll-wrap">
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+    <div class="pswp__ui pswp__ui--hidden">
+        <div class="pswp__top-bar">
+            <div class="pswp__counter"></div>
+            <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+            <button class="pswp__button pswp__button--share" title="Share"></button>
+            <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+            <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+            <div class="pswp__preloader">
+                <div class="pswp__preloader__icn">
+                    <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+            <div class="pswp__share-tooltip"></div>
+        </div>
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+        <div class="pswp__caption"><div class="pswp__caption__center"></div></div>
+    </div>
+ </div>
+</div>
+{% endblock script %}

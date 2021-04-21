@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<div class="col-xl-2 col-lg-2 col-md-12 md-margin-20px-bottom">
+    <!-- Nav tabs -->
+    <ul class="nav flex-column dashboard-list" role="tablist">
+        <li><a class="nav-link active" data-toggle="tab" href="#dashboard">Главная</a></li>
+        <li><a class="nav-link" data-toggle="tab" href="#orders">Мои заказы</a></li>
+        <li><a class="nav-link" data-toggle="tab" href="#edit-profile">Изменить профиль</a></li>
+        <li><a class="nav-link" data-toggle="tab" href="#address">Поменять пароль</a></li>
+        <li><a class="nav-link" href="{% url 'logout' %}">Выйти</a></li>
+    </ul>
+    <!-- End Nav tabs -->
+</div>
