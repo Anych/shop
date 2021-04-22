@@ -20,14 +20,14 @@
                         <div class="widget-title">
                             <h2>Цена</h2>
                         </div>
-                        <form action="#" method="post" class="price-filter">
-                            <div id="slider-range"></div>
+                        <form action="{% url 'search' %}" method="GET" class="price-filter">
+                            <div id="slider-range"data-min="1000" data-max="500000" data-min-name="min-price" data-max-name="max-price"></div>
                             <div class="row">
                                 <div class="col-6">
-                                    <p class="no-margin"><input id="amount" type="text"></p>
+                                    <p class="no-margin"><input id="amount" type="text" disabled></p>
                                 </div>
                                 <div class="col-6 text-right margin-25px-top">
-                                    <button class="btn btn-secondary btn--small">filter</button>
+                                    <button class="btn btn-secondary btn--small">Искать</button>
                                 </div>
                             </div>
                         </form>

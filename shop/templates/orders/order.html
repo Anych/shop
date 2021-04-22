@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load humanize %}
 
 {% block content %}
 <div id="page-content">
@@ -49,13 +50,13 @@
                                     {% endif %}
                                     </td>
                                     <td class="cart__price-wrapper cart-flex-item text-center">
-                                        <span class="money">&#8376; {{ order_product.product.price }}</span>
+                                        <span class="money">&#8376; {{ order_product.product.price | intcomma }}</span>
                                     </td>
                                     <td class="text-center">
                                         <span>Единиц товара: {{ order_product.quantity }}</span>
                                     </td>
                                     <td class="small--hide cart-price text-center">
-                                        <div><span class="">&#8376; {{ order_product.sub_total }}</span></div>
+                                        <div><span class="">&#8376; {{ order_product.sub_total | intcomma }}</span></div>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -64,11 +65,11 @@
                                 <tr>
                                     <td colspan="2" class="text-left"><a href="{% url 'store' %}" class="btn btn--link btn--small cart-continue"><i class="anm anm-chevron-cir-left"></i> Продолжить покупки</a></td>
                                     <td colspan="2" class="text-right h5">Доставка</td>
-                                    <td class="text-center h5"> &#8376; {{ order.delivery }}</td>
+                                    <td class="text-center h5"> &#8376; {{ order.delivery | intcomma }}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="4" class="text-right h5">Итого</td>
-                                    <td class="text-center h5">&#8376; {{ order.order_total }}</td>
+                                    <td class="text-center h5">&#8376; {{ order.order_total | intcomma }}</td>
                                 </tr>
                             </tfoot>
                     </table>

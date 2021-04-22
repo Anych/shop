@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load humanize %}
 
 {% block content %}
 <div id="page-content">
@@ -89,7 +90,7 @@
                                 {% for cart_item in cart_items %}
                                     <tr>
                                         <td class="text-left">{{ cart_item.product.name }}</td>
-                                        <td>{{ cart_item.product.price }}</td>
+                                        <td>{{ cart_item.product.price | intcomma }}</td>
                                         <td>{{ cart_item.quantity }}</td>
                                     {% if cart_item.variations.all %}
                                     <td>
@@ -100,18 +101,18 @@
                                     {% else %}
                                     <td></td>
                                     {% endif %}
-                                        <td>&#8376; {{ cart_item.sub_total }}</td>
+                                        <td>&#8376; {{ cart_item.sub_total | intcomma }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
                                 <tfoot class="font-weight-600">
                                     <tr>
                                         <td colspan="4" class="text-right">Доставка</td>
-                                        <td>&#8376; {{ delivery }}</td>
+                                        <td>&#8376; {{ delivery | intcomma }}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="4" class="text-right">Итого</td>
-                                        <td>&#8376; {{ grand_total }}</td>
+                                        <td>&#8376; {{ grand_total | intcomma }}</td>
                                     </tr>
                                 </tfoot>
                             </table>

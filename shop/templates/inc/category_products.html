@@ -1,3 +1,5 @@
+{% load humanize %}
+
 {% for product in products %}
 <div class="col-6 col-sm-6 col-md-4 col-lg-4 item">
     <!-- start product image -->
@@ -76,7 +78,7 @@
         <!-- product price -->
         <div class="product-price">
             <p class="product-price grid-view-item__meta">
-                <span class="price">&#8376;{{ product.price }}</span>
+                <span class="price">&#8376;{{ product.price | intcomma }}</span>
             </p>
         </div>
         <!-- End product price -->

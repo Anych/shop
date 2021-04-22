@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load humanize %}
 
 {% block content %}
 <div id="page-content">
@@ -58,7 +59,7 @@
                                     {% endif %}
                                 </td>
                                 <td class="cart__price-wrapper cart-flex-item">
-                                    <span class="money">&#8376; {{ cart_item.product.price }}</span>
+                                    <span class="money">&#8376; {{ cart_item.product.price | intcomma }}</span>
                                 </td>
                                 <td class="cart__update-wrapper cart-flex-item text-right">
                                     <div class="cart__qty text-center">
@@ -78,7 +79,7 @@
                                     </div>
                                 </td>
                                 <td class="text-right small--hide cart-price">
-                                    <div><span class="money">&#8376; {{ cart_item.sub_total }}</span></div>
+                                    <div><span class="money">&#8376; {{ cart_item.sub_total | intcomma }}</span></div>
                                 </td>
                                 <td class="text-center small--hide"><a href="{% url 'remove_cart_item' cart_item.product.id cart_item.id %}" class="btn btn--secondary cart__remove" title="Remove tem"><i class="icon icon anm anm-times-l"></i></a></td>
                             </tr>
@@ -97,7 +98,7 @@
                 <div class="solid-border">
                   <div class="row">
                     <span class="col-12 col-sm-6 cart__subtotal-title"><strong>Итого</strong></span><br><br>
-                    <span class="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right"><span class="money">&#8376; {{ total }}</span></span>
+                    <span class="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right"><span class="money">&#8376; {{ total | intcomma }}</span></span>
                   </div>
                 <div class="cart__shipping">Общая сумма будет доступна при расчёте</div>
                 <div class="order-button-payment">

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'mptt',
     'admin_honeypot',
+    'django.contrib.humanize',
 
     'category.apps.CategoryConfig',
     'accounts.apps.AccountsConfig',

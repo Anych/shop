@@ -1728,7 +1728,7 @@ ol#compare-items li .btn-remove1 { position:absolute; right:5px; top:5px; }
 .size-swacthes .swacth-list li { float:left; display:block; }
 .size-swacthes .swacth-list .swacth-btn { font-size:11px; display:block; margin-bottom:2px; width:30px; height:30px; line-height:28px; }
 /* Price Range */
-.price-filter input[type="text"] { height:30px; padding:0 10px; text-align:center; font-size:12px; width:100px; }
+.price-filter input[type="text"] { height:30px; padding:0 10px; text-align:center; font-size:12px; width:150px; }
 #slider-range.ui-slider-horizontal { background:#e9e9e9; border:none; border-radius:0; height:3px; margin-bottom:20px; }
 #slider-range .ui-slider-handle { background:#000; border:2px solid #000; height:12px; outline:none; top:-5px; width:12px; border-radius:50%; cursor:w-resize; margin-left:-1px; }
 #slider-range.ui-slider-horizontal .ui-slider-range { background:#777; border:0; }

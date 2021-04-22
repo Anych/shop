@@ -41,7 +41,7 @@ class Order(models.Model):
     order_note = models.TextField(max_length=500, blank=True, verbose_name='Примечания')
     order_total = models.FloatField(verbose_name='Общая сумма')
     delivery = models.FloatField(verbose_name='Стоимость доставки')
-    status = models.CharField(max_length=20, choices=STATUS, default='New', verbose_name='Статус')
+    status = models.CharField(max_length=20, choices=STATUS, default='Новый', verbose_name='Статус')
     ip = models.CharField(blank=True, max_length=20, verbose_name='IP')
     is_ordered = models.BooleanField(default=False, verbose_name='В заказе')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')

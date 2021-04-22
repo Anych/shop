@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load humanize %}
 
 {% block content %}
 <div id="page-content">
@@ -83,7 +84,7 @@
                                     <tr>
                                         <td>{{ order.order_number }}</td>
                                         <td>{{ order.full_name }}</td>
-                                        <td>{{ order.order_total }}</td>
+                                        <td>&#8376; {{ order.order_total | intcomma }}</td>
                                         <td>{{ order.status }}</td>
                                         <td>{{ order.created_at }} </td>
                                         <td><a class="text-center" href="{{ order.get_absolute_url }}">На заказ</a></td>
@@ -157,7 +158,7 @@
                     </div>
                     <!-- End Edit profile -->
 
-                    <!-- Address -->
+                    <!-- Change password -->
                     <div id="address" class="address tab-pane dashboard-content">
                         <div class="card-body">
                             <div class="row">
@@ -185,7 +186,7 @@
                             </div> <!-- row.// -->
                         </div> <!-- card-body .// -->
                     </div>
-                    <!-- End Address -->
+                    <!-- End Change password -->
 
                     <!-- Account Details -->
                     <div id="account-details" class="tab-pane fade">

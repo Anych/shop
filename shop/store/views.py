@@ -77,7 +77,9 @@ def product_detail(request, category_slug, product_slug):
     else:
         order_product = None
 
-    reviews = ReviewRating.objects.filter(product_id=product.id, status=True, )
+    reviews = ReviewRating.objects.filter(product_id=product.id, status=True).select_related()
+    average_review = Product.average_review(product)
+    count_review = Product.count_review(product)
 
     product_gallery = ProductGallery.objects.filter(product_id=product.id)
     context = {
@@ -87,16 +89,27 @@ def product_detail(request, category_slug, product_slug):
         'order_product': order_product,
         'reviews': reviews,
         'product_gallery': product_gallery,
+        'average_review': average_review,
+        'count_review': count_review,
     }
     return render(request, 'store/product_detail.html', context)
 
 
 def search(request):
-
+    products = Product.objects.order_by('-create_date')
+    products_count = products.count()
+    print(request.GET)
     if 'keyword' in request.GET:
         keyword = request.GET['keyword']
         if keyword:
-            products = Product.objects.order_by('-create_date').filter(name__icontains=keyword)
+            products = products.filter(name__icontains=keyword)
+            products_count = products.count()
+
+    if 'min_price' in request.GET:
+        min_price = request.GET['min_price']
+        max_price = request.GET['max_price']
+        if max_price:
+            products = products.filter(price__gte=min_price, price__lte=max_price)
             products_count = products.count()
 
     context = {
