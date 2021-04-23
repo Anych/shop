@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,16 +40,24 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+    'django.contrib.sites',
+
     'debug_toolbar',
     'mptt',
     'admin_honeypot',
-    'django.contrib.humanize',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 
     'category.apps.CategoryConfig',
     'accounts.apps.AccountsConfig',
     'store.apps.StoreConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -164,3 +173,7 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 EMAIL_USE_SSL = config('EMAIL_USE_SSL', cast=bool)
+
+SITE_ID = config('SITE_ID', cast=int)
+
+LOGIN_REDIRECT_URL = 'store'
