@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from cart.models import Cart, CartItem
-from store.models import Product, Variation
+from store.models import Product, Size
 
 
 def _cart_id(request):
@@ -17,19 +17,12 @@ def _cart_id(request):
 def add_cart(request, product_id):
     current_user = request.user
     product = Product.objects.get(id=product_id)
-    if current_user.is_authenticated:
-        product_variation = []
-        if request.method == 'POST':
-            for item in request.POST:
-                key = item
-                value = request.POST[key]
 
-                try:
-                    variation = Variation.objects.get(product=product, variation_category__iexact=key,
-                                                      variation_value__iexact=value)
-                    product_variation.append(variation)
-                except:
-                    pass
+    value = request.POST['size']
+    size = Size.objects.get(product=product, size=value)
+    product_variation = [size]
+
+    if current_user.is_authenticated:
 
         is_cart_item_exists = CartItem.objects.filter(product=product, user=current_user).exists()
         if is_cart_item_exists:
@@ -37,8 +30,8 @@ def add_cart(request, product_id):
             ex_var_list = []
             id = []
             for item in cart_item:
-                existing_variation = item.variations.all()
-                ex_var_list.append(list(existing_variation))
+                existing_size = item.size.all()
+                ex_var_list.append(list(existing_size))
                 id.append(item.id)
 
             if product_variation in ex_var_list:
@@ -49,11 +42,11 @@ def add_cart(request, product_id):
                 item.save()
 
             else:
-                item = CartItem.objects.create(product=product, quantity=1, user=current_user)
-                if len(product_variation) > 0:
-                    item.variations.clear()
-                    item.variations.add(*product_variation)
-                item.save()
+                cart_item = CartItem.objects.create(product=product, quantity=1, user=current_user)
+                cart_item.size.clear()
+                cart_item.size.add(size)
+                cart_item.save()
+                cart_item.save()
 
         else:
             cart_item = CartItem.objects.create(
@@ -61,26 +54,12 @@ def add_cart(request, product_id):
                 quantity=1,
                 user=current_user,
             )
-
-            if len(product_variation) > 0:
-                cart_item.variations.clear()
-                cart_item.variations.add(*product_variation)
+            cart_item.size.clear()
+            cart_item.size.add(size)
             cart_item.save()
         return redirect('cart')
 
     else:
-        product_variation = []
-
-        if request.method == 'POST':
-            for item in request.POST:
-                key = item
-                value = request.POST[key]
-                try:
-                    variation = Variation.objects.get(product=product, variation_category__iexact=key,
-                                                      variation_value__iexact=value)
-                    product_variation.append(variation)
-                except:
-                    pass
 
         try:
             cart = Cart.objects.get(cart_id=_cart_id(request))
@@ -96,8 +75,8 @@ def add_cart(request, product_id):
             ex_var_list = []
             id = []
             for item in cart_item:
-                existing_variation = item.variations.all()
-                ex_var_list.append(list(existing_variation))
+                existing_size = item.size.all()
+                ex_var_list.append(list(existing_size))
                 id.append(item.id)
 
             if product_variation in ex_var_list:
@@ -108,21 +87,20 @@ def add_cart(request, product_id):
                 item.save()
 
             else:
-                item = CartItem.objects.create(product=product, quantity=1, cart=cart)
-                if len(product_variation) > 0:
-                    item.variations.clear()
-                    item.variations.add(*product_variation)
-                item.save()
+                cart_item = CartItem.objects.create(product=product, quantity=1, cart=cart)
+                cart_item.size.clear()
+                cart_item.size.add(size)
+                cart_item.save()
+                cart_item.save()
+
         else:
             cart_item = CartItem.objects.create(
                 product=product,
                 quantity=1,
                 cart=cart,
             )
-
-            if len(product_variation) > 0:
-                cart_item.variations.clear()
-                cart_item.variations.add(*product_variation)
+            cart_item.size.clear()
+            cart_item.size.add(size)
             cart_item.save()
         return redirect('cart')
 

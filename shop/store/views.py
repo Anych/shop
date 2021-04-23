@@ -7,7 +7,7 @@ from cart.views import _cart_id
 from category.models import Category
 from orders.models import OrderProduct
 from store.forms import ReviewForm
-from store.models import Product, ReviewRating, ProductGallery
+from store.models import Product, ReviewRating, ProductGallery, Size
 
 
 def store(request, category_slug=None):
@@ -16,9 +16,10 @@ def store(request, category_slug=None):
     if category_slug is not None:
         category = get_object_or_404(Category, slug=category_slug)
         if category.is_root_node():
-            categories = Category.objects.get(slug=category_slug).get_descendants(include_self=False)
+            categories = category.get_descendants(include_self=False)
             category_id = category.id
-            products = Product.objects.filter(category__in=categories).order_by('-modified_date').select_related()
+            products = Product.objects.filter(category__in=categories)\
+                .order_by('-is_recommend', '-modified_date').select_related()
             products_count = len(products)
             paginator = Paginator(products, 6)
             page = request.GET.get('page')
@@ -33,7 +34,7 @@ def store(request, category_slug=None):
             page = request.GET.get('page')
             paged_products = paginator.get_page(page)
     else:
-        products = Product.objects.all().filter(is_available=True).order_by('-modified_date')
+        products = Product.objects.all().order_by('-is_recommend', '-modified_date').select_related()
         products_count = products.count()
         paginator = Paginator(products, 6)
         page = request.GET.get('page')
@@ -73,13 +74,18 @@ def product_detail(request, category_slug, product_slug):
     average_review = Product.average_review(product)
     count_review = Product.count_review(product)
 
-    product_gallery = ProductGallery.objects.filter(product_id=product.id)
+    sizes = Size.objects.filter(product__slug=product_slug, stock__gt=0)
+    own_color = Product.own_color(product)
+
+    product_gallery = ProductGallery.objects.filter(product__slug=product_slug)
     context = {
         'product': product,
         'category': category,
         'in_cart': in_cart,
         'order_product': order_product,
         'reviews': reviews,
+        'sizes': sizes,
+        'own_color': own_color,
         'product_gallery': product_gallery,
         'average_review': average_review,
         'count_review': count_review,

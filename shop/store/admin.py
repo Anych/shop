@@ -2,7 +2,7 @@ from django.contrib import admin
 import admin_thumbnails
 from django.utils.html import format_html
 
-from store.models import Product, Variation, ReviewRating, ProductGallery
+from store.models import Product, ReviewRating, ProductGallery, Size
 
 
 @admin_thumbnails.thumbnail('image')
@@ -12,31 +12,30 @@ class ProductGalleryInline(admin.StackedInline):
     extra = 1
 
 
-class VariationAdminInline(admin.StackedInline):
+class ProductSizeInline(admin.StackedInline):
 
-    model = Variation
+    model = Size
     extra = 1
 
 
 class ProductAdmin(admin.ModelAdmin):
 
-    def thumbnail(self, object):
-        return format_html('<img src="{}" width="40" />'.format(object.image1.url))
-    thumbnail.short_description = 'Фото продукта'
+    # def thumbnail(self, object):
+    #     return format_html('<img src="{}" width="40" />'.format(object.image1.url))
+    # thumbnail.short_description = 'Фото продукта'
 
-    list_display = ('thumbnail', 'name', 'price', 'category', 'is_discount')
-    inlines = [VariationAdminInline]
-    exclude = ['slug']
+    list_display = ('name', 'price', 'category', 'is_discount')
+    exclude = ['slug', 'views']
+    inlines = [ProductGalleryInline, ProductSizeInline]
 
 
-class VariationAdmin(admin.ModelAdmin):
+class SizeAdmin(admin.ModelAdmin):
 
-    list_display = ('product', 'variation_category', 'variation_value')
-    list_filter = ('product', 'variation_category', 'variation_value')
-    inlines = [ProductGalleryInline]
+    list_display = ('product',)
+    list_filter = ('product',)
 
 
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Variation, VariationAdmin)
+admin.site.register(Size, SizeAdmin)
 admin.site.register(ReviewRating)
 admin.site.register(ProductGallery)

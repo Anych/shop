@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from django.db import models
 from django.db.models import Avg, Count
 from django.urls import reverse
@@ -19,16 +21,20 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Бренд')
     slug = models.SlugField(max_length=200, verbose_name='Слаг', blank=True)
     description = models.TextField(blank=True, verbose_name='Описание')
+    img1 = models.ImageField(upload_to='store/products/%y/%m/%d')
+    img2 = models.ImageField(upload_to='store/products/%y/%m/%d')
     price = models.IntegerField(verbose_name='Цена')
-    image1 = models.ImageField(upload_to='photos/products')
-    image2 = models.ImageField(upload_to='photos/products')
-    is_discount = models.BooleanField(default=True, verbose_name='Скидка?')
-    discount_amount = models.IntegerField(verbose_name='Размер скидки')
+    is_discount = models.BooleanField(default=False, verbose_name='Скидка')
+    discount_amount = models.IntegerField(blank=True, null=True, verbose_name='Размер скидки')
     create_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
+    color = models.CharField(max_length=100, verbose_name='Цвет')
+    another_color = models.ManyToManyField('self', blank=True, verbose_name='Другой цвет')
+    is_recommend = models.BooleanField(default=False, verbose_name='Рекомендации')
+    views = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.name
+        return f'{self.name}: {self.color}'
 
     def get_absolute_url(self):
         return reverse('product_detail', kwargs={'category_slug': self.category.slug, 'product_slug': self.slug})
@@ -39,6 +45,11 @@ class Product(models.Model):
         if reviews['average'] is not None:
             avg = float(reviews['average'])
         return avg
+
+    def get_new_product(self):
+        new = datetime.now(timezone.utc) - self.created_at
+        if new.days <= 30:
+            return new
 
     def count_review(self):
         reviews = ReviewRating.objects.filter(product=self, status=True).aggregate(count=Count('id'))
@@ -52,39 +63,36 @@ class Product(models.Model):
             self.discount_price = int((int(self.price) * (100 - int(self.discount_amount))) / 100)
             return self.discount_price
 
+    def own_color(self):
+        return self.color
+
+    def stock(self):
+        stocks = Size.objects.filter(product=self).aggregate(count=Count('id'))
+        count = 0
+        if stocks['count'] is not None:
+            count = int(stocks['count'])
+        return count
+
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = gen_slug(self.name, self.category)
+            self.slug = gen_slug(self.category.name, self.brand.name)
         super().save(*args, **kwargs)
 
 
-class VariationManager(models.Manager):
+class ProductGallery(models.Model):
 
-    def colors(self):
-        return super(VariationManager, self).filter(variation_category='color', is_active=True)
-
-    def sizes(self):
-        return super(VariationManager, self).filter(variation_category='size', is_active=True)
+    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='store/products/%y/%m/%d')
 
 
-VARIATION_CATEGORY_CHOICE = (
-    ('цвет', 'Цвет'),
-    ('размер', 'Размер'),
-)
+class Size(models.Model):
 
-
-class Color(models.Model):
-
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
-    variation_category = models.CharField(max_length=100, choices=VARIATION_CATEGORY_CHOICE)
-    variation_value = models.CharField(max_length=100)
-    stock = models.IntegerField(verbose_name='В наличии')
-    created_date = models.DateTimeField(auto_now=True)
-
-    objects = VariationManager()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    size = models.CharField(max_length=100, verbose_name='Размер')
+    stock = models.IntegerField(default=1, verbose_name='Колличество')
 
     def __str__(self):
-        return self.variation_value
+        return self.size
 
 
 class ReviewRating(models.Model):
@@ -97,15 +105,6 @@ class ReviewRating(models.Model):
     status = models.BooleanField(default=True, verbose_name='Статус')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
-
-    def __str__(self):
-        return self.product.name
-
-
-class ProductGallery(models.Model):
-
-    product = models.ForeignKey(Color, default=None, on_delete=models.CASCADE)
-    image = models.ImageField(max_length=255, upload_to='store/products')
 
     def __str__(self):
         return self.product.name

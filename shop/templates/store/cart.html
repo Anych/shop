@@ -5,7 +5,7 @@
 
 {% block content %}
 <div id="page-content">
-    <!--Body Container-->
+
     <!--Breadcrumbs-->
     <div class="breadcrumbs-wrapper">
         <div class="container">
@@ -14,9 +14,8 @@
         </div>
     </div>
     <!--End Breadcrumbs-->
-<!--Page Title with Image-->
-    <!--Page Title with Image-->
-    <!--End Page Title with Image-->
+
+    <!--Body Container-->
     <div class="container">
         {% if not cart_items %}
         <h3 class="text-center">Ваша корзина пуста</h3>
@@ -29,7 +28,7 @@
         <div class="row">
             <!--Main Content-->
             <div class="col-12 col-sm-12 col-md-8 col-lg-8 main-col">
-                <form class="cart style2">
+                <div class="cart style2">
                     <table>
                         <thead class="cart__row cart__header">
                             <tr>
@@ -50,27 +49,25 @@
                                     <div class="list-view-item__title">
                                         <a href="{{ cart_item.product.get_absolute_url }}">{{ cart_item.product.name }}</a>
                                     </div>
-                                    {% if cart_item.variations.all %}
-                                    {% for item in cart_item.variations.all %}
+                                    {% for item in cart_item.size.all %}
                                     <div class="cart__meta-text">
-                                        {{ item.variation_category | capfirst }}: {{ item.variation_value | capfirst }} <br>
+                                        {{ item.size }}
                                     </div>
                                     {% endfor %}
-                                    {% endif %}
                                 </td>
                                 <td class="cart__price-wrapper cart-flex-item">
                                     <span class="money">&#8376; {{ cart_item.product.price | intcomma }}</span>
                                 </td>
                                 <td class="cart__update-wrapper cart-flex-item text-right">
-                                    <div class="cart__qty text-center">
+                                    <div class="cart__qty text-center" style="display:inline-block;">
                                         <div class="qtyField">
                                             <a class="qtyBtn minus" href="{% url 'remove_cart' cart_item.product.id cart_item.id %}"><i class="icon icon-minus"></i></a>
                                             <input class="cart__qty-input qty" type="text" name="updates[]" id="qty" value="{{ cart_item.quantity }}" pattern="[0-9]*">
-                                            <div>
+                                            <div style="display:inline-block;">
                                             <form action="{% url 'add_cart' cart_item.product.id %}" method="POST">
                                             {% csrf_token %}
-                                            {% for item in cart_item.variations.all %}
-                                                <input type="hidden" name="{{ item.variation_category | lower }}" value="{{ item.variation_value | capfirst }}">
+                                            {% for item in cart_item.size.all %}
+                                                <input type="hidden" name="size" value="{{ item.size }}">
                                             {% endfor %}
                                                 <button class="qtyBtn plus" type="submit"><i class="icon icon-plus"></i> </button>
                                             </form>
@@ -92,7 +89,7 @@
                         </tfoot>
                 </table>
                 <hr>
-                </form>
+                </div>
             </div>
             <div class="col-12 col-sm-12 col-md-4 col-lg-4 cart__footer">
                 <div class="solid-border">
@@ -101,7 +98,7 @@
                     <span class="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right"><span class="money">&#8376; {{ total | intcomma }}</span></span>
                   </div>
                 <div class="cart__shipping">Общая сумма будет доступна при расчёте</div>
-                <div class="order-button-payment">
+                <div class="order-button-payment" >
                     <a href="{% url 'checkout' %}"><button class="btn" value="Place order" type="submit">Оформление заказа</button></a>
                 </div>
                   <div class="paymnet-img"><img src="{% static 'assets/images/payment-img.jpg' %}" alt="Payment"></div>

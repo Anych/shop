@@ -13,36 +13,7 @@
             {% include 'inc/alerts.html' %}
             <div class="product-single">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-                        <div class="product-details-img product-horizontal-style">
-                            <div class="zoompro-wrap product-zoom-right pl-20">
-                                <div class="zoompro-span">
-                                    <img id="zoompro" class="zoompro prlightbox" src="{{ product.images.url }}" data-zoom-image="{{ product.images.url }}" alt="" />
-                                </div>
-                                <div class="product-labels"><span class="lbl on-sale">Sale</span></div>
-                                <div class="product-buttons">
-                                    <a href="{{ product.images.url }}" class="btn prlightbox" title="Увеличить">
-                                        <i class="icon anm anm-expand-l-arrows" aria-hidden="true"></i>
-                                        <span class="tooltip-label">Увеличить изображение</span>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="product-thumb product-horizontal-thumb">
-                                <div id="gallery" class="product-thumb-style1">
-                                    {% for image in product_gallery %}
-                                    <a data-image="{{ image.images.url }}" data-zoom-image="{{ image.images.url }}" class="slick-slide slick-cloned" data-slick-index="-4" aria-hidden="true" tabindex="-1">
-                                        <img class="blur-up lazyload" data-src="{{ image.images.url }}" src="{{ image.images.url }}" alt="" />
-                                    </a>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            <div class="lightboximages">
-                                {% for image in product_gallery %}
-                                <a href="{{ image.images.url }}" data-size="1000x1280"></a>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
+                    {% include 'product_inc/images.html' %}
                     <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                         <div class="product-single__meta">
                             <h1 class="product-single__title">{{ product.name }}</h1>
@@ -81,47 +52,7 @@
                         <div class="product-single__description rte">
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                         </div>
-                        <form method="POST" action="{% url 'add_cart' product.id %}" class="product-form product-form-product-template hidedropdown">
-                            {% csrf_token %}
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                                        <div class="swatch clearfix swatch-1 option2">
-                                            <label class="label">Цвета:<span class="required">*</span></label>
-                                            <select name="color">
-                                                <option value="" disabled selected>Выберите цвет</option>
-                                                {% for color in product.variation_set.colors %}
-                                                <option value="{{ color.variation_value | lower }}">{{ color.variation_value | capfirst }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                                        <div class="swatch clearfix swatch-1 option2">
-                                            <label class="label">Размеры:<span class="required">*</span></label>
-                                            <select name="size">
-                                                <option value="" disabled selected>Выберите размер</option>
-                                                {% for size in product.variation_set.sizes %}
-                                                <option value="{{ size.variation_value | lower }}">{{ size.variation_value | capfirst }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-                            <!-- Product Action -->
-                            <div class="product-action clearfix">
-<!--                                <div class="buy-it-btn">-->
-<!--                                    <button type="button" class="btn" disabled="disabled">Добавлено</button>-->
-<!--                                </div>-->
-<!--                                <br>-->
-<!--                                <div class="buy-it-btn">-->
-<!--                                    <a href="{% url 'cart' %}"><button type="button" class="btn">Перейти в корзину</button></a>-->
-<!--                                </div>-->
-                                <div class="product-form__item--submit">
-                                    <button type="submit" name="add" class="btn product-form__cart-submit">
-                                        <span>В корзину</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- End Product Action -->
-                        </form>
+                        {% include 'product_inc/add_button.html' %}
                         <p id="freeShipMsg" class="freeShipMsg" data-price="199"><i class="fa fa-truck" aria-hidden="true"></i> Getting Closer! Only <b class="freeShip"><span class="money" data-currency-usd="$199.00" data-currency="USD">$199.00</span></b> Away From <b>FREE SHIPPING!</b></p>
                         <p class="shippingMsg"><i class="fa fa-clock-o" aria-hidden="true"></i> Estimated Delivery Between <b id="fromDate">Wed. May 1</b> and <b id="toDate">Tue. May 7</b>.</p>
                         <div class="userViewMsg" data-user="20" data-time="11000">

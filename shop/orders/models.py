@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 
 from accounts.models import Account
-from store.models import Product, Variation
+from store.models import Product, Size
 
 
 class Payment(models.Model):
@@ -63,7 +63,7 @@ class OrderProduct(models.Model):
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Оплата')
     user = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name='Пользователь')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
-    variations = models.ManyToManyField(Variation, blank=True, verbose_name='Вариация')
+    size = models.ManyToManyField(Size, blank=True, verbose_name='Вариация')
     quantity = models.IntegerField(verbose_name='Колличество')
     product_price = models.FloatField(verbose_name='Цена продукта')
     ordered = models.BooleanField(default=False, verbose_name='Заказан')
