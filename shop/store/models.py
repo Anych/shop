@@ -4,7 +4,8 @@ from django.urls import reverse
 from mptt.fields import TreeForeignKey
 
 from accounts.models import Account
-from category.models import Category
+from category.models import Category, Brand
+from store.utils import gen_slug
 
 
 class Product(models.Model):
@@ -14,13 +15,15 @@ class Product(models.Model):
         verbose_name_plural = 'Продукты'
 
     name = models.CharField(max_length=200, verbose_name='Название')
-    slug = models.SlugField(max_length=200, verbose_name='Слаг')
+    category = TreeForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Бренд')
+    slug = models.SlugField(max_length=200, verbose_name='Слаг', blank=True)
     description = models.TextField(blank=True, verbose_name='Описание')
     price = models.IntegerField(verbose_name='Цена')
-    images = models.ImageField(upload_to='photos/products')
-    stock = models.IntegerField()
-    is_available = models.BooleanField(default=True, verbose_name='В наличии?')
-    category = TreeForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
+    image1 = models.ImageField(upload_to='photos/products')
+    image2 = models.ImageField(upload_to='photos/products')
+    is_discount = models.BooleanField(default=True, verbose_name='Скидка?')
+    discount_amount = models.IntegerField(verbose_name='Размер скидки')
     create_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 
@@ -44,6 +47,16 @@ class Product(models.Model):
             count = int(reviews['count'])
         return count
 
+    def discount_price(self):
+        if self.is_discount:
+            self.discount_price = int((int(self.price) * (100 - int(self.discount_amount))) / 100)
+            return self.discount_price
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = gen_slug(self.name, self.category)
+        super().save(*args, **kwargs)
+
 
 class VariationManager(models.Manager):
 
@@ -60,12 +73,12 @@ VARIATION_CATEGORY_CHOICE = (
 )
 
 
-class Variation(models.Model):
+class Color(models.Model):
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
     variation_category = models.CharField(max_length=100, choices=VARIATION_CATEGORY_CHOICE)
     variation_value = models.CharField(max_length=100)
-    is_active = models.BooleanField(default=True)
+    stock = models.IntegerField(verbose_name='В наличии')
     created_date = models.DateTimeField(auto_now=True)
 
     objects = VariationManager()
@@ -91,9 +104,8 @@ class ReviewRating(models.Model):
 
 class ProductGallery(models.Model):
 
-    product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
-    images = models.ImageField(max_length=255, upload_to='store/products')
+    product = models.ForeignKey(Color, default=None, on_delete=models.CASCADE)
+    image = models.ImageField(max_length=255, upload_to='store/products')
 
     def __str__(self):
         return self.product.name
-

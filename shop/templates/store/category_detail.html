@@ -15,69 +15,9 @@
                 <div class="sidebar_tags">
 
                     {% include 'inc/sidebar.html' %}
-                    <!--Price Filter-->
-                    <div class="sidebar_widget filterBox filter-widget">
-                        <div class="widget-title">
-                            <h2>Цена</h2>
-                        </div>
-                        <form action="{% url 'search' %}" method="GET" class="price-filter">
-                            <div id="slider-range"data-min="1000" data-max="500000" data-min-name="min-price" data-max-name="max-price"></div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <p class="no-margin"><input id="amount" type="text" disabled></p>
-                                </div>
-                                <div class="col-6 text-right margin-25px-top">
-                                    <button class="btn btn-secondary btn--small">Искать</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <!--End Price Filter-->
-                    <!--Size Swatches-->
-                    <div class="sidebar_widget filterBox filter-widget size-swacthes">
-                        <div class="widget-title"><h2>Размер</h2></div>
-                        <div class="filter-color swacth-list">
-                            <ul>
-                                <li><span class="swacth-btn">X</span><span class="tooltip-label">X</span></li>
-                                <li><span class="swacth-btn">XL</span><span class="tooltip-label">XL</span></li>
-                                <li><span class="swacth-btn">XLL</span><span class="tooltip-label">XLL</span></li>
-                                <li><span class="swacth-btn">M</span><span class="tooltip-label">M</span></li>
-                                <li><span class="swacth-btn">L</span><span class="tooltip-label">L</span></li>
-                                <li><span class="swacth-btn">S</span><span class="tooltip-label">S</span></li>
-                                <li><span class="swacth-btn">XXL</span><span class="tooltip-label">XLL</span></li>
-                                <li><span class="swacth-btn">XS</span><span class="tooltip-label">XS</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--End Size Swatches-->
-                    <!--Brand-->
-                    <div class="sidebar_widget filterBox filter-widget brand-filter">
-                        <div class="widget-title"><h2>Brands</h2></div>
-                        <ul>
-                            <li>
-                              <input type="checkbox" value="allen-vela" id="check1">
-                              <label for="check1"><span><span></span></span>Allen Vela</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" value="oxymat" id="check3">
-                              <label for="check3"><span><span></span></span>Oxymat</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" value="vanelas" id="check4">
-                              <label for="check4"><span><span></span></span>Vanelas</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" value="pagini" id="check5">
-                              <label for="check5"><span><span></span></span>Pagini</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" value="monark" id="check6">
-                              <label for="check6"><span><span></span></span>Monark</label>
-                            </li>
-                        </ul>
-                    </div>
-                    <!--End Brand-->
+
                     <!--Popular Products-->
+                    <div class="margin-1">
                     <div class="sidebar_widget sidePro">
                         <div class="widget-title"><h2>Популярные продукты</h2></div>
                         <div class="widget-content">
@@ -151,41 +91,15 @@
                             </div>
                         </div>
                     </div>
+                </div>
                     <!--End Popular Products-->
 
                     <!--Banner-->
                     <div class="sidebar_widget static-banner">
-                        <a href="#"><img src="assets/images/collection-side-banner.png" alt=""></a>
+                        <a href="#"><img src="{% static 'assets/images/collection-side-banner.png' %}" alt=""></a>
                     </div>
                     <!--Banner-->
-                    <!--Information-->
-                    <div class="sidebar_widget">
-                        <div class="widget-title"><h2>GLOBAL TEXT BLOCK</h2></div>
-                        <div class="widget-content"><p>Use this text to share information about your brand with your customers.</p><p>Describe a product, share announcements, or welcome customers to your store.</p></div>
-                    </div>
-                    <!--end Information-->
-                    <!--Product Tags-->
-                    <div class="sidebar_widget">
-                      <div class="widget-title">
-                        <h2>Product Tags</h2>
-                      </div>
-                      <div class="widget-content">
-                        <ul class="product-tags">
-                          <li><a href="#" title="Show products matching tag $100 - $400">$100 - $400</a></li>
-                          <li><a href="#" title="Show products matching tag $400 - $600">$400 - $600</a></li>
-                          <li><a href="#" title="Show products matching tag $600 - $800">$600 - $800</a></li>
-                          <li><a href="#" title="Show products matching tag Above $800">Above $800</a></li>
-                          <li><a href="#" title="Show products matching tag Allen Vela">Allen Vela</a></li>
-                          <li><a href="#" title="Show products matching tag Black">Black</a></li>
-                          <li><a href="#" title="Show products matching tag Blue">Blue</a></li>
-                          <li><a href="#" title="Show products matching tag Cantitate">Cantitate</a></li>
-                          <li><a href="#" title="Show products matching tag Famiza">Famiza</a></li>
-                          <li><a href="#" title="Show products matching tag Gray">Gray</a></li>
-                          <li><a href="#" title="Show products matching tag Green">Green</a></li>
-                        </ul>
-                        </div>
-                    </div>
-                    <!--end Product Tags-->
+
                 </div>
             </div>
             <!--End Sidebar-->
@@ -195,39 +109,23 @@
                 {% if 'search' in request.path %}
                 <div class="page-title"><h1>Результаты поиска</h1></div>
                 <div class="category-banner">
-                    <img src="assets/images/collection-banner/collection-banner.jpg" data-src="assets/images/collection-banner/collection-banner.jpg" alt="">
-                </div>
-                <div class="category-description">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing.</p>
+                    <img src="{% static 'assets/images/collection-banner/collection-banner.jpg' %}" data-src="{% static 'assets/images/collection-banner/collection-banner.jpg' %}" alt="">
                 </div>
                 {% else %}
-                <div class="page-title"><h1>Shop Left Sidebar</h1></div>
                 <div class="category-banner">
-                    <img src="assets/images/collection-banner/collection-banner.jpg" data-src="assets/images/collection-banner/collection-banner.jpg" alt="">
-                </div>
-                <div class="category-description">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing.</p>
+                    <img src="{% static 'assets/images/collection-banner/collection-banner.jpg' %}" data-src="{% static 'assets/images/collection-banner/collection-banner.jpg' %}" alt="">
                 </div>
                 {% endif %}
                 <!--Toolbar-->
-                <button type="button" class="btn btn-filter d-block d-md-none d-lg-none"> Product Filters</button>
                 <div class="toolbar">
                     <div class="filters-toolbar-wrapper">
                         <div class="row">
-                            <div class="col-4 col-md-4 col-lg-4 filters-toolbar__item collection-view-as d-flex justify-content-start align-items-center">
-                                <a href="shop-left-sidebar.html" title="Grid View" class="change-view change-view--active">
-                                    <i class="anm anm-th" aria-hidden="true"></i>
-                                </a>
-                                <a href="shop-list-view.html" title="List View" class="change-view">
-                                    <i class="anm anm-th-list" aria-hidden="true"></i>
-                                </a>
-                            </div>
                             {% if products %}
-                            <div class="col-4 col-md-4 col-lg-4 text-center filters-toolbar__item filters-toolbar__item--count d-flex justify-content-center align-items-center">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-center filters-toolbar__item filters-toolbar__item--count d-flex justify-content-center align-items-center">
                                 <span class="filters-toolbar__product-count">Найдено: {{ products_count }} товаров</span>
                             </div>
                             {% else %}
-                            <div class="col-4 col-md-4 col-lg-4 text-center filters-toolbar__item filters-toolbar__item--count d-flex justify-content-center align-items-center">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-center filters-toolbar__item filters-toolbar__item--count d-flex justify-content-center align-items-center">
                                 <span class="filters-toolbar__product-count">Найдено: {{ products_count }} товаров</span>
                             </div>
                         </div>

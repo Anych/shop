@@ -22,3 +22,15 @@ class Category(MPTTModel):
 
     def get_absolute_url(self):
         return reverse('category', kwargs={'category_slug': self.slug})
+
+
+class Brand(models.Model):
+
+    name = models.CharField(max_length=50, unique=True, verbose_name='Наименование')
+    slug = models.SlugField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'category_slug': self.slug})

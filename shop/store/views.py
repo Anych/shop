@@ -12,21 +12,13 @@ from store.models import Product, ReviewRating, ProductGallery
 
 def store(request, category_slug=None):
     ancestor = None
-    categories = None
-    products = None
 
     if category_slug is not None:
         category = get_object_or_404(Category, slug=category_slug)
         if category.is_root_node():
-            categories = category.get_children()
+            categories = Category.objects.get(slug=category_slug).get_descendants(include_self=False)
             category_id = category.id
-            products = []
-            root = category.get_children()
-            for child in root:
-                qs = Product.objects.filter(category=child, is_available=True)\
-                    .select_related().order_by('-modified_date')
-                for product in qs:
-                    products.append(product)
+            products = Product.objects.filter(category__in=categories).order_by('-modified_date').select_related()
             products_count = len(products)
             paginator = Paginator(products, 6)
             page = request.GET.get('page')

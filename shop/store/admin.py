@@ -5,8 +5,8 @@ from django.utils.html import format_html
 from store.models import Product, Variation, ReviewRating, ProductGallery
 
 
-@admin_thumbnails.thumbnail('images')
-class ProductGalleryInline(admin.TabularInline):
+@admin_thumbnails.thumbnail('image')
+class ProductGalleryInline(admin.StackedInline):
 
     model = ProductGallery
     extra = 1
@@ -21,19 +21,19 @@ class VariationAdminInline(admin.StackedInline):
 class ProductAdmin(admin.ModelAdmin):
 
     def thumbnail(self, object):
-        return format_html('<img src="{}" width="40" />'.format(object.images.url))
+        return format_html('<img src="{}" width="40" />'.format(object.image1.url))
     thumbnail.short_description = 'Фото продукта'
 
-    list_display = ('thumbnail', 'name', 'price', 'stock', 'category', 'modified_date')
-    prepopulated_fields = {'slug': ('name',)}
-    inlines = [ProductGalleryInline, VariationAdminInline]
+    list_display = ('thumbnail', 'name', 'price', 'category', 'is_discount')
+    inlines = [VariationAdminInline]
+    exclude = ['slug']
 
 
 class VariationAdmin(admin.ModelAdmin):
 
-    list_display = ('product', 'variation_category', 'variation_value', 'is_active')
-    list_editable = ('is_active',)
+    list_display = ('product', 'variation_category', 'variation_value')
     list_filter = ('product', 'variation_category', 'variation_value')
+    inlines = [ProductGalleryInline]
 
 
 admin.site.register(Product, ProductAdmin)

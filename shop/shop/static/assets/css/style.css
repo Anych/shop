@@ -1663,7 +1663,8 @@ ol#compare-items li .btn-remove1 { position:absolute; right:5px; top:5px; }
   16. Sidebar
 ========================================================================*/
 .sidebar .sidebar_widget { margin-bottom:35px;clear:both; width:100%; }
-.sidebar .sidebar_widget:last-of-type { margin-bottom:0; }
+.margin-1 { margin-top:100px }
+.sidebar .sidebar_widget:last-of-type { margin-bottom:20px; }
 .sidebar h2, .sidebar .h2 { font-family:'Poppins', sans-serif; margin-bottom:20px; font-size:15px; }
 .sidebar .sidebar_widget .widget-content ul { margin:0 0 15px; list-style:none; }
 .sidebar .sidebar_widget.sidePro .widget-content ul { margin:0; }
@@ -1717,7 +1718,7 @@ ol#compare-items li .btn-remove1 { position:absolute; right:5px; top:5px; }
 .sidebar .sidebar_widget.categories .sub-level > a:after { content:'\ebe0'; font-family:'annimex-icons'; display:inline-block; position:absolute; right:0; top:3px; }
 .sidebar .sidebar_widget.categories .sub-level > a.active:after { content:'\ebd1'; font-family:'annimex-icons'; display:inline-block; }
 .sidebar .sidebar_widget.categories .sub-level ul { margin-left:15px; margin-bottom:0; display:none; }
-.sidebar .sidebar_widget.categories li a { color:#111; font-size:14px; display:block; }
+.sidebar .sidebar_widget.categories li a { color:#111; font-size:14px; display:block; padding-left: 15px;}
 .sidebar .sidebar_widget.categories li a:focus { outline:0; }
 
 .filter-widget .widget-title { position:relative; cursor:pointer; }
@@ -1787,7 +1788,7 @@ ol#compare-items li .btn-remove1 { position:absolute; right:5px; top:5px; }
 .infinitpagin { clear:both; padding:15px 0 30px; text-align:center; }
 .loadMore { color:#fff !important; }
 
-.pagination { width:100%; text-align:center; list-style:none; font-size:1.15385em; }
+.pagination { width:100%; text-align:center; list-style:none; font-size:1.15385em; margin-bottom: 25px;}
 .pagination ul { display:block; margin:0 auto; }
 .pagination li { display:inline-block; }
 .pagination li.active a { border:2px solid #636871; color:#555; }
