@@ -20,11 +20,24 @@ from orders.models import Order
 
 
 def _profile(user):
-
     profile = UserProfile()
     profile.user_id = user.id
-    profile.profile_picture = 'default/default.png'
     profile.save()
+
+
+def _confirm_email(request, user, email):
+    current_site = get_current_site(request)
+    mail_subject = 'Активация аккаунта'
+    message = render_to_string('accounts/account_verification_email.html', {
+        'user': user,
+        'domain': current_site,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': default_token_generator.make_token(user),
+        'email': email,
+    })
+    to_email = email
+    send_email = EmailMessage(mail_subject, message, to=[to_email])
+    send_email.send()
 
 
 def register(request):
@@ -42,21 +55,7 @@ def register(request):
             user.phone_number = phone_number
             user.save()
 
-            _profile(user)
-
-            current_site = get_current_site(request)
-            mail_subject = 'Активация аккаунта'
-            message = render_to_string('accounts/account_verification_email.html', {
-                'user': user,
-                'domain': current_site,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': default_token_generator.make_token(user)
-            })
-            to_email = email
-            send_email = EmailMessage(mail_subject, message, to=[to_email])
-            send_email.send()
-            # messages.success(request, 'Спасибо за регистрацию! Письмо с активацией аккаунта отправлено Вам на почту!')
-            return redirect('/accounts/login/?command=verification&email='+email)
+            _confirm_email(request, user, email)
     else:
         form = RegistrationForm()
 
@@ -124,6 +123,19 @@ def login(request):
     return render(request, 'accounts/login.html')
 
 
+def confirm_email(request):
+    user = request.user
+    if request.method == 'POST':
+        email = request.POST['email']
+        _confirm_email(request, user, email)
+        return redirect('/accounts/login/?command=activate&email=' + email)
+    elif user.email:
+        _confirm_email(request, user, user.email)
+        return render(request, 'accounts/confirm_email.html')
+    else:
+        return render(request, 'accounts/confirm_email.html')
+
+
 @login_required(login_url='login')
 def logout(request):
     auth.logout(request)
@@ -131,7 +143,7 @@ def logout(request):
     return redirect('login')
 
 
-def activate(request, uidb64, token):
+def activate(request, uidb64, token, email):
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
         user = Account._default_manager.get(pk=uid)
@@ -139,8 +151,10 @@ def activate(request, uidb64, token):
         user = None
 
     if user is not None and default_token_generator.check_token(user, token):
+        user.email = email
         user.is_active = True
         user.save()
+        _profile(user)
         messages.success(request, 'Поздравляем, Вы успешно активировали аккаунт!')
         return redirect('login')
     else:
@@ -154,19 +168,22 @@ def dashboard(request):
     orders_count = orders.count()
     user = request.user
 
-    user_profile = get_object_or_404(UserProfile, user=user)
-    if request.method == 'POST':
-
-        user_form = UserForm(request.POST, instance=request.user)
-        profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, 'Ваши данные успешно обновлены!')
-            return redirect('dashboard')
+    if user.is_active is False:
+        return redirect('confirm_email')
     else:
-        user_form = UserForm(instance=request.user)
-        profile_form = UserProfileForm(instance=user_profile)
+        user_profile = UserProfile.objects.get(user=user)
+        if request.method == 'POST':
+
+            user_form = UserForm(request.POST, instance=request.user)
+            profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                messages.success(request, 'Ваши данные успешно обновлены!')
+                return redirect('dashboard')
+        else:
+            user_form = UserForm(instance=request.user)
+            profile_form = UserProfileForm(instance=user_profile)
 
     context = {
         'orders': orders,

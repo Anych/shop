@@ -14,7 +14,7 @@
     </div>
     <!--End Breadcrumbs-->
     <div class="container">
-        <div class="page-title"><h1>My Account</h1></div>
+        <div class="page-title"><h1>Мой аккаунт</h1></div>
         {% include 'inc/alerts.html' %}
         <div class="dashboard-upper-info">
             <div class="row align-items-center no-gutters">
@@ -53,13 +53,26 @@
                         <div class="d-inline-block dashboard-content col-xs-6 col-lg-6 col-md-6">
                         <img src="{{ user_profile.profile_picture.url }}" alt="Фото пользователя" width="50" height="50" style="border-radius:50%;" class="rounded mx-auto d-block">
                             <br>
-                            <p class="text-center">{{ user.email }}</p>
-                            <p class="text-center">{{ user.phone_number }}123</p>
+                            {% if user.email %}
+                                <p class="text-center">{{ user.email }}</p>
+                            {% else %}
+                                <p class="text-center">{{ user.full_name }}</p>
+                            {% endif %}
+                            {% if user.phone_number %}
+                                <p class="text-center">{{ user.phone_number }}</p>
+                            {% else %}
+                                <p class="text-center">Номер телефона отсутствует</p>
+                            {% endif %}
                             </div>
                         <div class="d-inline-block dashboard-content col-xs-6 col-lg-6 col-md-6 float-right" style="display:inline-block;">
                             <h3 class="text-center">Всего заказов </h3>
-                            <h4 class="text-center">{{ orders_count }}</h4>
-                            <a href="" class="text-center"><p class="text-center">Посмотреть заказы</p></a>
+                            {% if orders.count %}
+                                <h4 class="text-center">{{ orders_count }}</h4>
+                                <a href="{% url 'store' %}" class="text-center"><p>Перейти в магазин</p></a>
+                            {% else %}
+                                <h4 class="text-center">Заказов нет</h4>
+                                <a href="{% url 'store' %}" class="text-center"><p>Сделайте первый заказ</p></a>
+                            {% endif %}
                         </div>
                     </div>
                     <!-- End Dashboard -->
@@ -132,8 +145,8 @@
                                             {{ profile_form.address_line1 }}
                                         </div>
                                         <div class="form-group">
-                                            <label>Address Line 2</label>
-                                            {{ profile_form.address_line2 }}
+                                            <label>E-mail</label>
+                                            {{ user_form.email }}
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-4">

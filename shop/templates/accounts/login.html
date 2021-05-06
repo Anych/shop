@@ -12,14 +12,20 @@
         <div class="breadcrumbs"><a href="{% url 'home' %}" title="Вернуться на главную">Главная</a> <span aria-hidden="true">|</span> <span>Авторизация</span></div>
     </div>
 </div>
-    <!--Page Title with Image-->
-    <!--End Page Title with Image-->
     {% if request.GET.command == 'verification' %}
 
     <div class="container mx-auto alert alert-info text-center" role="alert" style="max-width: 1024px; margin-top:100px;">
     Спасибо за регистрацию! Письмо с активацией аккаунта отправлено Вам на почту [{{ request.GET.email }}]
     <br><br>
     Прошли верификацию? <a href="{% url 'login' %}">Авторизация</a>
+    </div>
+    <br><br>
+    <br><br>
+    {% elif request.GET.command == 'activate' %}
+    <div class="container mx-auto alert alert-info text-center" role="alert" style="max-width: 1024px; margin-top:100px;">
+    Спасибо за верификацию почты! Письмо с активацией аккаунта отправлено Вам на почту [{{ request.GET.email }}]
+    <br><br>
+    <a href="{% url 'confirm_email' %}">Выслать письмо повторно?</a>
     </div>
     <br><br>
     <br><br>

@@ -43,9 +43,9 @@ class Account(AbstractBaseUser):
 
     first_name = models.CharField(max_length=50, verbose_name='Фамилия')
     last_name = models.CharField(max_length=50, verbose_name='Имя')
-    email = models.CharField(max_length=100, null=True, blank=True, unique=True, verbose_name='Почта')
+    email = models.CharField(max_length=100, null=True, verbose_name='Почта')
     username = models.CharField(max_length=50, unique=True, verbose_name='Имя пользователя')
-    phone_number = models.CharField(max_length=50, null=True, blank=True, verbose_name='Номер телефона')
+    phone_number = models.CharField(max_length=50, null=True, verbose_name='Номер телефона')
 
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)
@@ -80,7 +80,8 @@ class UserProfile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE, verbose_name='Пользователь')
     address_line1 = models.CharField(max_length=255, blank=True, verbose_name='Адрес 1')
     address_line2 = models.CharField(max_length=255, blank=True, verbose_name='Адрес 2')
-    profile_picture = models.ImageField(blank=True, upload_to='user_profile', verbose_name='Фото')
+    profile_picture = models.ImageField(blank=True, default='user_profile/default.png',
+                                        upload_to='user_profile', verbose_name='Фото')
     city = models.CharField(max_length=100, blank=True, verbose_name='Город')
     state = models.CharField(max_length=100, blank=True, verbose_name='Область')
     country = models.CharField(max_length=100, blank=True, verbose_name='Страна')

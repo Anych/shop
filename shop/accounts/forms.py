@@ -42,7 +42,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = Account
-        fields = ('first_name', 'last_name', 'phone_number')
+        fields = ('first_name', 'last_name', 'phone_number', 'email')
 
 
 class UserProfileForm(forms.ModelForm):
