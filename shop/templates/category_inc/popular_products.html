@@ -1,0 +1,58 @@
+{% load humanize %}
+
+<!--Popular Products-->
+<div class="margin-1">
+  <div class="sidebar_widget sidePro">
+      <div class="widget-title"><h2>Популярные продукты</h2></div>
+      <div class="widget-content">
+          <div class="sideProSlider grid-products">
+              {% for product in popular_products %}
+              <div class="item">
+                  <!-- start product image -->
+                  <div class="product-image">
+                      <!-- start product image -->
+                      <a href="product-layout1.html" class="product-img">
+                          <!-- image -->
+                          <img class="primary blur-up lazyload" data-src="{{ product.img1.url }}" src="{{ product.img1.url }}" alt="{{ product.name }}" title="{{ product.name }}">
+                          <!-- End image -->
+                          <!-- Hover image -->
+                          <img class="hover blur-up lazyload" data-src="{{ product.img2.url }}" src="{{ product.img2.url }}" alt="{{ product.name }}" title="{{ product.name }}">
+                          <!-- End hover image -->
+                      </a>
+                      <!-- end product image -->
+                  </div>
+                  <!-- end product image -->
+
+                  <!--start product details -->
+                  <div class="product-details text-left">
+
+                      <!-- product price -->
+                      <div class="product-price">
+                          {% if product.is_discount %}
+                          <a href="{{ product.get_absolute_url }}"><p class="product-price grid-view-item__meta">
+                              <span class="new_price">{{ product.discount_price | intcomma }} &#8376;</span>
+                              <span class="old-price">{{ product.price | intcomma }} &#8376;</span>
+                          </p></a>
+                          {% else %}
+                          <a href="{{ product.get_absolute_url }}"><p class="product-price grid-view-item__meta ">
+                              <span class="price">&#8376;{{ product.price | intcomma }}</span>
+                          </p></a>
+                          {% endif %}
+                      </div>
+                      <!-- End product price -->
+
+                      <!-- product name -->
+                      <div class="product-name">
+                          <a href="{{ product.get_absolute_url }}">{{ product.brand }} / <span class="product-name">{{ product.name }}</span></a>
+                      </div>
+                      <!-- End product name -->
+                  </div>
+              <!-- End product details -->
+              </div>
+              {% endfor %}
+          </div>
+      </div>
+  </div>
+</div>
+
+<!--End Popular Products-->

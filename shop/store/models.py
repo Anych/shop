@@ -73,6 +73,10 @@ class Product(models.Model):
             count = int(stocks['count'])
         return count
 
+    def increment_views(self):
+        self.views += 1
+        self.save()
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = gen_slug(self.category.name, self.brand.name)

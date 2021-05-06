@@ -1,0 +1,7 @@
+<!--Breadcrumbs-->
+<div class="breadcrumbs-wrapper">
+    <div class="container">
+        <div class="breadcrumbs"><a href="{% url 'home' %}" title="На главную">Главная</a>
+            <span aria-hidden="true">|</span> <span><a href="{{ category.get_absolute_url }}" title="К категории">{{ category.name }}</a></span></div>
+    </div>
+</div>

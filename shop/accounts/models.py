@@ -43,15 +43,15 @@ class Account(AbstractBaseUser):
 
     first_name = models.CharField(max_length=50, verbose_name='Фамилия')
     last_name = models.CharField(max_length=50, verbose_name='Имя')
-    email = models.CharField(max_length=100, unique=True, verbose_name='Почта')
+    email = models.CharField(max_length=100, null=True, blank=True, unique=True, verbose_name='Почта')
     username = models.CharField(max_length=50, unique=True, verbose_name='Имя пользователя')
-    phone_number = models.CharField(max_length=50, verbose_name='Номер телефона')
+    phone_number = models.CharField(max_length=50, null=True, blank=True, verbose_name='Номер телефона')
 
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=False, verbose_name='Активный')
     is_admin = models.BooleanField(default=False, verbose_name='Админ')
     is_staff = models.BooleanField(default=False, verbose_name='Работник')
-    is_active = models.BooleanField(default=False, verbose_name='Активный')
     is_superadmin = models.BooleanField(default=False, verbose_name='Супер пользователь')
 
     USERNAME_FIELD = 'email'
@@ -63,7 +63,10 @@ class Account(AbstractBaseUser):
         return f'{self.first_name} {self.last_name}'
 
     def __str__(self):
-        return self.email
+        if self.email:
+            return self.email
+        else:
+            return self.first_name
 
     def has_perm(self, perm, obj=None):
         return self.is_admin

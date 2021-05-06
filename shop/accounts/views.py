@@ -54,6 +54,7 @@ def register(request):
             return redirect('/accounts/login/?command=verification&email='+email)
     else:
         form = RegistrationForm()
+
     context = {
         'form': form,
     }

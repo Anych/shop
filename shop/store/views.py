@@ -17,6 +17,8 @@ def store(request, category_slug=None):
         category = get_object_or_404(Category, slug=category_slug)
         if category.is_root_node():
             categories = category.get_descendants(include_self=False)
+            popular_products = Product.objects.filter(category__in=categories, views__gt=1)\
+                .order_by('-is_recommend', '-modified_date')
             category_id = category.id
             products = Product.objects.filter(category__in=categories)\
                 .order_by('-is_recommend', '-modified_date').select_related()
@@ -28,7 +30,10 @@ def store(request, category_slug=None):
             ancestor = category.get_ancestors(ascending=False, include_self=False).first()
             category_id = ancestor.id
             categories = ancestor.get_children()
-            products = Product.objects.filter(category=category, is_available=True).order_by('-modified_date')
+            popular_products = Product.objects.filter(category__slug=category_slug, views__gt=1)\
+                .order_by('-is_recommend', '-modified_date')
+            products = Product.objects.filter(category=category)\
+                .order_by('-is_recommend', '-modified_date').select_related()
             products_count = products.count()
             paginator = Paginator(products, 6)
             page = request.GET.get('page')
@@ -42,9 +47,12 @@ def store(request, category_slug=None):
         category = Category.objects.get(id=1)
         category_id = 1
         categories = category.get_children()
+        popular_products = Product.objects.filter(category__in=categories, views__gt=1)\
+            .order_by('-is_recommend', '-modified_date')
 
     context = {
             'products': paged_products,
+            'popular_products': popular_products,
             'category': category,
             'categories': categories,
             'ancestor': ancestor,
@@ -59,6 +67,7 @@ def product_detail(request, category_slug, product_slug):
         product = Product.objects.get(category__slug=category_slug, slug=product_slug)
         category = Category.objects.get(slug=category_slug)
         in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(request), product=product).exists()
+        product.increment_views()
     except Exception as e:
         raise e
 
@@ -78,6 +87,7 @@ def product_detail(request, category_slug, product_slug):
     own_color = Product.own_color(product)
 
     product_gallery = ProductGallery.objects.filter(product__slug=product_slug)
+
     context = {
         'product': product,
         'category': category,

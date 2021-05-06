@@ -6,7 +6,7 @@
 <div id="page-content">
     <!--Body Container-->
 
-    {% include 'inc/breadcrumbs.html' %}
+    {% include 'category_inc/breadcrumbs.html' %}
     <div class="container">
         <div class="row">
             <!--Sidebar-->
@@ -14,85 +14,9 @@
                 <div class="closeFilter d-block d-md-none d-lg-none"><i class="icon icon anm anm-times-l"></i></div>
                 <div class="sidebar_tags">
 
-                    {% include 'inc/sidebar.html' %}
+                    {% include 'category_inc/sidebar.html' %}
 
-                    <!--Popular Products-->
-                    <div class="margin-1">
-                    <div class="sidebar_widget sidePro">
-                        <div class="widget-title"><h2>Популярные продукты</h2></div>
-                        <div class="widget-content">
-                            <div class="sideProSlider grid-products">
-
-                                <div class="item">
-                                    <!-- start product image -->
-                                    <div class="product-image">
-                                        <!-- start product image -->
-                                        <a href="product-layout1.html" class="product-img">
-                                            <!-- image -->
-                                            <img class="primary blur-up lazyload" data-src="{% static 'assets/images/product-images/product1.jpg' %}" src="{% static 'assets/images/product-images/product1.jpg' %}" alt="" title="">
-                                            <!-- End image -->
-                                            <!-- Hover image -->
-                                            <img class="hover blur-up lazyload" data-src="{% static 'assets/images/product-images/product1.jpg' %}" src="{% static 'assets/images/product-images/product1.jpg' %}" alt="" title="">
-                                            <!-- End hover image -->
-                                        </a>
-                                        <!-- end product image -->
-
-                                        <!--Product Button-->
-                                        <div class="button-set style1">
-                                            <ul>
-                                                <li>
-                                                    <!--Cart Button-->
-                                                    <form class="add" action="cart-variant1.html" method="post">
-                                                        <button class="btn-icon btn btn-addto-cart" type="button" tabindex="0">
-                                                            <i class="icon anm anm-cart-l"></i>
-                                                            <span class="tooltip-label">Add to Cart</span>
-                                                        </button>
-                                                    </form>
-                                                    <!--end Cart Button-->
-                                                </li>
-                                                <li>
-                                                    <!--Quick View Button-->
-                                                    <a href="javascript:void(0)" title="Quick View" class="btn-icon quick-view-popup quick-view" data-toggle="modal" data-target="#content_quickview">
-                                                        <i class="icon anm anm-search-plus-l"></i>
-                                                        <span class="tooltip-label">Quick View</span>
-                                                    </a>
-                                                    <!--End Quick View Button-->
-                                                </li>
-                                                <li>
-                                                    <!--Wishlist Button-->
-                                                    <div class="wishlist-btn">
-                                                        <a class="btn-icon wishlist add-to-wishlist" href="my-wishlist.html">
-                                                            <i class="icon anm anm-heart-l"></i>
-                                                            <span class="tooltip-label">Add To Wishlist</span>
-                                                        </a>
-                                                    </div>
-                                                    <!--End Wishlist Button-->
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <!--End Product Button-->
-                                    </div>
-                                    <!-- end product image -->
-                                    <!--start product details -->
-                                    <div class="product-details text-center">
-                                        <!-- product name -->
-                                        <div class="product-name">
-                                            <a href="product-layout1.html">Martha Knit Top</a>
-                                        </div>
-                                        <!-- End product name -->
-                                        <!-- product price -->
-                                        <div class="product-price">
-                                            <span class="price">$399.01</span>
-                                        </div>
-                                        <!-- End product price -->
-                                    </div>
-                                    <!-- End product details -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                    <!--End Popular Products-->
+                    {% include 'category_inc/popular_products.html' %}
 
                     <!--Banner-->
                     <div class="sidebar_widget static-banner">
@@ -147,12 +71,12 @@
                 <!--Product Grid-->
                     <div class="grid-products grid--view-items">
                         <div class="row">
-                        {% include 'inc/category_products.html' %}
+                        {% include 'category_inc/products.html' %}
                         </div>
                     <!--End Product Grid-->
                     <!--Pagination Classic-->
                     <hr class="clear">
-                        {% include 'inc/category_pagination.html' %}
+                        {% include 'category_inc/pagination.html' %}
                     <!--End Pagination Classic-->
                 </div>
             </div>
