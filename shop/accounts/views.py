@@ -11,33 +11,13 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 from accounts.forms import RegistrationForm, UserForm, UserProfileForm
 from accounts.models import Account, UserProfile
+from accounts.utils import _confirm_email, _profile
 
 from cart.models import Cart, CartItem
 from cart.views import _cart_id
 import requests
 
 from orders.models import Order
-
-
-def _profile(user):
-    profile = UserProfile()
-    profile.user_id = user.id
-    profile.save()
-
-
-def _confirm_email(request, user, email):
-    current_site = get_current_site(request)
-    mail_subject = 'Активация аккаунта'
-    message = render_to_string('accounts/account_verification_email.html', {
-        'user': user,
-        'domain': current_site,
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': default_token_generator.make_token(user),
-        'email': email,
-    })
-    to_email = email
-    send_email = EmailMessage(mail_subject, message, to=[to_email])
-    send_email.send()
 
 
 def register(request):
@@ -156,7 +136,7 @@ def activate(request, uidb64, token, email):
         user.save()
         _profile(user)
         messages.success(request, 'Поздравляем, Вы успешно активировали аккаунт!')
-        return redirect('login')
+        return redirect('store')
     else:
         messages.error(request, 'Ошибка активации!')
         return redirect('register')
