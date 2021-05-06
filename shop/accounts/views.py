@@ -19,6 +19,14 @@ import requests
 from orders.models import Order
 
 
+def _profile(user):
+
+    profile = UserProfile()
+    profile.user_id = user.id
+    profile.profile_picture = 'default/default.png'
+    profile.save()
+
+
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -34,10 +42,7 @@ def register(request):
             user.phone_number = phone_number
             user.save()
 
-            profile = UserProfile()
-            profile.user_id = user.id
-            profile.profile_picture = 'default/default.png'
-            profile.save()
+            _profile(user)
 
             current_site = get_current_site(request)
             mail_subject = 'Активация аккаунта'
@@ -67,7 +72,6 @@ def login(request):
         password = request.POST['password']
 
         user = auth.authenticate(email=email, password=password)
-
         if user is not None:
             try:
                 cart = Cart.objects.get(cart_id=_cart_id(request))
@@ -148,8 +152,9 @@ def activate(request, uidb64, token):
 def dashboard(request):
     orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
     orders_count = orders.count()
+    user = request.user
 
-    user_profile = get_object_or_404(UserProfile, user=request.user)
+    user_profile = get_object_or_404(UserProfile, user=user)
     if request.method == 'POST':
 
         user_form = UserForm(request.POST, instance=request.user)
