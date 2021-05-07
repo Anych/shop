@@ -54,7 +54,6 @@ Table of Content:
 @import url('https://fonts.googleapis.com/css2?family=Alata&family=Bitter:ital,wght@0,400;0,700;1,400&family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;600;700&family=PT+Sans:ital,wght@0,400;0,700;1,700&family=Poppins:wght@300;400;500;600;700;900&family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@300;400;500;700;900&family=Work+Sans:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,700;1,400&family=Roboto+Slab:wght@300;400;600;700&family=Glegoo:wght@400;700&family=Oswald:wght@200;300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Titillium+Web:wght@200;300;400;600;700;900&display=swap');
-
 /*======================================================================
   2. Basic Styles
 ========================================================================*/
@@ -155,7 +154,7 @@ th { font-family: "Poppins", sans-serif; font-weight:600; text-transform:upperca
 .display-table { display:table; table-layout:fixed; width:100%; margin:0 !important; }
 .display-table-cell { float:none; display:table-cell; vertical-align:middle; }
 
-.btn { -moz-user-select:none; -ms-user-select:none; -webkit-user-select:none; user-select:none; -webkit-appearance:none; -moz-appearance:none; appearance:none; display:inline-block; width:auto; height:auto; 
+.btn { -moz-user-select:none; -ms-user-select:none; -webkit-user-select:none; user-select:none; -webkit-appearance:none; -moz-appearance:none; appearance:none; display:inline-block; width:100%; height:auto;
 	text-decoration:none; text-align:center; vertical-align:middle; cursor:pointer; border:1px solid transparent; border-radius:0; padding:8px 15px 8px; background-color:#000; color:#fff; font-family:'Poppins', sans-serif; 
 	font-weight:400; text-transform:uppercase; letter-spacing:1px; line-height:normal; white-space:normal; font-size:13px; -ms-transition:all 0.3s ease-in-out; -webkit-transition:all 0.3s ease-in-out; transition:all 0.3s ease-in-out; }
 .btn:hover, .btn:focus { background-color:#1a1a1a; opacity:0.8; color:#fff; text-decoration:none; }
@@ -2310,3 +2309,5 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
 .fbottom{
     background-color:#fff
 }
+
+@import "bootstrap-social.less";

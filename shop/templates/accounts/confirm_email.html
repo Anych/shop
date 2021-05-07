@@ -8,12 +8,21 @@
 
 <div class="breadcrumbs-wrapper">
     <div class="container">
-        <div class="breadcrumbs"><a href="{% url 'home' %}" title="Вернуться на главную">Главная</a> <span aria-hidden="true">|</span> <span>Подтерждение почты</span></div>
+        <div class="breadcrumbs"><a href="{% url 'home' %}" title="Вернуться на главную">Главная</a> <span aria-hidden="true">|</span> <span>Активация аккаунта</span></div>
     </div>
 </div>
-    {% if user.email %}
+    {% if request.GET.command == 'make_order' %}
     <div class="container mx-auto alert alert-info text-center" role="alert" style="max-width: 1024px; margin-top:100px;">
-    Перед тем как зайти в личный кабинет подтвердите пожалуйста почту. Письмо отправлено Вам на почту [{{ user.email }}]
+    Перед тем, как сделать заказ, подтвердите пожалуйста почту. Письмо отправлено Вам на почту [{{ user.email }}]
+    <br><br>
+    <a href="{% url 'confirm_email' %}">Выслать письмо повторно?</a> &nbsp; | &nbsp;
+    <a href="{% url 'checkout' %}">Уже активировали? Перейти к заказу</a>
+    </div>
+    <br><br>
+    <br><br>
+    {% elif user.email %}
+    <div class="container mx-auto alert alert-info text-center" role="alert" style="max-width: 1024px; margin-top:100px;">
+    Перед тем, как зайти в личный кабинет, подтвердите пожалуйста почту. Письмо отправлено Вам на почту [{{ user.email }}]
     <br><br>
     <a href="{% url 'confirm_email' %}">Выслать письмо повторно?</a>
     </div>

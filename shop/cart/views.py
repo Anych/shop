@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -170,11 +171,10 @@ def checkout(request, total=0, quantity=0, cart_items=None):
     grand_total = 0
 
     try:
-        if request.user.is_authenticated:
+        if request.user.is_authenticated and request.user.is_active:
             cart_items = CartItem.objects.filter(user=request.user, is_active=True)
         else:
-            cart = Cart.objects.get(cart_id=_cart_id(request))
-            cart_items = CartItem.objects.filter(cart=cart, is_active=True)
+            return redirect('/accounts/confirm_email/?command=make_order')
         for cart_item in cart_items:
             total += (cart_item.product.price * cart_item.quantity)
             quantity += cart_item.quantity
