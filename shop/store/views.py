@@ -15,25 +15,21 @@ def store(request, category_slug=None):
 
     if category_slug is not None:
         category = get_object_or_404(Category, slug=category_slug)
-        if category.is_root_node():
+        if category.is_root_node:
             categories = category.get_descendants(include_self=False)
-            popular_products = Product.objects.filter(category__in=categories, views__gt=1)\
-                .order_by('-is_recommend', '-modified_date')
-            category_id = category.id
             products = Product.objects.filter(category__in=categories)\
                 .order_by('-is_recommend', '-modified_date').select_related()
+            popular_products = products.filter(views__gt=1)
             products_count = len(products)
             paginator = Paginator(products, 6)
             page = request.GET.get('page')
             paged_products = paginator.get_page(page)
         else:
             ancestor = category.get_ancestors(ascending=False, include_self=False).first()
-            category_id = ancestor.id
             categories = ancestor.get_children()
-            popular_products = Product.objects.filter(category__slug=category_slug, views__gt=1)\
-                .order_by('-is_recommend', '-modified_date')
             products = Product.objects.filter(category=category)\
                 .order_by('-is_recommend', '-modified_date').select_related()
+            popular_products = products.filter(views__gt=1)
             products_count = products.count()
             paginator = Paginator(products, 6)
             page = request.GET.get('page')
@@ -45,10 +41,8 @@ def store(request, category_slug=None):
         page = request.GET.get('page')
         paged_products = paginator.get_page(page)
         category = Category.objects.get(id=1)
-        category_id = 1
         categories = category.get_children()
-        popular_products = Product.objects.filter(category__in=categories, views__gt=1)\
-            .order_by('-is_recommend', '-modified_date')
+        popular_products = products.filter(views__gt=1)
 
     context = {
             'products': paged_products,
@@ -56,7 +50,6 @@ def store(request, category_slug=None):
             'category': category,
             'categories': categories,
             'ancestor': ancestor,
-            'category_id': category_id,
             'products_count': products_count,
         }
     return render(request, 'store/category_detail.html', context)

@@ -41,10 +41,10 @@ class Account(AbstractBaseUser):
         verbose_name = 'Аккаунт'
         verbose_name_plural = 'Аккаунты'
 
-    first_name = models.CharField(max_length=50, verbose_name='Фамилия')
-    last_name = models.CharField(max_length=50, verbose_name='Имя')
+    first_name = models.CharField(max_length=50, null=True, verbose_name='Фамилия')
+    last_name = models.CharField(max_length=50, null=True, verbose_name='Имя')
     email = models.CharField(max_length=100, null=True, verbose_name='Почта')
-    username = models.CharField(max_length=50, unique=True, verbose_name='Имя пользователя')
+    username = models.CharField(max_length=50, unique=True, null=True, verbose_name='Имя пользователя')
     phone_number = models.CharField(max_length=50, null=True, verbose_name='Номер телефона')
 
     date_joined = models.DateTimeField(auto_now_add=True)
@@ -54,8 +54,8 @@ class Account(AbstractBaseUser):
     is_staff = models.BooleanField(default=False, verbose_name='Работник')
     is_superadmin = models.BooleanField(default=False, verbose_name='Супер пользователь')
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
     objects = MyAccountManager()
 

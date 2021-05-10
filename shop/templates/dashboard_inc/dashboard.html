@@ -1,0 +1,28 @@
+<!-- Dashboard -->
+<div id="dashboard" class="tab-pane fade active show">
+    <div class="d-inline-block dashboard-content-main col-xs-6 col-lg-6 col-md-6">
+    <img src="{{ user_profile.profile_picture.url }}" alt="Фото пользователя" width="50" height="50" style="border-radius:50%;" class="rounded mx-auto d-block">
+        <br>
+        {% if user.email %}
+            <p class="text-center">{{ user.email }}</p>
+        {% else %}
+            <p class="text-center">{{ user.full_name }}</p>
+        {% endif %}
+        {% if user.phone_number %}
+            <p class="text-center">{{ user.phone_number }}</p>
+        {% else %}
+            <p class="text-center mt-3">Номер телефона отсутствует</p>
+        {% endif %}
+        </div>
+    <div class="d-inline-block dashboard-content-main col-xs-6 col-lg-6 col-md-6 float-right" style="display:inline-block;">
+        <h3 class="text-center mt-2">Всего заказов </h3>
+        {% if orders.count %}
+            <h4 class="text-center mt-4">{{ orders_count }}</h4>
+            <a href="{% url 'store' %}"><p class="text-center mt-4 text-info">Перейти в магазин</p></a>
+        {% else %}
+            <h4 class="text-center">Заказов нет</h4>
+            <a href="{% url 'store' %}"><p class="text-center mt-4 text-info">Сделайте первый заказ</p></a>
+        {% endif %}
+    </div>
+</div>
+<!-- End Dashboard -->

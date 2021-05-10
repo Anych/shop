@@ -1,0 +1,39 @@
+{% load humanize %}
+<!-- Orders -->
+{% if orders %}
+<div id="orders" class="product-order tab-pane fade dashboard-content">
+    <h3 class="text-center">Заказы</h3>
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="alt-font">
+                <tr>
+                    <th>Номер заказа</th>
+                    <th>Данные получателя</th>
+                    <th>Сумма</th>
+                    <th>Статус</th>
+                    <th>Дата</th>
+                    <th>Просмотреть</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.order_number }}</td>
+                    <td>{{ order.full_name }}</td>
+                    <td>&#8376; {{ order.order_total | intcomma }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>{{ order.created_at }} </td>
+                    <td><a class="text-center text-info" href="{{ order.get_absolute_url }}">На заказ</a></td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% else %}
+<div id="orders" class="product-order tab-pane fade dashboard-content">
+    <h4 class="text-center mt-4">У Вас пока нету заказов</h4>
+    <a href="{% url 'store' %}"><p class="text-center text-info mt-4">Сделайте первый заказ</p></a>
+</div>
+{% endif %}
+<!-- End Orders -->

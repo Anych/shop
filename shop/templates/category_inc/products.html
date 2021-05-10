@@ -39,7 +39,7 @@
             </p></a>
             {% else %}
             <a href="{{ product.get_absolute_url }}"><p class="product-price grid-view-item__meta ">
-                <span class="price">&#8376;{{ product.price | intcomma }}</span>
+                <span class="price">{{ product.price | intcomma }} &#8376;</span>
             </p></a>
             {% endif %}
         </div>

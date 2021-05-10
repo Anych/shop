@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% load humanize %}
 
 {% block content %}
 <div id="page-content">
     <!--Body Container-->
+
     <!--Breadcrumbs-->
     <div class="breadcrumbs-wrapper">
         <div class="container">
@@ -13,6 +13,7 @@
         </div>
     </div>
     <!--End Breadcrumbs-->
+
     <div class="container">
         <div class="page-title"><h1>Мой аккаунт</h1></div>
         {% include 'inc/alerts.html' %}
@@ -37,247 +38,27 @@
             </div>
             <div class="col-xl-2 col-lg-2 col-md-12">
                 <div class="d-single-info text-center">
-                    <a class="view-cart" href="{% url 'cart' %}"><i class="icon anm anm-bag-l"></i><b> Просмотреть корзину</b></a>
+                    <a class="view-cart" href="{% url 'cart' %}"><i class="icon anm anm-bag-l"></i><b class="text-info">&nbsp&nbspПросмотреть корзину</b></a>
                 </div>
             </div>
         </div>
         </div>
         <div class="row mb-5">
-        {% include 'inc/dashboard_sidebar.html' %}
+
+        {% include 'dashboard_inc/sidebar.html' %}
 
             <div class="col-xs-10 col-lg-10 col-md-12">
                 <!-- Tab panes -->
                 <div class="tab-content padding-30px-all md-padding-15px-all">
-                    <!-- Dashboard -->
-                    <div id="dashboard" class="tab-pane fade active show">
-                        <div class="d-inline-block dashboard-content col-xs-6 col-lg-6 col-md-6">
-                        <img src="{{ user_profile.profile_picture.url }}" alt="Фото пользователя" width="50" height="50" style="border-radius:50%;" class="rounded mx-auto d-block">
-                            <br>
-                            {% if user.email %}
-                                <p class="text-center">{{ user.email }}</p>
-                            {% else %}
-                                <p class="text-center">{{ user.full_name }}</p>
-                            {% endif %}
-                            {% if user.phone_number %}
-                                <p class="text-center">{{ user.phone_number }}</p>
-                            {% else %}
-                                <p class="text-center">Номер телефона отсутствует</p>
-                            {% endif %}
-                            </div>
-                        <div class="d-inline-block dashboard-content col-xs-6 col-lg-6 col-md-6 float-right" style="display:inline-block;">
-                            <h3 class="text-center">Всего заказов </h3>
-                            {% if orders.count %}
-                                <h4 class="text-center">{{ orders_count }}</h4>
-                                <a href="{% url 'store' %}" class="text-center"><p>Перейти в магазин</p></a>
-                            {% else %}
-                                <h4 class="text-center">Заказов нет</h4>
-                                <a href="{% url 'store' %}" class="text-center"><p>Сделайте первый заказ</p></a>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <!-- End Dashboard -->
 
-                    <!-- Orders -->
-                    <div id="orders" class="product-order tab-pane fade dashboard-content">
-                        <h3 class="text-center">Заказы</h3>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead class="alt-font">
-                                    <tr>
-                                        <th>Номер заказа</th>
-                                        <th>Данные получателя</th>
-                                        <th>Сумма</th>
-                                        <th>Статус</th>
-                                        <th>Дата</th>
-                                        <th>Просмотреть</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for order in orders %}
-                                    <tr>
-                                        <td>{{ order.order_number }}</td>
-                                        <td>{{ order.full_name }}</td>
-                                        <td>&#8376; {{ order.order_total | intcomma }}</td>
-                                        <td>{{ order.status }}</td>
-                                        <td>{{ order.created_at }} </td>
-                                        <td><a class="text-center" href="{{ order.get_absolute_url }}">На заказ</a></td>
-                                    </tr>
-                                </tbody>
-                                {% endfor %}
-                            </table>
-                        </div>
-                    </div>
-                    <!-- End Orders -->
+                {% include 'dashboard_inc/dashboard.html' %}
 
-                    <!-- Edit profile -->
-                    <div id="edit-profile" class="product-order tab-pane fade dashboard-content">
-                        <h3>Изменить профиль</h3>
-                            <div class="card-body">
-                                <div class="text-right">
-                                    <img src="{{ user_profile.profile_picture.url }}" alt="Фото пользователя" width="50" style="border-radius:50px;">
-                                </div>
-                                <div class="row">
-                                <div class="col-md-12">
-                                    <form action="{% url 'dashboard' %}" method="POST" enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label>First Name</label>
-                                                {{ user_form.first_name }}
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label>Last Name</label>
-                                                {{ user_form.last_name }}
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label>Phone Number</label>
-                                                {{ user_form.phone_number }}
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label>Profile Picture</label>
-                                                {{ profile_form.profile_picture }}
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Address Line 1</label>
-                                            {{ profile_form.address_line1 }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label>E-mail</label>
-                                            {{ user_form.email }}
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-4">
-                                                <label>City</label>
-                                                {{ profile_form.city }}
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label>State</label>
-                                                {{ profile_form.state }}
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label>Country</label>
-                                                {{ profile_form.country }}
-                                            </div>
-                                        </div>
-                                        <input type="submit" value="Сохранить" class="btn btn-primary">
-                                    </form>
-                                </div>
+                {% include 'dashboard_inc/orders.html' %}
 
-                                </div> <!-- row.// -->
-                            </div> <!-- card-body .// -->
-                    </div>
-                    <!-- End Edit profile -->
+                {% include 'dashboard_inc/edit_profile.html' %}
 
-                    <!-- Change password -->
-                    <div id="address" class="address tab-pane dashboard-content">
-                        <div class="card-body">
-                            <div class="row">
-                            <div class="col-md-12">
-                                <form action="{% url 'change_password' %}" method="POST">
-                                    {% csrf_token %}
+                {% include 'dashboard_inc/change_password.html' %}
 
-                                    <div class="form-group">
-                                        <label>Текущий пароль</label>
-                                        <input type="password" name="current_password" placeholder="Текущий пароль" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Новый пароль</label>
-                                        <input type="password" name="new_password" placeholder="Новый пароль" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Подтвердите новый пароль</label>
-                                        <input type="password" name="confirm_password" placeholder="Confirm New Password" class="form-control" required>
-                                    </div>
-
-                                    <input type="submit" value="Submit" class="btn btn-primary">
-                                </form>
-                            </div>
-
-                            </div> <!-- row.// -->
-                        </div> <!-- card-body .// -->
-                    </div>
-                    <!-- End Change password -->
-
-                    <!-- Account Details -->
-                    <div id="account-details" class="tab-pane fade">
-                        <h3>Account details </h3>
-                        <div class="account-login-form bg-light-gray padding-20px-all">
-                            <form>
-                                <fieldset>
-                                    <p>Already have an account? <a href="login.html"> Log in instead!</a></p>
-
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <div class="form-group margin-15px-top col-md-12 col-lg-12 col-xl-12">
-                                                <label class="control-label padding-10px-right"><strong>Title</strong></label>
-                                                <label class="radio-inline">
-                                                    <input name="Mr" value="1" checked="checked" type="radio" class="padding-10px-right"> Mr. &nbsp;
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input name="Mrs" value="0" type="radio" class="padding-10px-right"> Mrs.
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                            <label for="input-firstname">First Name <span class="required-f">*</span></label>
-                                            <input name="firstname" value="" id="input-firstname" class="form-control" type="text">
-                                        </div>
-                                        <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                            <label for="input-lastname">Last Name <span class="required-f">*</span></label>
-                                            <input name="lastname" value="" id="input-lastname" class="form-control" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                            <label for="input-email">E-Mail <span class="required-f">*</span></label>
-                                            <input name="email" value="" id="input-email" class="form-control" type="email">
-                                        </div>
-                                        <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                            <label for="input-password">Password <span class="required-f">*</span></label>
-                                            <input name="password" value="" id="input-password" class="form-control" type="password">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                            <label for="input-telephone">Telephone <span class="required-f">*</span></label>
-                                            <input name="telephone" value="" id="input-telephone" class="form-control" type="tel">
-                                        </div>
-                                        <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                            <label>Birthdate <span class="required-f">*</span></label>
-                                            <input name="birthdate" max="3000-12-31" min="1000-01-01" class="form-control" type="date">
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-12 col-lg-12 col-xl-12 required">
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input" value="">Receive offers from our partners
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input" value="">Sign up for our newsletter
-                                                </label>
-                                                <p>You may unsubscribe at any moment. For that purpose, please find our contact info in the legal notice.</p><br>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-
-                                <button type="submit" class="btn margin-15px-top btn-primary">Save</button>
-                            </form>
-
-                        </div>
-
-                    </div>
-                    <!-- End Account Details -->
                 </div>
                 <!-- End Tab panes -->
             </div>

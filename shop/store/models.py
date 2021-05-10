@@ -47,7 +47,7 @@ class Product(models.Model):
         return avg
 
     def get_new_product(self):
-        new = datetime.now(timezone.utc) - self.created_at
+        new = datetime.now(timezone.utc) - self.create_date
         if new.days <= 30:
             return new
 

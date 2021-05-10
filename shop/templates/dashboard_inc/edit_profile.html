@@ -1,0 +1,61 @@
+<!-- Edit profile -->
+<div id="edit-profile" class="product-order tab-pane fade dashboard-content">
+    <h3 class="text-center">Изменить профиль</h3>
+        <div class="card-body">
+            <div class="text-right">
+                <img src="{{ user_profile.profile_picture.url }}" alt="Фото пользователя" width="50" style="border-radius:50px;">
+            </div>
+            <div class="row">
+            <div class="col-md-12">
+                <form action="{% url 'dashboard' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Имя</label>
+                            {{ user_form.first_name }}
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Фамилия</label>
+                            {{ user_form.last_name }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Телефон</label>
+                            {{ user_form.phone_number }}
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Фото профиля</label>
+                            {{ profile_form.profile_picture }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Адрес</label>
+                        {{ profile_form.address_line1 }}
+                    </div>
+                    <div class="form-group">
+                        <label>Почта</label>
+                        {{ user_form.email }}
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label>Город</label>
+                            {{ profile_form.city }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Область</label>
+                            {{ profile_form.state }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Страна</label>
+                            {{ profile_form.country }}
+                        </div>
+                    </div>
+                    <input type="submit" value="Сохранить" class="btn btn-primary">
+                </form>
+            </div>
+
+            </div> <!-- row.// -->
+        </div> <!-- card-body .// -->
+</div>
+<!-- End Edit profile -->

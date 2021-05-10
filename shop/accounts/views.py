@@ -250,7 +250,7 @@ def change_password(request):
             if success:
                 user.set_password(new_password)
                 user.save()
-                messages.success(request, 'Ваш пароль успешно обновлены!')
+                messages.success(request, 'Ваш пароль успешно обновлён!')
                 return redirect('dashboard')
             else:
                 messages.error(request, 'Текущий пароль введен не правильно.')

@@ -11,36 +11,56 @@
         <div class="breadcrumbs"><a href="{% url 'home' %}" title="Вернуться на главную">Главная</a> <span aria-hidden="true">|</span> <span>Активация аккаунта</span></div>
     </div>
 </div>
+
     {% if request.GET.command == 'make_order' %}
-    <div class="container mx-auto alert alert-info text-center" role="alert" style="max-width: 1024px; margin-top:100px;">
+        {% if user.email %}
+    <div class="container mx-auto alert alert-info text-center mb-6" role="alert" style="max-width: 1024px; margin-top:100px;">
     Перед тем, как сделать заказ, подтвердите пожалуйста почту. Письмо отправлено Вам на почту [{{ user.email }}]
-    <br><br>
-    <a href="{% url 'confirm_email' %}">Выслать письмо повторно?</a> &nbsp; | &nbsp;
-    <a href="{% url 'checkout' %}">Уже активировали? Перейти к заказу</a>
+    <p class="mt-3"><a href="{% url 'confirm_email' %}" class="text-primary">Выслать письмо повторно?</a> &nbsp; | &nbsp; <a href="{% url 'checkout' %}" class="text-primary">Уже активировали? Перейти к заказу</a></p>
     </div>
-    <br><br>
-    <br><br>
+        {% else %}
+    <div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
+    <div class="card-body">
+        <h4 class="card-title mb-4 text-center">Регистрация почты</h4>
+        <!--Main Content-->
+        <form method="POST" action="{% url 'confirm_email' %}" class="contact-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="mt-3">Электронная почта <span class="required">*</span></label>
+                <input type="email" name="email" placeholder="Введите e-mail" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block mt-3">Подтвердить</button>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group">
+                <p class="text-center mt-4">
+                    <a href="{% url 'forgotPassword' %}">Забыли пароль?</a> &nbsp; | &nbsp;
+                    <a href="{% url 'register' %}">Создать аккаунт</a>
+                </p>
+            </div>
+        </form>
+            </div>
+        </div>
+        {% endif %}
     {% elif user.email %}
-    <div class="container mx-auto alert alert-info text-center" role="alert" style="max-width: 1024px; margin-top:100px;">
+    <div class="container mx-auto alert alert-info text-center mb-6" role="alert" style="max-width: 1024px; margin-top:100px;">
     Перед тем, как зайти в личный кабинет, подтвердите пожалуйста почту. Письмо отправлено Вам на почту [{{ user.email }}]
-    <br><br>
-    <a href="{% url 'confirm_email' %}">Выслать письмо повторно?</a>
+        <p class="mt-3"><a href="{% url 'confirm_email' %}" class="text-primary">Выслать письмо повторно?</a></p>
     </div>
-    <br><br>
-    <br><br>
     {% else %}
 	<div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
         <div class="card-body">
-            <h4 class="card-title mb-4">Регистрация почты</h4>
+            <h4 class="card-title mb-4 text-center">Регистрация почты</h4>
             <!--Main Content-->
             <form method="POST" action="{% url 'confirm_email' %}" class="contact-form">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label>Электронная почта <span class="required">*</span></label>
+                    <label class="mt-3">Электронная почта <span class="required">*</span></label>
                     <input type="email" name="email" placeholder="Введите e-mail" required>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Подтвердить</button>
+                    <button type="submit" class="btn btn-primary btn-block mt-3">Подтвердить</button>
                 </div>
                 <div class="clearfix"></div>
                 <div class="form-group">
@@ -54,10 +74,6 @@
             </div>
             {% endif %}
             <!--End Main Content-->
-        </div>
-<br><br>
-
-    </div><!--End Body Container-->
 
 </div><!--End Page Wrapper-->
 {% endblock content %}
