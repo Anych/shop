@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+
 from pathlib import Path
 from django.contrib.messages import constants as messages
 from decouple import config
@@ -105,12 +106,12 @@ AUTH_USER_MODEL = 'accounts.Account'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'postgres',
-        'NAME': 'iris',
-        'PASSWORD': '123',
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
+        'ENGINE': config('ENGINE'),
+        'USER': config('USER'),
+        'NAME': config('NAME'),
+        'PASSWORD': config('PASSWORD'),
+        'HOST': config('HOST'),
+        'PORT': config('PORT'),
     }
 }
 
@@ -137,9 +138,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = config('LANGUAGE_CODE')
 
-TIME_ZONE = 'Asia/Almaty'
+TIME_ZONE = config('TIME_ZONE')
 
 USE_I18N = True
 
