@@ -5,6 +5,7 @@
 __pycache__/
 .idea
 shop/__pycache__/
+shop/shop/__pycache__/
 local_settings.py
 db.postgresql
 db.sqlite3-journal
