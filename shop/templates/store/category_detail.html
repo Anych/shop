@@ -41,45 +41,49 @@
                     <img src="{% static 'assets/images/collection-banner/collection-banner.jpg' %}" data-src="{% static 'assets/images/collection-banner/collection-banner.jpg' %}" alt="">
                 </div>
                 {% endif %}
-                <!--Toolbar-->
+
+                {% if products %}
                 <div class="toolbar">
                     <div class="filters-toolbar-wrapper">
                         <div class="row">
-                            {% if products %}
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-center filters-toolbar__item filters-toolbar__item--count d-flex justify-content-center align-items-center">
-                                <span class="filters-toolbar__product-count">Найдено: {{ products_count }} товаров</span>
-                            </div>
-                            {% else %}
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-center filters-toolbar__item filters-toolbar__item--count d-flex justify-content-center align-items-center">
                                 <span class="filters-toolbar__product-count">Найдено: {{ products_count }} товаров</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                    <div class="grid-products grid--view-items">
-                        <div class="container">
-                            <div>
-                                <h2 class="text-center">Товары не найдены. Попробуйте позже.</h2>
+                <!--Product Grid-->
+                <div class="grid-products grid--view-items">
+                    <div class="row">
+                    {% include 'category_inc/products.html' %}
+                    </div>
+                <!--End Product Grid-->
+                <!--Pagination Classic-->
+                <hr class="clear">
+                    {% include 'category_inc/pagination.html' %}
+                <!--End Pagination Classic-->
+                </div>
+
+                {% else %}
+                <div class="toolbar">
+                    <div class="filters-toolbar-wrapper">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-center filters-toolbar__item filters-toolbar__item--count d-flex justify-content-center align-items-center">
+                                <span class="filters-toolbar__product-count">Найдено: {{ products_count }} товаров</span>
                             </div>
                         </div>
                     </div>
-                            {% endif %}
+                </div>
+                <div class="grid-products grid--view-items">
+                    <div class="container">
+                        <div>
+                            <h2 class="text-center">Товары не найдены. Попробуйте позже.</h2>
                         </div>
                     </div>
                 </div>
+                {% endif %}
                 <!--End Toolbar-->
 
-                <!--Product Grid-->
-                    <div class="grid-products grid--view-items">
-                        <div class="row">
-                        {% include 'category_inc/products.html' %}
-                        </div>
-                    <!--End Product Grid-->
-                    <!--Pagination Classic-->
-                    <hr class="clear">
-                        {% include 'category_inc/pagination.html' %}
-                    <!--End Pagination Classic-->
-                </div>
             </div>
             <!--End Main Content-->
         </div>

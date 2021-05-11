@@ -1,68 +1,115 @@
 <!--Categories-->
-{% if category.id == 1 %}
+
+{% if category.id == 1 or category in cloth_categories %}
 
 <div class="sidebar_widget categories filter-widget">
     <div class="widget-title"><h2>Одежда</h2></div>
-        <div class="widget-content" style="">
+        <div class="widget-content">
             <ul class="sidebar_categories">
-            {% for category in categories %}
+            {% for category in cloth_categories %}
             <li class="lvl-1"><a href="{{ category.get_absolute_url }}" class="site-nav">{{ category.name }}</a></li>
             {% endfor %}
             </ul>
         </div>
 </div>
 
-<div class="sidebar_widget categories">
-    <div><h2><a href="{% url 'category' category_slug='shoes' %}">Обувь</a></h2></div>
-</div>
-
-<div class="sidebar_widget categories">
-    <div><h2><a href="{% url 'category' category_slug='accessories' %}">Аксессуары</a></h2></div>
-</div>
-
-{% elif category.id == 2 %}
-
-<div class="sidebar_widget categories">
-    <div><h2><a href="{% url 'category' category_slug='clothes' %}">Одежда</a></h2></div>
-</div>
-
 <div class="sidebar_widget categories filter-widget">
-    <div class="widget-title"><h2>Обувь</h2></div>
-        <div class="widget-content" style="">
+    <div class="widget-title active"><h2>Обувь</h2></div>
+        <div class="widget-content" style="display: none;">
             <ul class="sidebar_categories">
-            {% for category in categories %}
+            {% for category in shoe_categories %}
             <li class="lvl-1"><a href="{{ category.get_absolute_url }}" class="site-nav">{{ category.name }}</a></li>
             {% endfor %}
             </ul>
-    </div>
-</div>
-
-<div class="sidebar_widget categories">
-    <div><h2><a href="{% url 'category' category_slug='accessories' %}">Аксессуары</a></h2></div>
-</div>
-
-{% elif category.id == 3 %}
-
-<div class="sidebar_widget categories">
-    <div><h2><a href="{% url 'category' category_slug='clothes' %}">Одежда</a></h2></div>
-</div>
-
-<div class="sidebar_widget categories">
-    <div><h2><a href="{% url 'category' category_slug='shoes' %}">Обувь</a></h2></div>
+        </div>
 </div>
 
 <div class="sidebar_widget categories filter-widget">
-    <div class="widget-title"><h2>Акссессуары</h2></div>
-        <div class="widget-content" style="">
+    <div class="widget-title active"><h2>Аксессуары</h2></div>
+        <div class="widget-content" style="display: none;">
             <ul class="sidebar_categories">
-            {% for category in categories %}
+            {% for category in accessories_categories %}
             <li class="lvl-1"><a href="{{ category.get_absolute_url }}" class="site-nav">{{ category.name }}</a></li>
             {% endfor %}
             </ul>
-    </div>
+        </div>
 </div>
+
+
+{% elif category.id == 2 or category in shoe_categories %}
+
+<div class="sidebar_widget categories filter-widget">
+    <div class="widget-title"><h2>Одежда</h2></div>
+        <div class="widget-content" style="display: none;">
+            <ul class="sidebar_categories">
+            {% for category in cloth_categories %}
+            <li class="lvl-1"><a href="{{ category.get_absolute_url }}" class="site-nav">{{ category.name }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+</div>
+
+<div class="sidebar_widget categories filter-widget">
+    <div class="widget-title active"><h2>Обувь</h2></div>
+        <div class="widget-content">
+            <ul class="sidebar_categories">
+            {% for category in shoe_categories %}
+            <li class="lvl-1"><a href="{{ category.get_absolute_url }}" class="site-nav">{{ category.name }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+</div>
+
+<div class="sidebar_widget categories filter-widget">
+    <div class="widget-title active"><h2>Аксессуары</h2></div>
+        <div class="widget-content" style="display: none;">
+            <ul class="sidebar_categories">
+            {% for category in accessories_categories %}
+            <li class="lvl-1"><a href="{{ category.get_absolute_url }}" class="site-nav">{{ category.name }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+</div>
+
+
+{% elif category.id == 3 or category in accessories_categories %}
+
+<div class="sidebar_widget categories filter-widget">
+    <div class="widget-title"><h2>Одежда</h2></div>
+        <div class="widget-content" style="display: none;">
+            <ul class="sidebar_categories">
+            {% for category in cloth_categories %}
+            <li class="lvl-1"><a href="{{ category.get_absolute_url }}" class="site-nav">{{ category.name }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+</div>
+
+<div class="sidebar_widget categories filter-widget">
+    <div class="widget-title active"><h2>Обувь</h2></div>
+        <div class="widget-content" style="display: none;">
+            <ul class="sidebar_categories">
+            {% for category in shoe_categories %}
+            <li class="lvl-1"><a href="{{ category.get_absolute_url }}" class="site-nav">{{ category.name }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+</div>
+
+<div class="sidebar_widget categories filter-widget">
+    <div class="widget-title active"><h2>Аксессуары</h2></div>
+        <div class="widget-content">
+            <ul class="sidebar_categories">
+            {% for category in accessories_categories %}
+            <li class="lvl-1"><a href="{{ category.get_absolute_url }}" class="site-nav">{{ category.name }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+</div>
+
 
 {% elif 'search' in request.path %}
+
 <div class="sidebar_widget categories">
     <div><h2><a href="{% url 'category' category_slug='clothes' %}">Одежда</a></h2></div>
 </div>
@@ -74,5 +121,5 @@
     <div><h2><a href="{% url 'category' category_slug='accessories' %}">Аксессуары</a></h2></div>
 </div>
 {% endif %}
+
 <!--End Categories-->
-{% load mptt_tags %}
