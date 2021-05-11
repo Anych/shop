@@ -1,11 +1,10 @@
-# Created by https://www.toptal.com/developers/gitignore/api/django
-# Edit at https://www.toptal.com/developers/gitignore?templates=django
-
 ### Django ###
 *.log
 *.pot
 *.pyc
 __pycache__/
+.idea
+shop/__pycache__/
 local_settings.py
 db.postgresql
 db.sqlite3-journal
@@ -121,7 +120,7 @@ celerybeat.pid
 .env/
 .venv/
 env/
-../venv/
+venv/
 ENV/
 env.bak/
 venv.bak/
@@ -157,5 +156,6 @@ Thumbs.db
 # profiling data
 .prof
 
-
+# media folder
+/media
 # End of https://www.toptal.com/developers/gitignore/api/django
