@@ -15,7 +15,7 @@ def store(request, category_slug=None):
 
     if category_slug is not None:
         category = get_object_or_404(Category, slug=category_slug)
-        if category.is_root_node:
+        if category.is_root_node():
             categories = category.get_descendants(include_self=False)
             products = Product.objects.filter(category__in=categories)\
                 .order_by('-is_recommend', '-modified_date').select_related()
