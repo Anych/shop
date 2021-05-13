@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load socialaccount %}
+
+{% block style %}<link rel="stylesheet" href="{% static 'assets/css/bootstrap-social.css' %}">{% endblock style %}
 
 {% block content %}
 <div id="page-content">
@@ -14,22 +17,22 @@
     <!--End Breadcrumbs-->
     <!--Page Title with Image-->
 	<div class="card mx-auto" style="max-width:520px; margin-top:40px;">
-      <article class="card-body">
-    {% include 'inc/alerts.html' %}
-		<header class="mb-4"><h4 class="card-title">Регистрация</h4></header>
-		<form action="{% url 'register' %}" method="POST">
-      {% csrf_token %}
+		<div class="card-body">
+		{% include 'inc/alerts.html' %}
+		<h4 class="card-title mb-4 text-center">Регистрация</h4>
+		<form action="{% url 'register' %}" method="POST" class="contact-form">
+			{% csrf_token %}
 
-				<div class="form-row">
-					<div class="col form-group">
-						<label>Имя</label>
-					  	{{ form.first_name }}
-					</div> <!-- form-group end.// -->
-					<div class="col form-group">
-						<label>Фамилия</label>
-					  	{{ form.last_name }}
-					</div> <!-- form-group end.// -->
-				</div> <!-- form-row end.// -->
+			<div class="form-row">
+				<div class="col form-group">
+					<label>Имя</label>
+					{{ form.first_name }}
+				</div> <!-- form-group end.// -->
+				<div class="col form-group">
+					<label>Фамилия</label>
+					{{ form.last_name }}
+				</div> <!-- form-group end.// -->
+			</div> <!-- form-row end.// -->
 
 				<div class="form-row">
 					<div class="form-group col-md-6">
@@ -48,16 +51,31 @@
 					</div> <!-- form-group end.// -->
 					<div class="form-group col-md-6">
 						<label>Повторите пароль</label>
-            {{form.confirm_password}}
+						{{form.confirm_password}}
 					</div> <!-- form-group end.// -->
 				</div>
-			    <div class="form-group">
-			        <button type="submit" class="btn btn-primary btn-block"> Зарегистрироваться </button>
-			    </div> <!-- form-group// -->
+				<div class="form-group">
+					<div class="text-center"><button type="submit" class="btn"> Зарегистрироваться </button></div>
+				</div> <!-- form-group// -->
+                <div class="text-center mb-3">
+                    <span>Или зайти через</span>
+                </div>
+                    <div class="row pl-20 pr-20">
+                        <div class="col-6 pr-1">
+                            <a href="{% provider_login_url 'facebook' method='oauth2' %}" class="btn btn-block btn-social btn-facebook">
+                                <span class="fa fa-facebook"></span>Facebook
+                            </a>
+                        </div>
+                        <div class="col-6 pl-1">
+                            <a href="{% provider_login_url 'google' %}" class="btn btn-block btn-social btn-google">
+                                <span class="fa fa-google"></span>Google
+                            </a>
+                        </div>
+                    </div>
       {{ form.email.errors }}
       {{ form.non_field_errors }}
 			</form>
-		</article><!-- card-body.// -->
+		</div><!-- card-body.// -->
     </div> <!-- card .// -->
     <p class="text-center mt-4">Есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
     <br><br>

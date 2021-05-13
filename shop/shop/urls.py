@@ -5,10 +5,15 @@ from django.urls import path, include
 
 from shop import views
 
+handler404 = views.PageNotFoundView.as_view()
+handler403 = views.PermissionDeniedView.as_view()
+
 urlpatterns = [
     path('mila-host/', admin.site.urls),
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('', views.BaseView.as_view(), name='home'),
+    path('privacy/', views.PrivacyPolicyView.as_view(), name='privacy'),
+    path('terms/', views.TermsView.as_view(), name='terms'),
     path('store/', include('store.urls')),
     path('cart/', include('cart.urls')),
     path('accounts/', include('accounts.urls')),

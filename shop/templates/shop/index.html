@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="page-content">
+    <!--Body Container-->
+    <div class="container">
+        <!--Hero Banner-->
+        <div class="section no-pt-section no-pb-section hero-section">
+            <div class="hero hero--large hero__overlay bg-size">
+                <img class="bg-img" src="{% static 'assets/images/slideshow-banner/dome4-banner1.jpg' %}" alt="Одежда из Италии">
+                <div class="hero__inner">
+                    <div class="wrap-text center">
+                        <h2 class="mega-title">ЕСТЕСТВЕННЫЙ СТИЛЬ</h2>
+                        <div class="mega-subtitle"><p>Модная Итальянская одежда. По самым выгодным ценам. Изысканные модели. Стоящие Вашего внимания.</p></div>
+                        <a href="{% url 'store' %}" class="btn btn-main">СМОТРЕТЬ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Hero Banner-->
+
+        <!-- Banner Masonary-->
+        <div class="imgBanners style2">
+            <div class="grid-masonary banner-grid">
+                <div class="grid-sizer col-12 col-sm-6 col-md-6 col-lg-6"></div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 banner-item">
+                            <div class="imgBanner-grid-item">
+                                <div class="img">
+                                    <a href="#">
+                                        <img class="blur-up lazyload" data-src="{% static 'assets/images/collection-banner/demo4-collection-bnr1.jpg' %}" src="{% static 'assets/images/collection-banner/demo4-collection-bnr1.jpg' %}" alt="Товары со скидкой" title="Скидки" />
+                                    </a>
+                                    <div class="details center w-50">
+                                        <div class="inner">
+                                            <h3 class="title">Товары со скидкой</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 banner-item">
+                            <div class="imgBanner-grid-item">
+                                <div class="img">
+                                    <a href="#">
+                                        <img class="blur-up lazyload" data-src="{% static 'assets/images/collection-banner/demo4-collection-bnr1.jpg' %}" src="{% static 'assets/images/collection-banner/demo4-collection-bnr1.jpg' %}" alt="Элегантные сумки" title="Сумки" />
+                                    </a>
+                                    <div class="details center w-50">
+                                        <div class="inner">
+                                            <h3 class="title">Элегантные сумки</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- End Banner Masonary-->
+        <!--Featured Products-->
+        <div class="section featured-grid no-pb-section">
+            <div class="section-header">
+                <h2>Рекомендуемые продукты</h2>
+                <p>Новые поступления от известных брендов</p>
+            </div>
+            <div class="grid-products style2">
+                <div class="row">
+                    <div class="col-12 col-sm-4 col-md-3 col-lg-3">
+                        <div class="item">
+                            <a class="overlay" href="product-layout-3.html"></a>
+                            <!-- start product image -->
+                            <div class="product-image">
+                                <!-- start product image -->
+                                <a href="product-layout-3.html" class="product-img">
+                                    <!-- image -->
+                                    <img class="blur-up lazyload" data-src="{% static 'assets/images/product-images/product1.jpg' %}" src="{% static 'assets/images/product-images/product1.jpg' %}" alt="" title="">
+                                    <!-- End image -->
+                                </a>
+                                <!-- end product image -->
+                            </div>
+                            <!-- end product image -->
+                            <!--start product details -->
+                            <div class="product-details text-center">
+                                <!-- product name -->
+                                <div class="product-name">
+                                    <a href="product-layout-3.html"></a>
+                                </div>
+                                <!-- End product name -->
+                                <!-- product price -->
+                                <div class="product-price">
+                                    <span class="price">$99.01</span>
+                                </div>
+                                <!-- End product price -->
+                            </div>
+                            <!-- End product details -->
+                        </div>
+                        <div class="item">
+                                    <a class="overlay" href="product-layout-3.html"></a>
+                                    <!-- start product image -->
+                                    <div class="product-image">
+                                        <!-- start product image -->
+                                        <a href="product-layout-3.html" class="product-img">
+                                            <!-- image -->
+                                            <img class="blur-up lazyload" data-src="{% static 'assets/images/product-images/product1.jpg' %}" src="{% static 'assets/images/product-images/product1.jpg' %}" alt="" title="">
+                                            <!-- End image -->
+                                        </a>
+                                        <!-- end product image -->
+                                    </div>
+                                    <!-- end product image -->
+                                    <!--start product details -->
+                                    <div class="product-details text-center">
+                                        <!-- product name -->
+                                        <div class="product-name">
+                                            <a href="product-layout-3.html">Button Up Top Black</a>
+                                        </div>
+                                        <!-- End product name -->
+                                        <!-- product price -->
+                                        <div class="product-price">
+                                            <span class="price">$199.01</span>
+                                        </div>
+                                        <!-- End product price -->
+                                    </div>
+                                    <!-- End product details -->
+                                </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-6 col-lg-6">
+                        <div class="item">
+                            <a class="overlay" href="product-layout-3.html"></a>
+                            <!-- start product image -->
+                            <div class="product-image">
+                                <!-- start product image -->
+                                <a href="product-layout-3.html" class="product-img">
+                                    <!-- image -->
+                                    <img class="blur-up lazyload" data-src="{% static 'assets/images/product-images/product1.jpg' %}" src="{% static 'assets/images/product-images/product1.jpg' %}" alt="" title="">
+                                    <!-- End image -->
+                                </a>
+                                <!-- end product image -->
+                            </div>
+                            <!-- end product image -->
+                            <!--start product details -->
+                            <div class="product-details text-center">
+                                <!-- product name -->
+                                <div class="product-name">
+                                    <a href="product-layout-3.html">Sunset Sleep Scarf Top</a>
+                                </div>
+                                <!-- End product name -->
+                                <!-- product price -->
+                                <div class="product-price">
+                                    <span class="price">$99.01</span>
+                                </div>
+                                <!-- End product price -->
+                            </div>
+                            <!-- End product details -->
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-3 col-lg-3">
+                        <div class="item">
+                            <a class="overlay" href="product-layout-3.html"></a>
+                            <!-- start product image -->
+                            <div class="product-image">
+                                <!-- start product image -->
+                                <a href="product-layout-3.html" class="product-img">
+                                    <!-- image -->
+                                    <img class="blur-up lazyload" data-src="{% static 'assets/images/product-images/product1.jpg' %}" src="{% static 'assets/images/product-images/product1.jpg' %}" alt="" title="">
+                                    <!-- End image -->
+                                </a>
+                                <!-- end product image -->
+                            </div>
+                            <!-- end product image -->
+                            <!--start product details -->
+                            <div class="product-details text-center">
+                                <!-- product name -->
+                                <div class="product-name">
+                                    <a href="product-layout-3.html">Top Slip On Velcro Sneakers</a>
+                                </div>
+                                <!-- End product name -->
+                                <!-- product price -->
+                                <div class="product-price">
+                                    <span class="price">$99.01</span>
+                                </div>
+                                <!-- End product price -->
+                            </div>
+                            <!-- End product details -->
+                        </div>
+                        <div class="item">
+                                    <a class="overlay" href="product-layout-3.html"></a>
+                                    <!-- start product image -->
+                                    <div class="product-image">
+                                        <!-- start product image -->
+                                        <a href="product-layout-3.html" class="product-img">
+                                            <!-- image -->
+                                            <img class="blur-up lazyload" data-src="{% static 'assets/images/product-images/product1.jpg' %}" src="{% static 'assets/images/product-images/product1.jpg' %}" alt="" title="">
+                                            <!-- End image -->
+                                        </a>
+                                        <!-- end product image -->
+                                    </div>
+                                    <!-- end product image -->
+                                    <!--start product details -->
+                                    <div class="product-details text-center">
+                                        <!-- product name -->
+                                        <div class="product-name">
+                                            <a href="product-layout-3.html">Crop Top Green</a>
+                                        </div>
+                                        <!-- End product name -->
+                                        <!-- product price -->
+                                        <div class="product-price">
+                                            <span class="price">$59.00</span>
+                                        </div>
+                                        <!-- End product price -->
+                                    </div>
+                                    <!-- End product details -->
+                                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Featured Products-->
+
+    </div><!--End Body Container-->
+</div><!--End Page Wrapper-->
+{% endblock content %}

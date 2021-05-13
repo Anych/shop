@@ -85,7 +85,7 @@ AUTH_USER_MODEL = 'accounts.Account'
 DATABASES = {
     'default': {
         'ENGINE': config('ENGINE'),
-        'USER': config('USER'),
+        'USER': config('DB_USER'),
         'NAME': config('NAME'),
         'PASSWORD': config('PASSWORD'),
         'HOST': config('HOST'),

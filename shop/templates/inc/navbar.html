@@ -34,7 +34,9 @@
                             {% for category in links %}
                             <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
                             {% endfor %}
-                      </ul>
+                                                        <li><a href="#">Бренды</a></li>
+                            <li><a href="#">Скидки</a></li>
+                        </ul>
                     </nav>
                 </div>
                 <!--End Desktop Menu-->
@@ -110,8 +112,29 @@
         <ul id="MobileNav" class="mobile-nav">
         	<li class="lvl1 parent megamenu"><a href="{% url 'home' %}">Главная</a>
             {% for category in links %}
-            <li class="lvl1 parent megamenu"><a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                <li class="lvl1 parent megamenu"><a href="{{ category.get_absolute_url }}">{{ category.name }}<i class="anm anm-plus-l"></i></a>
+                {% if category.id == 1 %}
+                    <ul>
+                    {% for cat in cloth_categories %}
+                        <li><a href="{{ cat.get_absolute_url }}" class="site-nav">{{ cat.name }}</a></li>
+                    {% endfor %}
+                    </ul>
+                {% elif category.id == 2 %}
+                    <ul>
+                    {% for cat in shoes_categories %}
+                        <li><a href="{{ cat.get_absolute_url }}" class="site-nav">{{ cat.name }}</a></li>
+                    {% endfor %}
+                    </ul>
+                {% elif category.id == 3 %}
+                    <ul>
+                    {% for cat in accessories_categories %}
+                        <li><a href="{{ cat.get_absolute_url }}" class="site-nav">{{ cat.name }}</a></li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
             {% endfor %}
+            <li><a href="#">Бренды</a></li>
+            <li><a href="#">Скидки</a></li>
         </li>
       </ul>
 	</div>

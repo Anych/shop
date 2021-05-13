@@ -47,23 +47,23 @@
                         <p><b>Email</b>: <a href="mailto:mila-iris@mila-iris.kz">mila_iris@mila_iris.kz</a></p>
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-3 footer-links">
-                        <h4 class="h4">Quick Shop</h4>
+                        <h4 class="h4">Магазин</h4>
                         <ul>
-                            <li><a href="#">Women</a></li>
-                            <li><a href="#">Men</a></li>
-                            <li><a href="#">Kids</a></li>
-                            <li><a href="#">Sportswear</a></li>
-                            <li><a href="#">Sale</a></li>
+                            {% for category in links %}
+                            <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+                            {% endfor %}
+                            <li><a href="#">Бренды</a></li>
+                            <li><a href="#">Скидки</a></li>
                         </ul>
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-3 footer-links">
                         <h4 class="h4">Информация</h4>
                         <ul>
-                            <li><a href="aboutus-style1.html">About us</a></li>
-                            <li><a href="{% url 'login' %}">Login</a></li>
-                            <li><a href="#">Privacy policy</a></li>
-                            <li><a href="#">Terms &amp; condition</a></li>
+                            <li><a href="aboutus-style1.html">О нас</a></li>
+                            <li><a href="{% url 'login' %}">Авторизоваться</a></li>
                             <li><a href="{% url 'dashboard' %}">Мой аккаунт</a></li>
+                            <li><a href="{% url 'privacy' %}">Политика конфиденциальности</a></li>
+                            <li><a href="{% url 'terms' %}">Пользовательское соглашение</a></li>
                         </ul>
                     </div>
                     <div class="col-12 col-sm-12 col-md-3 col-lg-3">
@@ -83,7 +83,6 @@
                 <ul class="payment-icons list--inline">
                     <li><i class="anm anm-cc-visa" aria-hidden="true"></i></li>
                     <li><i class="anm anm-cc-mastercard" aria-hidden="true"></i></li>
-                    <li><i class="anm anm-cc-amex" aria-hidden="true"></i></li>
                     <li><i class="anm anm-cc-paypal" aria-hidden="true"></i></li>
                 </ul>
                 <div class="copytext">

@@ -13,10 +13,6 @@ from store.models import Product, ReviewRating, ProductGallery, Size
 def store(request, category_slug=None):
     ancestor = None
 
-    cloth_categories = Category.objects.get(id=1).get_descendants(include_self=False)
-    shoe_categories = Category.objects.get(id=2).get_descendants(include_self=False)
-    accessories_categories = Category.objects.get(id=3).get_descendants(include_self=False)
-
     if category_slug is not None:
         category = get_object_or_404(Category, slug=category_slug)
         if category.is_root_node():
@@ -49,9 +45,6 @@ def store(request, category_slug=None):
         popular_products = products.filter(views__gt=1)
 
     context = {
-            'cloth_categories': cloth_categories,
-            'shoe_categories': shoe_categories,
-            'accessories_categories': accessories_categories,
             'products': paged_products,
             'popular_products': popular_products,
             'category': category,
@@ -106,7 +99,7 @@ def product_detail(request, category_slug, product_slug):
 def search(request):
     products = Product.objects.order_by('-create_date')
     products_count = products.count()
-    print(request.GET)
+
     if 'keyword' in request.GET:
         keyword = request.GET['keyword']
         if keyword:

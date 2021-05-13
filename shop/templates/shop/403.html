@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="page-content">
+    <!--Body Container-->
+    <!--Breadcrumbs-->
+    <div class="breadcrumbs-wrapper">
+        <div class="container">
+            <div class="breadcrumbs"><a href="{% url 'home' %}" title="Вернуться на главную">Главная</a> <span aria-hidden="true">|</span> <span>Ошибка 403</span></div>
+        </div>
+    </div>
+    <!--End Breadcrumbs-->
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="error-content">
+                    <div class="page-title"><h1>Ошибка 403. Нет прав для просмотра</h1></div>
+                    <p>У Вас нет прав для просмотра данной страцицы</p>
+                    <p><a href="{% url 'store' %}" class="btn btn-cart">Продолжить покупки</a></p>
+                </div>
+            </div>
+        </div>
+    </div><!--End Body Container-->
+</div><!--End Page Wrapper-->
+
+{% endblock content %}

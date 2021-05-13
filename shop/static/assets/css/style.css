@@ -165,6 +165,8 @@ th { font-family: "Poppins", sans-serif; font-weight:600; text-transform:upperca
 .btn-large { font-size:16px; padding:10px 20px; }
 .btn-link { color:#555; }
 .btn-link:hover { color:#000; }
+.btn-main{ width: 80%; }
+.btn-cart{ width: 30%; }
 
 input:-moz-placeholder, textarea:-moz-placeholder { opacity:0.7; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)"; }
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { opacity:0.7; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)"; }
