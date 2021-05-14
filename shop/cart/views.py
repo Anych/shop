@@ -23,9 +23,10 @@ def add_cart(request, product_id):
 
     if current_user.is_authenticated:
 
-        is_cart_item_exists = CartItem.objects.filter(product=product, user=current_user, size=size).exists()
+        is_cart_item_exists = CartItem.objects.filter(product=product, user__email=current_user.email, size=size)\
+            .exists()
         if is_cart_item_exists:
-            cart_item = CartItem.objects.get(product=product, user=current_user, size=size)
+            cart_item = CartItem.objects.get(product=product, user__email=current_user.email, size=size)
             cart_item.quantity += 1
             cart_item.save()
 
@@ -71,7 +72,7 @@ def remove_cart(request, product_id, cart_item_id):
 
     try:
         if current_user.is_authenticated:
-            cart_item = CartItem.objects.get(product=product, user=current_user, id=cart_item_id)
+            cart_item = CartItem.objects.get(product=product, user__email=current_user.email, id=cart_item_id)
         else:
             cart = Cart.objects.get(cart_id=_cart_id(request))
             cart_item = CartItem.objects.get(product=product, cart=cart, id=cart_item_id)
@@ -88,7 +89,7 @@ def remove_cart(request, product_id, cart_item_id):
 def remove_cart_item(request, product_id, cart_item_id):
     product = get_object_or_404(Product, id=product_id)
     if request.user.is_authenticated:
-        cart_item = CartItem.objects.get(product=product, user=request.user, id=cart_item_id)
+        cart_item = CartItem.objects.get(product=product, user__email=request.user.email, id=cart_item_id)
     else:
         cart = Cart.objects.get(cart_id=_cart_id(request))
         cart_item = CartItem.objects.get(product=product, cart=cart, id=cart_item_id)
