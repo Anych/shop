@@ -62,7 +62,7 @@ def login(request):
                 pass
 
             auth.login(request, user)
-            messages.success(request, 'You are now logged in.')
+            messages.success(request, 'Вы авторизовались.')
             url = request.META.get('HTTP_REFERER')
             try:
                 query = requests.utils.urlparse(url).query

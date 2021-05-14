@@ -11,9 +11,12 @@ handler403 = views.PermissionDeniedView.as_view()
 urlpatterns = [
     path('mila-host/', admin.site.urls),
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+
     path('', views.BaseView.as_view(), name='home'),
     path('privacy/', views.PrivacyPolicyView.as_view(), name='privacy'),
     path('terms/', views.TermsView.as_view(), name='terms'),
+    path('about-us/', views.AboutUs.as_view(), name='about_us'),
+
     path('store/', include('store.urls')),
     path('cart/', include('cart.urls')),
     path('accounts/', include('accounts.urls')),

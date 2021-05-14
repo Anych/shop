@@ -30,3 +30,9 @@ class TermsView(View):
 
     def get(self, request, *args, **kwargs):
         return render(request, 'shop/terms.html', {})
+
+
+class AboutUs(View):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'shop/about_us.html', {})
