@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from cart.models import CartItem
 from orders.forms import OrderForm
 from orders.models import Order, Payment, OrderProduct
-from store.models import Product
+from store.models import Product, Size
 
 
 def payments(request):
@@ -82,22 +82,17 @@ def place_order(request, total=0, quantity=0):
                 order_product.order_id = order.id
                 order.payment = payment
                 order_product.user_id = request.user.id
+                order_product.size = item.size
                 order_product.product_id = item.product_id
                 order_product.quantity = item.quantity
                 order_product.product_price = item.product.price
                 order_product.ordered = True
                 order_product.save()
 
-                cart_item = CartItem.objects.get(id=item.id)
-                product_variation = cart_item.variations.all()
-                order_product = OrderProduct.objects.get(id=order_product.id)
-                order_product.variations.set(product_variation)
-                order_product.save()
-
                 # уменьшение колличества товара
-                product = Product.objects.get(id=item.product.id)
-                product.stock -= item.quantity
-                product.save()
+                size = Size.objects.get(product=item.product_id, size=item.size)
+                size.stock -= item.quantity
+                size.save()
 
             # очистка корзины
             CartItem.objects.filter(user=request.user).delete()

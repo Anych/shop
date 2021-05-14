@@ -43,7 +43,7 @@
 {% elif category.id == 2 or category in shoe_categories %}
 
 <div class="sidebar_widget categories filter-widget">
-    <div class="widget-title"><h2>Одежда</h2></div>
+    <div class="widget-title active"><h2>Одежда</h2></div>
         <div class="widget-content" style="display: none;">
             <ul class="sidebar_categories">
             {% for cat in cloth_categories %}
@@ -54,7 +54,7 @@
 </div>
 
 <div class="sidebar_widget categories filter-widget">
-    <div class="widget-title active"><h2>Обувь</h2></div>
+    <div class="widget-title"><h2>Обувь</h2></div>
         <div class="widget-content">
             <ul class="sidebar_categories">
             {% for cat in shoe_categories %}
@@ -83,7 +83,7 @@
 {% elif category.id == 3 or category in accessories_categories %}
 
 <div class="sidebar_widget categories filter-widget">
-    <div class="widget-title"><h2>Одежда</h2></div>
+    <div class="widget-title active"><h2>Одежда</h2></div>
         <div class="widget-content" style="display: none;">
             <ul class="sidebar_categories">
             {% for cat in cloth_categories %}
@@ -105,7 +105,7 @@
 </div>
 
 <div class="sidebar_widget categories filter-widget">
-    <div class="widget-title active"><h2>Аксессуары</h2></div>
+    <div class="widget-title"><h2>Аксессуары</h2></div>
         <div class="widget-content">
             <ul class="sidebar_categories">
             {% for cat in accessories_categories %}

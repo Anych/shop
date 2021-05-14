@@ -63,7 +63,7 @@ class OrderProduct(models.Model):
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Оплата')
     user = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name='Пользователь')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
-    size = models.ManyToManyField(Size, blank=True, verbose_name='Вариация')
+    size = models.ForeignKey(Size, blank=True, on_delete=models.CASCADE, verbose_name='Размер')
     quantity = models.IntegerField(verbose_name='Колличество')
     product_price = models.FloatField(verbose_name='Цена продукта')
     ordered = models.BooleanField(default=False, verbose_name='Заказан')

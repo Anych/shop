@@ -35,7 +35,7 @@
                             {% for order_product in order_products %}
                                 <tr class="cart__row border-bottom line1 cart-flex border-top">
                                     <td class="cart__image-wrapper cart-flex-item">
-                                        <a href="{{ order_product.product.get_absolute_url }}"><img class="cart__image" src="{{ order_product.product.images.url }}" alt="{{ cart_item.product.name }}"></a>
+                                        <a href="{{ order_product.product.get_absolute_url }}"><img class="cart__image" src="{{ order_product.product.img1.url }}" alt="{{ cart_item.product.name }}"></a>
                                     </td>
                                     <td class="cart__meta small--text-left cart-flex-item">
                                         <div class="list-view-item__title">
