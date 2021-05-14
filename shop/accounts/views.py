@@ -36,6 +36,8 @@ def register(request):
             user.save()
 
             _confirm_email(user, email)
+            auth.login(request, user)
+            return redirect('store')
     else:
         form = RegistrationForm()
 
@@ -49,8 +51,7 @@ def login(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
-
-        user = auth.authenticate(email=email, password=password)
+        user = auth.authenticate(username=email, password=password)
         if user is not None:
             try:
                 cart = Cart.objects.get(cart_id=_cart_id(request))
@@ -82,10 +83,10 @@ def confirm_email(request):
     user = request.user
     if request.method == 'POST':
         email = request.POST['email']
-        _confirm_email(request, user, email)
+        _confirm_email(user, email)
         return redirect('/accounts/login/?command=activate&email=' + email)
     elif user.email:
-        _confirm_email(request, user, user.email)
+        _confirm_email(user, user.email)
         return render(request, 'accounts/confirm_email.html')
     else:
         return render(request, 'accounts/confirm_email.html')

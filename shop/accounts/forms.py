@@ -1,6 +1,8 @@
+from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from django import forms
 from django.contrib.auth.password_validation import get_default_password_validators
 from django.core.exceptions import ValidationError
+from django.shortcuts import redirect
 
 from accounts.models import Account, UserProfile
 

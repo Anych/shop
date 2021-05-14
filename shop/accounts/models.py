@@ -14,6 +14,7 @@ class MyAccountManager(BaseUserManager):
             username=username,
             first_name=first_name,
             last_name=last_name,
+            is_active=True,
         )
         user.set_password(password)
         user.save(using=self._db)
@@ -49,13 +50,13 @@ class Account(AbstractBaseUser):
 
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)
-    is_active = models.BooleanField(default=False, verbose_name='Активный')
+    is_active = models.BooleanField(default=True, verbose_name='Активный')
     is_admin = models.BooleanField(default=False, verbose_name='Админ')
     is_staff = models.BooleanField(default=False, verbose_name='Работник')
     is_superadmin = models.BooleanField(default=False, verbose_name='Супер пользователь')
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
 
     objects = MyAccountManager()
 
