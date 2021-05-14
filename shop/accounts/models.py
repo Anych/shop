@@ -51,6 +51,7 @@ class Account(AbstractBaseUser):
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True, verbose_name='Активный')
+    was_confirm_email = models.BooleanField(default=False, verbose_name='Подтверждена почта')
     is_admin = models.BooleanField(default=False, verbose_name='Админ')
     is_staff = models.BooleanField(default=False, verbose_name='Работник')
     is_superadmin = models.BooleanField(default=False, verbose_name='Супер пользователь')

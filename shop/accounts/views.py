@@ -33,6 +33,7 @@ def register(request):
             user = Account.objects.create_user(first_name=first_name, last_name=last_name,
                                                email=email, username=username, password=password)
             user.phone_number = phone_number
+            _profile(user)
             user.save()
 
             _confirm_email(user, email)
@@ -108,9 +109,8 @@ def activate(request, uidb64, token, email):
 
     if user is not None and default_token_generator.check_token(user, token):
         user.email = email
-        user.is_active = True
+        user.was_confirm_email = True
         user.save()
-        _profile(user)
         messages.success(request, 'Поздравляем, Вы успешно активировали аккаунт!')
         return redirect('store')
     else:
@@ -124,22 +124,19 @@ def dashboard(request):
     orders_count = orders.count()
     user = request.user
 
-    if user.is_active is False:
-        return redirect('confirm_email')
-    else:
-        user_profile = UserProfile.objects.get(user=user)
-        if request.method == 'POST':
+    user_profile = UserProfile.objects.get(user=user)
+    if request.method == 'POST':
 
-            user_form = UserForm(request.POST, instance=request.user)
-            profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
-            if user_form.is_valid() and profile_form.is_valid():
-                user_form.save()
-                profile_form.save()
-                messages.success(request, 'Ваши данные успешно обновлены!')
-                return redirect('dashboard')
-        else:
-            user_form = UserForm(instance=request.user)
-            profile_form = UserProfileForm(instance=user_profile)
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Ваши данные успешно обновлены!')
+            return redirect('dashboard')
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = UserProfileForm(instance=user_profile)
 
     context = {
         'orders': orders,
