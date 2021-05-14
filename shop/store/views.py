@@ -56,6 +56,7 @@ def store(request, category_slug=None):
 
 
 def product_detail(request, category_slug, product_slug):
+
     try:
         product = Product.objects.get(category__slug=category_slug, slug=product_slug)
         category = Category.objects.get(slug=category_slug)
@@ -143,19 +144,33 @@ def submit_review(request, product_id):
                 return redirect(url)
 
 
-def brand_detail(request, brand_slug=None):
+def sales(request, sales_slug=None):
+    ancestor = None
 
-    if brand_slug is not None:
-        brand = get_object_or_404(Category, slug=brand_slug)
-        products = Product.objects.filter(category__in=categories)\
-            .order_by('-is_recommend', '-modified_date').select_related()
-        popular_products = products.filter(views__gt=1)
-        products_count = len(products)
-        paginator = Paginator(products, 6)
-        page = request.GET.get('page')
-        paged_products = paginator.get_page(page)
+    if sales_slug is not None:
+        category = get_object_or_404(Category, slug=sales_slug)
+        if category.is_root_node():
+            categories = category.get_descendants(include_self=False)
+            products = Product.objects.filter(category__in=categories, is_discount=True)\
+                .order_by('-is_recommend', '-modified_date').select_related()
+            popular_products = products.filter(views__gt=1)
+            products_count = len(products)
+            paginator = Paginator(products, 6)
+            page = request.GET.get('page')
+            paged_products = paginator.get_page(page)
+
+        else:
+            ancestor = category.get_ancestors(ascending=False, include_self=False).first()
+            categories = ancestor.get_children()
+            products = Product.objects.filter(category=category, is_discount=True)\
+                .order_by('-is_recommend', '-modified_date').select_related()
+            popular_products = products.filter(views__gt=1)
+            products_count = products.count()
+            paginator = Paginator(products, 6)
+            page = request.GET.get('page')
+            paged_products = paginator.get_page(page)
     else:
-        products = Product.objects.all().order_by('-is_recommend', '-modified_date').select_related()
+        products = Product.objects.filter(is_discount=True).select_related().order_by('-is_recommend', '-modified_date')
         products_count = products.count()
         paginator = Paginator(products, 6)
         page = request.GET.get('page')
@@ -165,6 +180,7 @@ def brand_detail(request, brand_slug=None):
         popular_products = products.filter(views__gt=1)
 
     context = {
+            'sales_slug': sales_slug,
             'products': paged_products,
             'popular_products': popular_products,
             'category': category,

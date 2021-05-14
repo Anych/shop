@@ -34,8 +34,7 @@
                             {% for category in links %}
                             <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
                             {% endfor %}
-                                                        <li><a href="#">Бренды</a></li>
-                            <li><a href="#">Скидки</a></li>
+                            <li><a href="{% url 'sales' %}">Скидки</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -133,8 +132,7 @@
                     </ul>
                 {% endif %}
             {% endfor %}
-            <li><a href="#">Бренды</a></li>
-            <li><a href="#">Скидки</a></li>
+            <li><a href="{% url 'sales' %}">Скидки</a></li>
         </li>
       </ul>
 	</div>

@@ -23,6 +23,9 @@ class Category(MPTTModel):
     def get_absolute_url(self):
         return reverse('category', kwargs={'category_slug': self.slug})
 
+    def get_sales_url(self):
+        return reverse('sales', kwargs={'sales_slug': self.slug})
+
 
 class Brand(models.Model):
 
@@ -33,4 +36,4 @@ class Brand(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('category', kwargs={'category_slug': self.slug})
+        return reverse('category', kwargs={'brand_slug': self.slug})

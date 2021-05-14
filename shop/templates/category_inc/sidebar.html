@@ -1,6 +1,134 @@
 <!--Categories-->
+{% if 'sales' in request.path and sales_slug is None %}
 
-{% if category.id == 1 or category in cloth_categories %}
+<div class="sidebar_widget categories">
+    {% for category in links %}
+        <div class="widget-title mb-4"><a href="{{ category.get_sales_url }}"><h2>{{ category.name }}</h2></a></div>
+    {% endfor %}
+</div>
+
+
+{% elif category.id == 1 or category in cloth_categories and 'sales' in request.path %}
+
+<div class="sidebar_widget categories filter-widget">
+    <div class="widget-title"><h2>Одежда</h2></div>
+        <div class="widget-content">
+            <ul class="sidebar_categories">
+            {% for cat in cloth_categories %}
+                {% if cat == category %}
+                    <li class="lvl-1"><a href="{{ cat.get_sales_url }}" class="site-nav"><b>{{ cat.name }}</b></a></li>
+                {% else %}
+                    <li class="lvl-1"><a href="{{ cat.get_sales_url }}" class="site-nav">{{ cat.name }}</a></li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+</div>
+
+<div class="sidebar_widget categories filter-widget">
+    <div class="widget-title active"><h2>Обувь</h2></div>
+        <div class="widget-content" style="display: none;">
+            <ul class="sidebar_categories">
+            {% for cat in shoe_categories %}
+                <li class="lvl-1"><a href="{{ cat.get_sales_url }}" class="site-nav">{{ cat.name }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+</div>
+
+<div class="sidebar_widget categories filter-widget">
+    <div class="widget-title active"><h2>Аксессуары</h2></div>
+        <div class="widget-content" style="display: none;">
+            <ul class="sidebar_categories">
+            {% for cat in accessories_categories %}
+                <li class="lvl-1"><a href="{{ cat.get_sales_url }}" class="site-nav">{{ cat.name }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+</div>
+
+
+{% elif category.id == 2 or category in shoe_categories and 'sales' in request.path %}
+
+<div class="sidebar_widget categories filter-widget">
+    <div class="widget-title active"><h2>Одежда</h2></div>
+        <div class="widget-content" style="display: none;">
+            <ul class="sidebar_categories">
+            {% for cat in cloth_categories %}
+                <li class="lvl-1"><a href="{{ cat.get_sales_url }}" class="site-nav">{{ cat.name }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+</div>
+
+<div class="sidebar_widget categories filter-widget">
+    <div class="widget-title"><h2>Обувь</h2></div>
+        <div class="widget-content">
+            <ul class="sidebar_categories">
+            {% for cat in shoe_categories %}
+                {% if cat == category %}
+                <li class="lvl-1"><a href="{{ cat.get_sales_url }}" class="site-nav"><b>{{ cat.name }}</b></a></li>
+                {% else %}
+                <li class="lvl-1"><a href="{{ cat.get_sales_url }}" class="site-nav">{{ cat.name }}</a></li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+</div>
+
+<div class="sidebar_widget categories filter-widget">
+    <div class="widget-title active"><h2>Аксессуары</h2></div>
+        <div class="widget-content" style="display: none;">
+            <ul class="sidebar_categories">
+            {% for cat in accessories_categories %}
+                <li class="lvl-1"><a href="{{ cat.get_sales_url }}" class="site-nav">{{ cat.name }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+</div>
+
+
+{% elif category.id == 3 or category in accessories_categories and 'sales' in request.path %}
+
+<div class="sidebar_widget categories filter-widget">
+    <div class="widget-title active"><h2>Одежда</h2></div>
+        <div class="widget-content" style="display: none;">
+            <ul class="sidebar_categories">
+            {% for cat in cloth_categories %}
+                <li class="lvl-1"><a href="{{ cat.get_sales_url }}" class="site-nav">{{ cat.name }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+</div>
+
+<div class="sidebar_widget categories filter-widget">
+    <div class="widget-title active"><h2>Обувь</h2></div>
+        <div class="widget-content" style="display: none;">
+            <ul class="sidebar_categories">
+            {% for cat in shoe_categories %}
+                <li class="lvl-1"><a href="{{ cat.get_sales_url }}" class="site-nav">{{ cat.name }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+</div>
+
+<div class="sidebar_widget categories filter-widget">
+    <div class="widget-title"><h2>Аксессуары</h2></div>
+        <div class="widget-content">
+            <ul class="sidebar_categories">
+            {% for cat in accessories_categories %}
+                {% if cat == category %}
+                <li class="lvl-1"><a href="{{ cat.get_sales_url }}" class="site-nav"><b>{{ cat.name }}</b></a></li>
+                {% else %}
+                <li class="lvl-1"><a href="{{ cat.get_sales_url }}" class="site-nav">{{ cat.name }}</a></li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+</div>
+
+
+{% elif category.id == 1 or category in cloth_categories %}
 
 <div class="sidebar_widget categories filter-widget">
     <div class="widget-title"><h2>Одежда</h2></div>

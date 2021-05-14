@@ -1,5 +1,3 @@
-from django.core.exceptions import ObjectDoesNotExist
-
 from cart.models import Cart, CartItem
 from cart.views import _cart_id
 

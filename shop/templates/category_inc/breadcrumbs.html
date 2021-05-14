@@ -7,6 +7,8 @@
             <span aria-hidden="true">|</span> <span>{{ category.name }}</span></div>
             {% elif 'search' in request.path %}
             <span aria-hidden="true">|</span> <span>Результаты поиска</span></div>
+            {% elif 'sales' in request.path %}
+            <span aria-hidden="true">|</span> <span>Скидки</span></div>
             {% else %}
             <span aria-hidden="true">|</span> <span><a href="{{ category.get_absolute_url }}" title="К категории">{{ category.name }}</a></span></div>
             {% endif %}
