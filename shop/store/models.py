@@ -34,7 +34,7 @@ class Product(models.Model):
     views = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'{self.name}: {self.color}'
+        return f'{self.brand} / {self.name}: {self.color}'
 
     def get_absolute_url(self):
         return reverse('product_detail', kwargs={'category_slug': self.category.slug, 'product_slug': self.slug})
