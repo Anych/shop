@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.password_validation import get_default_password_validators
+from django.core.exceptions import ValidationError
 
 from accounts.models import Account, UserProfile
 
@@ -24,17 +26,27 @@ class RegistrationForm(forms.ModelForm):
         'placeholder': 'Подтвердите пароль',
     }))
 
-    def clean(self):
+    def clean(self, password_validators=None):
         cleaned_data = super(RegistrationForm, self).clean()
         password = cleaned_data.get('password')
         confirm_password = cleaned_data.get('confirm_password')
         if password != confirm_password:
             raise forms.ValidationError('Пароли не совпадают')
+        errors = []
+        if password_validators is None:
+            password_validators = get_default_password_validators()
+        for validator in password_validators:
+            try:
+                validator.validate(password)
+            except ValidationError as error:
+                errors.append(error)
+        if errors:
+            raise ValidationError(errors)
 
     def clean_email(self):
         email = self.cleaned_data['email']
         if Account.objects.filter(email=email).exists():
-            raise forms.ValidationError('Данный почтовый ящик уже зарегестрирован в системе')
+            raise forms.ValidationError('Данный почтовый ящик уже зарегистрирован в системе')
         return email
 
 

@@ -19,6 +19,8 @@
 	<div class="card mx-auto" style="max-width:520px; margin-top:40px;">
 		<div class="card-body">
 		{% include 'inc/alerts.html' %}
+			<h5 class="text-danger text-center">{{ form.email.errors }}</h5>
+		<h5 class="text-danger text-center">{{ form.non_field_errors }}</h5>
 		<h4 class="card-title mb-4 text-center">Регистрация</h4>
 		<form action="{% url 'register' %}" method="POST" class="contact-form">
 			{% csrf_token %}
@@ -72,8 +74,6 @@
                             </a>
                         </div>
                     </div>
-      {{ form.email.errors }}
-      {{ form.non_field_errors }}
 			</form>
 		</div><!-- card-body.// -->
     </div> <!-- card .// -->
