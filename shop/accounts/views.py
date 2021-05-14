@@ -35,7 +35,7 @@ def register(request):
             user.phone_number = phone_number
             user.save()
 
-            _confirm_email(request, user, email)
+            _confirm_email(user, email)
     else:
         form = RegistrationForm()
 
@@ -62,7 +62,6 @@ def login(request):
                 pass
 
             auth.login(request, user)
-            messages.success(request, 'Вы авторизовались.')
             url = request.META.get('HTTP_REFERER')
             try:
                 query = requests.utils.urlparse(url).query
@@ -71,7 +70,7 @@ def login(request):
                     nextPage = params['next']
                     return redirect(nextPage)
             except:
-                return redirect('dashboard')
+                return redirect('store')
 
         else:
             messages.error(request, 'Неправильно введена почта или пароль')
