@@ -48,9 +48,9 @@ def add_cart(request, product_id):
             )
         cart.save()
 
-        is_cart_item_exists = CartItem.objects.filter(product=product, cart=cart).exists()
+        is_cart_item_exists = CartItem.objects.filter(product=product, size=size, cart=cart).exists()
         if is_cart_item_exists:
-            cart_item = CartItem.objects.get(product=product, user=current_user, size=size)
+            cart_item = CartItem.objects.get(product=product, size=size, cart=cart)
             cart_item.quantity += 1
             cart_item.save()
 
@@ -58,8 +58,8 @@ def add_cart(request, product_id):
             cart_item = CartItem.objects.create(
                 product=product,
                 quantity=1,
-                user=current_user,
-                size=size
+                size=size,
+                cart=cart
             )
             cart_item.save()
     return redirect('cart')
