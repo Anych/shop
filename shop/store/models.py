@@ -16,25 +16,27 @@ class Product(models.Model):
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
 
-    name = models.CharField(max_length=200, verbose_name='Название')
+    article = models.CharField(max_length=200, null=True, verbose_name='Артикул')
     category = TreeForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Бренд')
+    name_of_model = models.CharField(max_length=200, null=True, blank=True, verbose_name='Название модели')
     slug = models.SlugField(max_length=200, verbose_name='Слаг', blank=True)
     description = models.TextField(blank=True, verbose_name='Описание')
-    img1 = models.ImageField(upload_to='store/products/%y/%m/%d')
-    img2 = models.ImageField(upload_to='store/products/%y/%m/%d')
+    structure = models.TextField(blank=True, null=True, verbose_name='Состав')
+    color = models.CharField(max_length=100, verbose_name='Цвет')
+    another_color = models.ManyToManyField('self', blank=True, verbose_name='Другой цвет')
+    img1 = models.ImageField(upload_to='store/products')
+    img2 = models.ImageField(upload_to='store/products')
     price = models.IntegerField(verbose_name='Цена')
     is_discount = models.BooleanField(default=False, verbose_name='Скидка')
     discount_amount = models.IntegerField(blank=True, null=True, verbose_name='Размер скидки')
     create_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
-    color = models.CharField(max_length=100, verbose_name='Цвет')
-    another_color = models.ManyToManyField('self', blank=True, verbose_name='Другой цвет')
     is_recommend = models.BooleanField(default=False, verbose_name='Рекомендации')
     views = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'{self.brand} / {self.name}: {self.color}'
+        return f'{self.brand} / {self.article}: {self.color}'
 
     def get_absolute_url(self):
         return reverse('product_detail', kwargs={'category_slug': self.category.slug, 'product_slug': self.slug})

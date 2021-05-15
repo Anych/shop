@@ -24,7 +24,7 @@ class ProductAdmin(admin.ModelAdmin):
     #     return format_html('<img src="{}" width="40" />'.format(object.image1.url))
     # thumbnail.short_description = 'Фото продукта'
 
-    list_display = ('name', 'price', 'category', 'is_discount')
+    list_display = ('article', 'price', 'category', 'is_discount')
     exclude = ['slug', 'views']
     inlines = [ProductGalleryInline, ProductSizeInline]
 

@@ -14,6 +14,7 @@ class Category(MPTTModel):
         order_insertion_by = ['name']
 
     name = models.CharField(max_length=50, unique=True, verbose_name='Наименование')
+    name_for_product = models.CharField(max_length=50, null=True, verbose_name='Наименование')
     slug = models.SlugField(max_length=100, unique=True)
     parent = TreeForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
 
