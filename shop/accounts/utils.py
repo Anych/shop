@@ -1,3 +1,4 @@
+from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
@@ -13,10 +14,12 @@ def _profile(user):
     profile.save()
 
 
-def _confirm_email(user, email):
+def _confirm_email(request, user, email):
     mail_subject = 'Активация аккаунта'
+    current_site = get_current_site(request)
     message = render_to_string('accounts/account_verification_email.html', {
         'user': user,
+        'domain': current_site,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': default_token_generator.make_token(user),
         'email': email,

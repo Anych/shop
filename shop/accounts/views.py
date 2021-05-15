@@ -36,7 +36,7 @@ def register(request):
             _profile(user)
             user.save()
 
-            _confirm_email(user, email)
+            _confirm_email(request, user, email)
             auth.login(request, user)
             return redirect('store')
     else:
@@ -84,10 +84,10 @@ def confirm_email(request):
     user = request.user
     if request.method == 'POST':
         email = request.POST['email']
-        _confirm_email(user, email)
+        _confirm_email(request, user, email)
         return redirect('/accounts/login/?command=activate&email=' + email)
     elif user.email:
-        _confirm_email(user, user.email)
+        _confirm_email(request, user, user.email)
         return render(request, 'accounts/confirm_email.html')
     else:
         return render(request, 'accounts/confirm_email.html')
