@@ -120,11 +120,15 @@ def activate(request, uidb64, token, email):
 
 @login_required(login_url='login')
 def dashboard(request):
+    user = request.user
+    try:
+        user_profile = UserProfile.objects.get(user=user)
+    except Exception:
+        _profile(user)
+        user_profile = UserProfile.objects.get(user=user)
+
     orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
     orders_count = orders.count()
-    user = request.user
-
-    user_profile = UserProfile.objects.get(user=user)
     if request.method == 'POST':
 
         user_form = UserForm(request.POST, instance=request.user)

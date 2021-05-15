@@ -18,6 +18,7 @@ class MyAccountManager(BaseUserManager):
         )
         user.set_password(password)
         user.save(using=self._db)
+        user.save()
         return user
 
     def create_superuser(self, first_name, last_name, username, email, password):
@@ -65,10 +66,7 @@ class Account(AbstractBaseUser):
         return f'{self.first_name} {self.last_name}'
 
     def __str__(self):
-        if self.email:
-            return self.email
-        else:
-            return self.first_name
+        return self.full_name()
 
     def has_perm(self, perm, obj=None):
         return self.is_admin
@@ -89,7 +87,7 @@ class UserProfile(models.Model):
     country = models.CharField(max_length=100, blank=True, verbose_name='Страна')
 
     def __str__(self):
-        return self.user.first_name
+        return str(self.user)
 
     def full_address(self):
         return f'{self.address_line1} {self.address_line2}'
