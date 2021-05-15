@@ -36,7 +36,7 @@ def register(request):
             _profile(user)
             user.save()
 
-            _confirm_email(request, user, email)
+            _confirm_email(user, email)
             auth.login(request, user)
             return redirect('store')
     else:
@@ -84,10 +84,10 @@ def confirm_email(request):
     user = request.user
     if request.method == 'POST':
         email = request.POST['email']
-        _confirm_email(request, user, email)
+        _confirm_email(user, email)
         return redirect('/accounts/login/?command=activate&email=' + email)
     elif user.email:
-        _confirm_email(request, user, user.email)
+        _confirm_email(user, user.email)
         return render(request, 'accounts/confirm_email.html')
     else:
         return render(request, 'accounts/confirm_email.html')
@@ -158,11 +158,9 @@ def forgotPassword(request):
         if Account.objects.filter(email=email).exists():
             user = Account.objects.get(email__exact=email)
 
-            current_site = get_current_site(request)
             mail_subject = 'Восстановление пароля'
             message = render_to_string('accounts/reset_password_email.html', {
                 'user': user,
-                'domain': current_site,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': default_token_generator.make_token(user)
             })
