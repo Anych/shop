@@ -1,62 +1,7 @@
-/*********************************************************************************
-	Template Name: Avone Multipurpose eCommerce Bootstrap4 Template
-	Description: A perfect template to build beautiful and unique Fashion websites. It comes with nice and clean design.
-	Version: 1.0
-**********************************************************************************/
-
-/* --------------------------------------------------
-Table of Content:
-
-1.  Google Fonts
-2.  Basic Styles
-3.  Typography
-4.  Container
-6. Pre Loader
-7. Headers Style
-8. Homepage Demo's
-9. Homepage Sections
-	9.1 Products With Tab Slider
-	9.2 Hero/Parallax Banners
-	9.3 Featured Content Section
-	9.4 Newletter Section
-	9.5 Testimonial Slider
-	9.6 Info/Simple Text Section
-	9.7 Instagram Section
-	9.8 Miniproduct List Section
-	9.9 Homepage Slideshow
-	9.10 Collection Slider
-	9.11 Brands Logo Slider
-	9.12 Home Blog Post
-	9.13 Store Features
-	9.14 Promotion Product Popup
-	9.15 Custom Content
-10. Collection Banner Grid
-11. Breadcrumbs
-12. Section
-13. Product Grid
-14. Product Listview
-15. Products Detail Page
-16. Sidebar
-17. Shop Pages
-18. CMS Page
-19. Blog Pages
-20. Cart Pages
-21. Checkout Page Styles
-22. Nesletter Popup Styles
-23. Footer
-24. Brands Page
-25. Cookie Popup
-=======================================================================*/
-
-/*======================================================================
-  1. Google Fonts
-========================================================================*/
 @import url('https://fonts.googleapis.com/css2?family=Alata&family=Bitter:ital,wght@0,400;0,700;1,400&family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;600;700&family=PT+Sans:ital,wght@0,400;0,700;1,700&family=Poppins:wght@300;400;500;600;700;900&family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@300;400;500;700;900&family=Work+Sans:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,700;1,400&family=Roboto+Slab:wght@300;400;600;700&family=Glegoo:wght@400;700&family=Oswald:wght@200;300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Titillium+Web:wght@200;300;400;600;700;900&display=swap');
-/*======================================================================
-  2. Basic Styles
-========================================================================*/
+
 * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 *, ::before, ::after { box-sizing:border-box; -webkit-box-sizing:border-box; }
 html { overflow:hidden; overflow-y:auto; }
@@ -1083,7 +1028,8 @@ white-space:nowrap; -ms-transform:translateX(-50%); -webkit-transform:translateX
 .grid-products .item .product-price { margin:5px 0; color:#000000; font-weight:400; }
 .product-price .old-price { color:#555; font-size:12px; opacity:0.8; text-decoration:line-through; }
 .product-price .price { color:#000000; padding-right:5px; font-weight: 600; font-size: 16px;}
-.product-price .new_price { font-weight: 600; padding-right:5px; color: red; font-size: 20px;}
+.product-price .new_price { font-weight: 600; padding-right:5px; color: red; font-size: 16px;}
+.money { font-size: 13px; font-weight: 600;}
 .product-price__sale, .product__price--sale { color:#000 !important; }
 .product-name {color: #999}
 
