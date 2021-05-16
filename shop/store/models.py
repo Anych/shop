@@ -25,6 +25,7 @@ class Product(models.Model):
     structure = models.CharField(max_length=200, blank=True, null=True, verbose_name='Состав')
     color = models.CharField(max_length=100, verbose_name='Цвет')
     another_color = models.ManyToManyField('self', blank=True, verbose_name='Другой цвет')
+    made_in = models.CharField(max_length=100, null=True, verbose_name='Производство')
     description = models.TextField(blank=True, verbose_name='Описание')
     img1 = models.ImageField(upload_to='store/products', verbose_name='Изображение 1')
     img2 = models.ImageField(upload_to='store/products', verbose_name='Изображение 2')
@@ -66,8 +67,8 @@ class Product(models.Model):
             self.discount_price = int((int(self.price) * (100 - int(self.discount_amount))) / 100)
             return self.discount_price
 
-    def own_color(self):
-        return self.color
+    def you_save(self):
+        return self.price - self.discount_price
 
     def stock(self):
         stocks = Size.objects.filter(product=self).aggregate(count=Count('id'))
@@ -94,6 +95,17 @@ class ProductGallery(models.Model):
 
     product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE, verbose_name='Продукт')
     image = models.ImageField(upload_to='store/products', verbose_name='Изображение')
+
+
+class ProductFeatures(models.Model):
+
+    class Meta:
+        verbose_name = 'Дополниетелыное поле продукта'
+        verbose_name_plural = 'Дополниетелыные поля продукта'
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
+    value = models.CharField(max_length=200, verbose_name='Ключ')
+    feature = models.CharField(max_length=200, verbose_name='Значение')
 
 
 class Size(models.Model):

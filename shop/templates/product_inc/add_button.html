@@ -1,11 +1,11 @@
-<form method="POST" action="{% url 'add_cart' product.id %}" class="product-form product-form-product-template hidedropdown">
+<form method="POST" action="{% url 'add_cart' product.id %}" class="product-form product-form-product-template hidedropdown mt-3">
     {% csrf_token %}
     {% if product.another_color.all %}
         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
             <div class="swatch clearfix swatch-1 option2">
                 <label class="label">Цвета:<span class="required">*</span></label>
                 <select name="color" onchange="window.location.href=this.options[this.selectedIndex].value">
-                    <option value="{{ own_color }}" disabled selected>{{ own_color | capfirst }}</option>
+                    <option value="{{ product.color }}" disabled selected>{{ product.color | capfirst }}</option>
                     {% for color in product.another_color.all %}
                         {% if color.get_absolute_url in request.path %}
                         {% else %}
@@ -41,15 +41,8 @@
     {% endif %}
     <!-- Product Action -->
     <div class="product-action clearfix">
-<!--                                <div class="buy-it-btn">-->
-<!--                                    <button type="button" class="btn" disabled="disabled">Добавлено</button>-->
-<!--                                </div>-->
-<!--                                <br>-->
-<!--                                <div class="buy-it-btn">-->
-<!--                                    <a href="{% url 'cart' %}"><button type="button" class="btn">Перейти в корзину</button></a>-->
-<!--                                </div>-->
         <div class="product-form__item--submit">
-            <button type="submit" name="add" class="btn product-form__cart-submit">
+            <button type="submit" name="add" class="btn btn-main">
                 <span>В корзину</span>
             </button>
         </div>

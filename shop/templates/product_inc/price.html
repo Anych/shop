@@ -1,0 +1,34 @@
+{% load humanize %}
+<div class="product-single__meta">
+    {% if count_review >= 1 %}
+    <div class="prInfoRow">
+        <span class="product-review">
+            <span class="reviewLink">
+                <i class="font-13 fa fa-star{% if average_review < 0.5 %}-o{% elif average_review >= 0.5 and average_review < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                <i class="font-13 fa fa-star{% if average_review < 1.5 %}-o{% elif average_review >= 1.5 and average_review < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                <i class="font-13 fa fa-star{% if average_review < 2.5 %}-o{% elif average_review >= 2.5 and average_review < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                <i class="font-13 fa fa-star{% if average_review < 3.5 %}-o{% elif average_review >= 3.5 and average_review < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                <i class="font-13 fa fa-star{% if average_review < 4.5 %}-o{% elif average_review >= 4.5 and average_review < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                <span class="spr-badge-caption"><b>{{ count_review }}</b></span>
+            </span>
+        </span>
+    </div>
+    {% endif %}
+    <h1 class="product-single__title">{{ product.brand }}</h1>
+    <p>{{ product.category.name_for_product }}{% if product.name_of_model %} - {{ product.name_of_model }}{% endif %}</p>
+    {% if product.is_discount %}
+    <p class="product-single__price product-single__price-product-template">
+        <s id="ComparePrice-product-template"><span class="money">{{ product.price | intcomma }}</span></s>
+        <span class="product-price__price product-price__price-product-template product-price__sale product-price__sale--single">
+            <span id="ProductPrice-product-template"><span class="money">{{ product.discount_price | intcomma }} &#8376;</span></span>
+        </span>
+        <span class="discount-badge"> <span class="devider">|</span>&nbsp;
+            <span>Вы экономите</span>
+            <span class="product-single__save-amount"><span class="money">{{ product.you_save }} &#8376;</span></span>
+            <span class="off">(<span>{{ product.discount_amount}}</span>%)</span>
+        </span>
+    </p>
+    {% else %}
+        <p class="money">{{ product.price | intcomma }} &#8376;</p>
+    {% endif %}
+</div>

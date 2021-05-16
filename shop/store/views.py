@@ -7,7 +7,7 @@ from cart.views import _cart_id
 from category.models import Category
 from orders.models import OrderProduct
 from store.forms import ReviewForm
-from store.models import Product, ReviewRating, ProductGallery, Size
+from store.models import Product, ReviewRating, ProductGallery, Size, ProductFeatures
 
 
 def store(request, category_slug=None):
@@ -26,7 +26,6 @@ def store(request, category_slug=None):
             paged_products = paginator.get_page(page)
         else:
             ancestor = category.get_ancestors(ascending=False, include_self=False).first()
-            categories = ancestor.get_children()
             products = Product.objects.filter(category=category)\
                 .order_by('-is_recommend', '-modified_date').select_related()
             popular_products = products.filter(views__gt=1)
@@ -57,42 +56,27 @@ def store(request, category_slug=None):
 
 def product_detail(request, category_slug, product_slug):
 
-    try:
-        product = Product.objects.get(category__slug=category_slug, slug=product_slug)
-        category = Category.objects.get(slug=category_slug)
-        in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(request), product=product).exists()
-        product.increment_views()
-    except Exception as e:
-        raise e
-
-    if request.user.is_authenticated:
-        try:
-            order_product = OrderProduct.objects.filter(user=request.user, product_id=product.id).exists()
-        except OrderProduct.DoesNotExist:
-            order_product = None
-    else:
-        order_product = None
+    product = Product.objects.get(category__slug=category_slug, slug=product_slug)
+    product.increment_views()
 
     reviews = ReviewRating.objects.filter(product_id=product.id, status=True).select_related()
-    average_review = Product.average_review(product)
-    count_review = Product.count_review(product)
+    average_review = product.average_review
+    count_review = product.count_review
 
-    sizes = Size.objects.filter(product__slug=product_slug, stock__gt=0)
-    own_color = Product.own_color(product)
+    sizes = Size.objects.filter(product=product, stock__gt=0).select_related()
 
-    product_gallery = ProductGallery.objects.filter(product__slug=product_slug)
+    product_gallery = ProductGallery.objects.filter(product=product).select_related()
+
+    product_features = ProductFeatures.objects.filter(product=product).select_related()
 
     context = {
         'product': product,
-        'category': category,
-        'in_cart': in_cart,
-        'order_product': order_product,
         'reviews': reviews,
         'sizes': sizes,
-        'own_color': own_color,
         'product_gallery': product_gallery,
         'average_review': average_review,
         'count_review': count_review,
+        'product_features': product_features,
     }
     return render(request, 'store/product_detail.html', context)
 

@@ -1,7 +1,7 @@
 from django.contrib import admin
 import admin_thumbnails
 
-from store.models import Product, ProductGallery, Size
+from store.models import Product, ProductGallery, Size, ProductFeatures
 
 
 @admin_thumbnails.thumbnail('image')
@@ -17,12 +17,18 @@ class ProductSizeInline(admin.StackedInline):
     extra = 1
 
 
+class ProductFeatureInline(admin.StackedInline):
+
+    model = ProductFeatures
+    extra = 1
+
+
 class ProductAdmin(admin.ModelAdmin):
 
     list_display = ('article', 'brand', 'category', 'price', 'is_recommend')
     list_display_links = ('article', 'brand')
     exclude = ['slug', 'views']
-    inlines = [ProductGalleryInline, ProductSizeInline]
+    inlines = [ProductFeatureInline, ProductGalleryInline, ProductSizeInline]
 
 
 admin.site.register(Product, ProductAdmin)
