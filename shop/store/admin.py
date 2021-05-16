@@ -1,8 +1,7 @@
 from django.contrib import admin
 import admin_thumbnails
-from django.utils.html import format_html
 
-from store.models import Product, ReviewRating, ProductGallery, Size
+from store.models import Product, ProductGallery, Size
 
 
 @admin_thumbnails.thumbnail('image')
@@ -20,22 +19,10 @@ class ProductSizeInline(admin.StackedInline):
 
 class ProductAdmin(admin.ModelAdmin):
 
-    # def thumbnail(self, object):
-    #     return format_html('<img src="{}" width="40" />'.format(object.image1.url))
-    # thumbnail.short_description = 'Фото продукта'
-
-    list_display = ('article', 'price', 'category', 'is_discount')
+    list_display = ('article', 'brand', 'category', 'price', 'is_recommend')
+    list_display_links = ('article', 'brand')
     exclude = ['slug', 'views']
     inlines = [ProductGalleryInline, ProductSizeInline]
 
 
-class SizeAdmin(admin.ModelAdmin):
-
-    list_display = ('product',)
-    list_filter = ('product',)
-
-
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Size, SizeAdmin)
-admin.site.register(ReviewRating)
-admin.site.register(ProductGallery)

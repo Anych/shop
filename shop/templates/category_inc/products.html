@@ -47,7 +47,7 @@
 
         <!-- product name -->
         <div class="product-name">
-            <a href="{{ product.get_absolute_url }}">{{ product.brand }} / <span class="product-name">{{ product.name }}</span></a>
+            <a href="{{ product.get_absolute_url }}">{{ product.brand }} / <span class="product-name">{{ product.category.name_for_product }}{% if product.name_of_model %} - {{ product.name_of_model }}{% endif %}</span></a>
         </div>
         <!-- End product name -->
     </div>
