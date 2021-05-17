@@ -13,8 +13,8 @@ from store.utils import gen_slug
 class Product(models.Model):
 
     class Meta:
-        verbose_name = 'Продукт'
-        verbose_name_plural = 'Продукты'
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'
         ordering = ['category', 'price', '-create_date']
 
     article = models.CharField(max_length=200, null=True, verbose_name='Артикул')
@@ -38,7 +38,7 @@ class Product(models.Model):
     views = models.IntegerField(default=0, verbose_name='Просмотры')
 
     def __str__(self):
-        return f'{self.brand} / {self.article}: {self.color}'
+        return f'{self.article} - {self.category.name_for_product}: {self.brand}'
 
     def get_absolute_url(self):
         return reverse('product_detail', kwargs={'category_slug': self.category.slug, 'product_slug': self.slug})

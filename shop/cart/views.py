@@ -148,7 +148,7 @@ def checkout(request, total=0, quantity=0, cart_items=None):
     grand_total = 0
 
     try:
-        if request.user.is_authenticated and request.user.is_active:
+        if request.user.is_authenticated and request.user.was_confirm_email:
             cart_items = CartItem.objects.filter(user=request.user, is_active=True)
         else:
             return redirect('/accounts/confirm_email/?command=make_order')

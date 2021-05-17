@@ -110,11 +110,11 @@ def activate(request, uidb64, token, email):
         user.email = email
         user.was_confirm_email = True
         user.save()
-        messages.success(request, 'Поздравляем, Вы успешно активировали аккаунт!')
-        return redirect('store')
+        messages.success(request, 'Поздравляем, Вы успешно подтвердили свою почту!')
+        return redirect('checkout')
     else:
         messages.error(request, 'Ошибка активации!')
-        return redirect('register')
+        return redirect('confirm_email')
 
 
 @login_required(login_url='login')

@@ -7,6 +7,11 @@ from store.models import Product, Size
 
 class Payment(models.Model):
 
+    class Meta:
+        verbose_name = 'Оплата'
+        verbose_name_plural = 'Оплаты'
+        ordering = ['-created_at']
+
     user = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name='Пользователь')
     payment_id = models.CharField(max_length=100, verbose_name='Номер оплаты')
     payment_method = models.CharField(max_length=100, verbose_name='Метод оплаты')
@@ -19,6 +24,10 @@ class Payment(models.Model):
 
 
 class Order(models.Model):
+
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
 
     STATUS = (
         ('Новый', 'Новый'),
@@ -59,6 +68,10 @@ class Order(models.Model):
 
 class OrderProduct(models.Model):
 
+    class Meta:
+        verbose_name = 'Заказ на продукт'
+        verbose_name_plural = 'Заказы на продукты'
+
     order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name='Заказ')
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Оплата')
     user = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name='Пользователь')
@@ -71,7 +84,7 @@ class OrderProduct(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
 
     def __str__(self):
-        return self.product.name
+        return f'{self.product.article} - {self.product.category.name_for_product}: {self.product.brand}'
 
     def sub_total(self):
         return self.product.price * self.quantity
