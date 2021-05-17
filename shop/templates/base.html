@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-  <title>{% block title %} Магазин Итальянской одежды{% endblock %}</title>
+  <title>{% block title %} Магазин Итальянской одежды MIla&Iris{% endblock %}</title>
 
   <meta name="description" content="description">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,7 +25,7 @@
   {% block style %}{% endblock %}
 
 </head>
-<body class="template-index index-demo4">
+<body {% block body %} class="template-index index-demo4" {% endblock %}>
 <div id="pre-loader">
     <img src="{% static 'assets/images/loader.gif' %}" alt="Загрузка">
 </div>

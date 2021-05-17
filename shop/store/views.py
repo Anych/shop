@@ -2,12 +2,11 @@ from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 
-from cart.models import CartItem
-from cart.views import _cart_id
 from category.models import Category
 from orders.models import OrderProduct
-from store.forms import ReviewForm
-from store.models import Product, ReviewRating, ProductGallery, Size, ProductFeatures
+from store.forms import ReviewForm, QuestionForm
+from store.models import Product, ReviewRating, ProductGallery, Size, ProductFeatures, CustomerQuestion
+from store.utils import question_email
 
 
 def store(request, category_slug=None):
@@ -59,10 +58,17 @@ def product_detail(request, category_slug, product_slug):
     product = Product.objects.get(category__slug=category_slug, slug=product_slug)
     product.increment_views()
 
+    if request.user.is_authenticated:
+        try:
+            order_product = OrderProduct.objects.filter(user=request.user, product_id=product.id).exists()
+        except OrderProduct.DoesNotExist:
+            order_product = None
+    else:
+        order_product = None
+
     reviews = ReviewRating.objects.filter(product_id=product.id, status=True).select_related()
     average_review = product.average_review
     count_review = product.count_review
-
     sizes = Size.objects.filter(product=product, stock__gt=0).select_related()
 
     product_gallery = ProductGallery.objects.filter(product=product).select_related()
@@ -71,6 +77,7 @@ def product_detail(request, category_slug, product_slug):
 
     context = {
         'product': product,
+        'order_product': order_product,
         'reviews': reviews,
         'sizes': sizes,
         'product_gallery': product_gallery,
@@ -126,6 +133,26 @@ def submit_review(request, product_id):
                 data.save()
                 messages.success(request, 'Спасибо! Ваш отзыв опубликован.')
                 return redirect(url)
+
+
+def ask_question(request, product_id):
+    url = request.META.get('HTTP_REFERER')
+    if request.method == 'POST':
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            data = CustomerQuestion()
+            data.email = form.cleaned_data['email']
+            data.question = form.cleaned_data['question']
+            data.name = form.cleaned_data['name']
+            data.product_id = product_id
+            if request.user.is_authenticated:
+                data.user_id = request.user.id
+            else:
+                data.user_id = None
+            data.save()
+            messages.success(request, 'Спасибо! Ваш вопрос был отправлен.')
+            question_email(data.name, data.email, data.question, url)
+            return redirect(url)
 
 
 def sales(request, sales_slug=None):

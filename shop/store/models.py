@@ -131,3 +131,16 @@ class ReviewRating(models.Model):
 
     def __str__(self):
         return self.review
+
+
+class CustomerQuestion(models.Model):
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
+    question = models.TextField(max_length=1500, blank=True, verbose_name='Вопрос')
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, verbose_name='Пользователь')
+    email = models.CharField(max_length=200, blank=True, verbose_name='Почта')
+    name = models.CharField(max_length=200, blank=True, verbose_name='Имя')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+
+    def __str__(self):
+        return self.email
