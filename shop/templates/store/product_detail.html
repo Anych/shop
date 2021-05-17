@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
-{% block title %}Купить {{ product.brand }} {{ product.category.name_for_product| lower}}{% if product.name_of_model %} - {{ product.name_of_model }}{% endif %}{% endblock %}
+
 {% load static %}
 {% load humanize %}
+
+{% block title %}Купить {{ product.brand }} {{ product.category.name_for_product| lower}}{% if product.name_of_model %} - {{ product.name_of_model }}{% endif %}{% endblock %}
 {% block body %} class="template-product product-single-center-mode" style="padding-bottom: 0px;"{% endblock body %}
+
 {% block content %}
 <div id="page-content">
         <!--Body Container-->

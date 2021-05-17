@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -14,10 +15,9 @@ def _cart_id(request):
     return cart
 
 
-def add_cart(request, product_id):
+def add_cart(request, product_id, quantity=1):
     current_user = request.user
     product = Product.objects.get(id=product_id)
-
     value = request.POST['size']
     size = Size.objects.get(product=product, size=value)
 
@@ -28,7 +28,11 @@ def add_cart(request, product_id):
         if is_cart_item_exists:
             cart_item = CartItem.objects.get(product=product, user__email=current_user.email, size=size)
             cart_item.quantity += 1
-            cart_item.save()
+            if size.stock < cart_item.quantity:
+                messages.success(request, f'К сожалению, на складе осталось {size.stock}')
+                return redirect('cart')
+            else:
+                cart_item.save()
 
         else:
             cart_item = CartItem.objects.create(
@@ -37,7 +41,11 @@ def add_cart(request, product_id):
                 user=current_user,
                 size=size
             )
-            cart_item.save()
+            if size.stock < cart_item.quantity:
+                messages.success(request, f'К сожалению, на складе осталось {size.stock}')
+                return redirect('cart')
+            else:
+                cart_item.save()
         return redirect('cart')
 
     else:
@@ -53,7 +61,11 @@ def add_cart(request, product_id):
         if is_cart_item_exists:
             cart_item = CartItem.objects.get(product=product, size=size, cart=cart)
             cart_item.quantity += 1
-            cart_item.save()
+            if size.stock < cart_item.quantity:
+                messages.success(request, f'К сожалению, на складе осталось {size.stock}')
+                return redirect('cart')
+            else:
+                cart_item.save()
 
         else:
             cart_item = CartItem.objects.create(
@@ -62,7 +74,11 @@ def add_cart(request, product_id):
                 size=size,
                 cart=cart
             )
-            cart_item.save()
+            if size.stock < cart_item.quantity:
+                messages.success(request, f'К сожалению, на складе осталось {size.stock}')
+                return redirect('cart')
+            else:
+                cart_item.save()
     return redirect('cart')
 
 

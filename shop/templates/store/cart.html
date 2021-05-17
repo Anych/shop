@@ -20,14 +20,15 @@
     <div class="container">
         {% if not cart_items %}
         <h3 class="text-center">Ваша корзина пуста</h3>
-        <br>
+        <br><br>
         <div class="text-center">
-            <a href="{% url 'store' %}" class="btn btn-cart">Продолжить покупки</a>
+            <a href="{% url 'store' %}" class="btn btn-medium">Продолжить покупки</a>
         </div>
         {% else %}
         <div class="page-title"><h1>Корзина</h1></div>
         <div class="row">
             <!--Main Content-->
+            {% include 'inc/alerts.html' %}
             <div class="col-12 col-sm-12 col-md-8 col-lg-8 main-col">
                 <div class="cart style2">
                     <table>
@@ -48,10 +49,11 @@
                                 </td>
                                 <td class="cart__meta small--text-left cart-flex-item">
                                     <div class="list-view-item__title">
-                                        <a href="{{ cart_item.product.get_absolute_url }}">{{ cart_item.product.name }}</a>
+                                        <a href="{{ cart_item.product.get_absolute_url }}">{{ cart_item.product.category.name_for_product }}: {{ cart_item.product.brand }}{% if product.name_of_model %} - {{ product.name_of_model }}{% endif %}.
+                                            <p>{{ cart_item.product.color }}</p></a>
                                     </div>
                                     <div class="cart__meta-text">
-                                        {{ cart_item.size }}
+                                        Размер: {{ cart_item.size }}
                                     </div>
                                 </td>
                                 <td class="cart__price-wrapper cart-flex-item">
@@ -63,7 +65,7 @@
                                             <a class="qtyBtn minus" href="{% url 'remove_cart' cart_item.product.id cart_item.id %}"><i class="icon icon-minus"></i></a>
                                             <input class="cart__qty-input qty" type="text" name="updates[]" id="qty" value="{{ cart_item.quantity }}" pattern="[0-9]*">
                                             <div style="display:inline-block;">
-                                            <form action="{% url 'add_cart' cart_item.product.id %}" method="POST">
+                                            <form action="{% url 'add_cart' cart_item.product.id cart_item.quantity %}" method="POST">
                                             {% csrf_token %}
                                                 <input type="hidden" name="size" value="{{ cart_item.size }}">
                                                 <button class="qtyBtn plus" type="submit"><i class="icon icon-plus"></i> </button>
@@ -75,7 +77,7 @@
                                 <td class="text-right small--hide cart-price">
                                     <div><span class="money">&#8376; {{ cart_item.sub_total | intcomma }}</span></div>
                                 </td>
-                                <td class="text-center small--hide"><a href="{% url 'remove_cart_item' cart_item.product.id cart_item.id %}" class="btn btn--secondary cart__remove" title="Remove tem"><i class="icon icon anm anm-times-l"></i></a></td>
+                                <td class="text-center small--hide"><a href="{% url 'remove_cart_item' cart_item.product.id cart_item.id %}" class="btn btn--secondary cart__remove" title="Удалить"><i class="icon icon anm anm-times-l"></i></a></td>
                             </tr>
                             {% endfor %}
                         </tbody>

@@ -1,4 +1,4 @@
-<form method="POST" action="{% url 'add_cart' product.id %}" class="product-form product-form-product-template hidedropdown mt-3">
+<form method="POST" action="{% url 'add_cart' product_id=product.id quantity=1 %}" class="product-form product-form-product-template hidedropdown mt-3">
     {% csrf_token %}
     {% if product.another_color.all %}
         <div class="col-12 col-sm-12 col-md-6 col-lg-6">

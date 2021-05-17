@@ -1,7 +1,6 @@
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 
 from django.shortcuts import render, redirect, get_object_or_404

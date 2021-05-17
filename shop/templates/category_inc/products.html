@@ -1,6 +1,7 @@
 {% load humanize %}
 
 {% for product in products %}
+{% if product.stock %}
 <div class="col-6 col-sm-6 col-md-4 col-lg-4 item">
     <!-- start product image -->
     <div class="product-image">
@@ -53,4 +54,5 @@
     </div>
     <!-- End product details -->
 </div>
+{% endif %}
 {% endfor %}

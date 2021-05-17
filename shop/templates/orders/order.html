@@ -3,8 +3,6 @@
 {% load static %}
 {% load humanize %}
 
-{% block title %}Заказ в магазине Mila&Iris{% endblock %}
-
 {% block content %}
 <div id="page-content">
     <!--Body Container-->
@@ -70,7 +68,8 @@
                                     <td class="text-center h5"> &#8376; {{ order.delivery | intcomma }}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" class="text-right h5">Итого</td>
+                                    <td colspan="2" class="text-left"><a href="{% url 'dashboard' %}" class="btn btn--link btn--small cart-continue"><i class="anm anm-chevron-cir-left"></i> Вернуться в аккаунт</a></td>
+                                    <td colspan="2" class="text-right h5">Итого</td>
                                     <td class="text-center h5">&#8376; {{ order.order_total | intcomma }}</td>
                                 </tr>
                             </tfoot>

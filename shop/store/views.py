@@ -16,8 +16,8 @@ def store(request, category_slug=None):
         category = get_object_or_404(Category, slug=category_slug)
         if category.is_root_node():
             categories = category.get_descendants(include_self=False)
-            products = Product.objects.filter(category__in=categories)\
-                .order_by('-is_recommend', '-modified_date').select_related()
+            products = Product.objects.filter(category__in=categories, size__stock__gt=0).\
+                order_by('-is_recommend', '-modified_date').distinct().select_related()
             popular_products = products.filter(views__gt=1)
             products_count = len(products)
             paginator = Paginator(products, 6)
@@ -25,20 +25,21 @@ def store(request, category_slug=None):
             paged_products = paginator.get_page(page)
         else:
             ancestor = category.get_ancestors(ascending=False, include_self=False).first()
-            products = Product.objects.filter(category=category)\
-                .order_by('-is_recommend', '-modified_date').select_related()
+            products = Product.objects.filter(category=category, size__stock__gt=0).\
+                order_by('-is_recommend', '-modified_date').distinct().select_related()
             popular_products = products.filter(views__gt=1)
             products_count = products.count()
             paginator = Paginator(products, 6)
             page = request.GET.get('page')
             paged_products = paginator.get_page(page)
     else:
-        products = Product.objects.all().order_by('-is_recommend', '-modified_date').select_related()
+        category = Category.objects.get(id=1)
+        products = Product.objects.filter(category=category, size__stock__gt=0).\
+            order_by('-is_recommend', '-modified_date').distinct().select_related()
         products_count = products.count()
         paginator = Paginator(products, 6)
         page = request.GET.get('page')
         paged_products = paginator.get_page(page)
-        category = Category.objects.get(id=1)
         categories = category.get_children()
         popular_products = products.filter(views__gt=1)
 
