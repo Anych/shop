@@ -8,6 +8,7 @@ from cart.models import CartItem
 from orders.forms import OrderForm
 from orders.models import Order, Payment, OrderProduct
 from store.models import Product, Size
+from store.utils import order_email
 
 
 def payments(request):
@@ -106,6 +107,7 @@ def place_order(request, total=0, quantity=0):
             to_email = request.user.email
             send_email = EmailMessage(mail_subject, message, to=[to_email])
             send_email.send()
+            order_email(order.id)
             return redirect('order_complete')
         else:
             return redirect('checkout')

@@ -19,5 +19,16 @@ def question_email(name, email, question, product_url):
         'question': question,
         'product_url': product_url,
     })
-    send_email = EmailMessage(mail_subject, message, to=['mila-iris@mila-iris.kz'])
+    send_email = EmailMessage(mail_subject, message, to=['mila-iris@mila-iris.kz', 'anuar123@mail.ru',
+                                                         'botaonelove@yandex.ru', 'anuar.umarov@gmail.com'])
+    send_email.send()
+
+
+def order_email(order_id):
+    mail_subject = 'Новый заказ на сайте'
+    message = render_to_string('accounts/new_order.html', {
+        'order_id': order_id,
+    })
+    send_email = EmailMessage(mail_subject, message, to=['mila-iris@mila-iris.kz', 'anuar123@mail.ru',
+                                                         'botaonelove@yandex.ru', 'anuar.umarov@gmail.com'])
     send_email.send()
