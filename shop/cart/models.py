@@ -6,6 +6,10 @@ from store.models import Product, Size
 
 class Cart(models.Model):
 
+    class Meta:
+        verbose_name = 'Корзина'
+        verbose_name_plural = 'Корзины'
+
     cart_id = models.CharField(max_length=255, blank=True, verbose_name='Номер корзины')
     date_added = models.DateField(auto_now_add=True)
 
@@ -16,6 +20,8 @@ class Cart(models.Model):
 class CartItem(models.Model):
 
     class Meta:
+        verbose_name = 'Товар в корзине'
+        verbose_name_plural = 'Товары в корзинах'
         ordering = ['id']
 
     user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, verbose_name='Пользователь')

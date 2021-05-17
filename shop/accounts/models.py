@@ -42,6 +42,7 @@ class Account(AbstractBaseUser):
     class Meta:
         verbose_name = 'Аккаунт'
         verbose_name_plural = 'Аккаунты'
+        ordering = ['-date_joined']
 
     first_name = models.CharField(max_length=50, null=True, verbose_name='Фамилия')
     last_name = models.CharField(max_length=50, null=True, verbose_name='Имя')
@@ -76,6 +77,10 @@ class Account(AbstractBaseUser):
 
 
 class UserProfile(models.Model):
+
+    class Meta:
+        verbose_name = 'Профайл'
+        verbose_name_plural = 'Профайлы'
 
     user = models.OneToOneField(Account, on_delete=models.CASCADE, verbose_name='Пользователь')
     address_line1 = models.CharField(max_length=255, blank=True, verbose_name='Адрес 1')

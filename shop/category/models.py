@@ -30,6 +30,10 @@ class Category(MPTTModel):
 
 class Brand(models.Model):
 
+    class Meta:
+        verbose_name = 'Бренд'
+        verbose_name_plural = 'Бренды'
+
     name = models.CharField(max_length=50, unique=True, verbose_name='Наименование')
     slug = models.SlugField(max_length=100, unique=True)
 
