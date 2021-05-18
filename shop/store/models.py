@@ -5,6 +5,8 @@ from django.db.models import Avg, Count
 from django.urls import reverse
 from mptt.fields import TreeForeignKey
 
+from smartfields import fields
+
 from accounts.models import Account
 from category.models import Category, Brand
 from store.utils import gen_slug
@@ -27,8 +29,8 @@ class Product(models.Model):
     another_color = models.ManyToManyField('self', blank=True, verbose_name='Другой цвет')
     made_in = models.CharField(max_length=100, null=True, verbose_name='Производство')
     description = models.TextField(blank=True, verbose_name='Описание')
-    img1 = models.ImageField(upload_to='store/products', verbose_name='Изображение 1')
-    img2 = models.ImageField(upload_to='store/products', verbose_name='Изображение 2')
+    img1 = fields.ImageField(upload_to='store/products', verbose_name='Изображение 1')
+    img2 = fields.ImageField(upload_to='store/products', verbose_name='Изображение 2')
     price = models.IntegerField(verbose_name='Цена')
     is_discount = models.BooleanField(default=False, verbose_name='Скидка')
     discount_amount = models.IntegerField(blank=True, null=True, verbose_name='Размер скидки')
@@ -94,7 +96,7 @@ class ProductGallery(models.Model):
         verbose_name_plural = 'Галереи'
 
     product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE, verbose_name='Продукт')
-    image = models.ImageField(upload_to='store/products', verbose_name='Изображение')
+    image = fields.ImageField(upload_to='store/products', verbose_name='Изображение')
 
 
 class ProductFeatures(models.Model):

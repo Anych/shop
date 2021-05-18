@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'mptt',
     'admin_honeypot',
     'snowpenguin.django.recaptcha3',
+    'smartfields',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
