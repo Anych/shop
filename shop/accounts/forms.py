@@ -1,15 +1,18 @@
 from django import forms
 from django.contrib.auth.password_validation import get_default_password_validators
 from django.core.exceptions import ValidationError
+from snowpenguin.django.recaptcha3.fields import ReCaptchaField
 
 from accounts.models import Account, UserProfile
 
 
 class RegistrationForm(forms.ModelForm):
 
+    captcha = ReCaptchaField()
+
     class Meta:
         model = Account
-        fields = ['first_name', 'last_name', 'phone_number', 'email', 'password']
+        fields = ['first_name', 'last_name', 'phone_number', 'email', 'password', 'captcha']
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
@@ -51,6 +54,8 @@ class RegistrationForm(forms.ModelForm):
 
 
 class UserForm(forms.ModelForm):
+
+    captcha = ReCaptchaField()
 
     class Meta:
         model = Account

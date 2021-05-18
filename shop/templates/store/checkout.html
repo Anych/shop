@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
-{% load static %}
-{% load humanize %}
+{% load static recaptcha3 humanize%}
+
+{% block style %}   {% recaptcha_init %}    {% recaptcha_ready action_name='homepage' %}    {% endblock style %}
 
 {% block title %}Оформление заказа в магазине Mila&Iris Алматы.{% endblock %}
+
 {% block content %}
 <div id="page-content">
     <!--Body Container-->
@@ -51,7 +53,7 @@
                                     <input name="address" value="" id="input-address" type="text" required>
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                    <label for="input-city">Страна <span class="required-f">*</span></label>
+                                    <label for="input-country">Страна <span class="required-f">*</span></label>
                                     <input name="country" value="" id="input-country" type="text" required>
                                 </div>
                             </div>
@@ -67,7 +69,7 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12 col-lg-12 col-xl-12">
-                                    <label for="">Примечания </label>
+                                    <label for="input-text">Примечания </label>
                                     <textarea class="form-control resize-both" rows="3" name="order_note"></textarea>
                                 </div>
                             </div>
@@ -94,15 +96,9 @@
                                         <td class="text-left">{{ cart_item.product.category.name_for_product }}: {{ cart_item.product.brand }}</td>
                                         <td>{{ cart_item.product.price | intcomma }}</td>
                                         <td>{{ cart_item.quantity }}</td>
-                                    {% if cart_item.variations.all %}
                                     <td>
-                                    {% for item in cart_item.variations.all %}
-                                        {{ item.variation_category | capfirst }}: {{ item.variation_value | capfirst }} <br>
-                                    {% endfor %}
+                                    {{ cart_item.product.color }} / {{ cart_item.size }}
                                     </td>
-                                    {% else %}
-                                    <td></td>
-                                    {% endif %}
                                         <td>&#8376; {{ cart_item.sub_total | intcomma }}</td>
                                     </tr>
                                 {% endfor %}

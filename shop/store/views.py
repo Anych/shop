@@ -163,8 +163,8 @@ def sales(request, sales_slug=None):
         category = get_object_or_404(Category, slug=sales_slug)
         if category.is_root_node():
             categories = category.get_descendants(include_self=False)
-            products = Product.objects.filter(category__in=categories, is_discount=True)\
-                .order_by('-is_recommend', '-modified_date').select_related()
+            products = Product.objects.filter(category__in=categories, is_discount=True, size__stock__gt=0)\
+                .order_by('-is_recommend', '-modified_date').distinct().select_related()
             popular_products = products.filter(views__gt=1)
             products_count = len(products)
             paginator = Paginator(products, 6)
@@ -174,15 +174,16 @@ def sales(request, sales_slug=None):
         else:
             ancestor = category.get_ancestors(ascending=False, include_self=False).first()
             categories = ancestor.get_children()
-            products = Product.objects.filter(category=category, is_discount=True)\
-                .order_by('-is_recommend', '-modified_date').select_related()
+            products = Product.objects.filter(category=category, is_discount=True, size__stock__gt=0)\
+                .order_by('-is_recommend', '-modified_date').distinct().select_related()
             popular_products = products.filter(views__gt=1)
             products_count = products.count()
             paginator = Paginator(products, 6)
             page = request.GET.get('page')
             paged_products = paginator.get_page(page)
     else:
-        products = Product.objects.filter(is_discount=True).select_related().order_by('-is_recommend', '-modified_date')
+        products = Product.objects.filter(is_discount=True, size__stock__gt=0).distinct().select_related()\
+            .order_by('-is_recommend', '-modified_date')
         products_count = products.count()
         paginator = Paginator(products, 6)
         page = request.GET.get('page')

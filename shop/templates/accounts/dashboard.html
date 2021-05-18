@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
+
 {% block title %}Мой аккаунт MIla&Iris{% endblock %}
-{% load static %}
+
+{% load static recaptcha3 %}
+
+{% block style %}   {% recaptcha_init %}{% recaptcha_ready action_name='homepage' %}    {% endblock style %}
 
 {% block content %}
 <div id="page-content">

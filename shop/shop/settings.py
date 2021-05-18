@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'mptt',
     'admin_honeypot',
+    'snowpenguin.django.recaptcha3',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -155,3 +156,8 @@ ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = None
 ACCOUNT_UNIQUE_EMAIL = False
+
+RECAPTCHA_PUBLIC_KEY = config('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
+RECAPTCHA_DEFAULT_ACTION = config('RECAPTCHA_DEFAULT_ACTION')
+RECAPTCHA_SCORE_THRESHOLD = 0.5

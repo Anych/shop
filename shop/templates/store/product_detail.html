@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 
-{% load static %}
+{% load static recaptcha3 %}
 {% load humanize %}
 
 {% block title %}Купить {{ product.brand }} {{ product.category.name_for_product| lower}}{% if product.name_of_model %} - {{ product.name_of_model }}{% endif %}{% endblock %}
+
+{% block style %}   {% recaptcha_init %}    {% recaptcha_ready action_name='homepage' %}    {% endblock style %}
+
 {% block body %} class="template-product product-single-center-mode" style="padding-bottom: 0px;"{% endblock body %}
 
 {% block content %}
@@ -116,4 +119,5 @@
             <div class="pswp__caption"><div class="pswp__caption__center"></div></div>
         </div>
      </div>
+    </div>
 {% endblock script %}
