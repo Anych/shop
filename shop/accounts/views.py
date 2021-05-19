@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.views import View
 
 from accounts.forms import RegistrationForm, UserForm, UserProfileForm
 from accounts.models import Account, UserProfile
@@ -36,6 +37,8 @@ def register(request):
             user.save()
 
             _confirm_email(user, email)
+
+            auth.authenticate(request=request, username=email, password=password)
             auth.login(request, user)
             return redirect('store')
     else:
@@ -45,6 +48,41 @@ def register(request):
         'form': form,
     }
     return render(request, 'accounts/register.html', context)
+
+
+class LoginView(View):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'accounts/login.html')
+
+    def post(self, request, *args, **kwargs):
+        email = request.POST['email']
+        password = request.POST['password']
+        user = auth.authenticate(request=request, username=email, password=password)
+        if user is not None:
+            try:
+                cart = Cart.objects.get(cart_id=_cart_id(request))
+                cart_item = CartItem.objects.filter(cart=cart)
+                for item in cart_item:
+                    item.user = user
+                    item.save()
+            except:
+                pass
+
+            auth.login(request, user)
+            url = request.META.get('HTTP_REFERER')
+            try:
+                query = requests.utils.urlparse(url).query
+                params = dict(x.split('=') for x in query.split('&'))
+                if 'next' in params:
+                    nextPage = params['next']
+                    return redirect(nextPage)
+            except:
+                return redirect('store')
+
+        else:
+            messages.error(request, 'Неправильно введена почта или пароль')
+            return redirect('login')
 
 
 def login(request):

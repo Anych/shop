@@ -3,8 +3,6 @@
 {% load static recaptcha3 socialaccount %}
 
 {% block style %}	<link rel="stylesheet" href="{% static 'assets/css/bootstrap-social.css' %}">
-					{% recaptcha_init %}
-					{% recaptcha_ready action_name='homepage' %}
 {% endblock style %}
 
 {% block title %}Регистрация{% endblock %}
@@ -61,7 +59,7 @@
 					</div> <!-- form-group end.// -->
 				</div>
 				<div class="form-group">
-					{{ form.captcha }}
+
 					<div class="text-center"><button type="submit" class="btn" data-action='submit'> Зарегистрироваться </button></div>
 				</div> <!-- form-group// -->
                 <div class="text-center mb-3">

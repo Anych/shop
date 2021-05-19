@@ -8,11 +8,9 @@ from accounts.models import Account, UserProfile
 
 class RegistrationForm(forms.ModelForm):
 
-    captcha = ReCaptchaField()
-
     class Meta:
         model = Account
-        fields = ['first_name', 'last_name', 'phone_number', 'email', 'password', 'captcha']
+        fields = ['first_name', 'last_name', 'phone_number', 'email', 'password']
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
