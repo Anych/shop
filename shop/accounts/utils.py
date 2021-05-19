@@ -1,8 +1,11 @@
+from django.contrib import messages
+from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
+from axes.helpers import get_cache_timeout
 
 from accounts.models import UserProfile
 
@@ -24,3 +27,8 @@ def _confirm_email(user, email):
     to_email = email
     send_email = EmailMessage(mail_subject, message, to=[to_email])
     send_email.send()
+
+
+def axes_disabled(request, credentials, *args, **kwargs):
+    messages.error(request, f'Слишком много неправильных попыток входа, попробуйте через {get_cache_timeout()} секунд')
+    return redirect('login')
