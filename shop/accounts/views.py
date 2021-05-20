@@ -21,6 +21,7 @@ from orders.models import Order
 
 
 def register(request):
+
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -38,7 +39,7 @@ def register(request):
 
             _confirm_email(user, email)
 
-            auth.authenticate(request=request, username=email, password=password)
+            user = auth.authenticate(request=request, username=email, password=password)
             auth.login(request, user)
             return redirect('store')
     else:
