@@ -171,4 +171,4 @@ RECAPTCHA_SCORE_THRESHOLD = 0.5
 
 AXES_FAILURE_LIMIT = 5
 AXES_COOLOFF_TIME = timedelta(minutes=1)
-AXES_LOCKOUT_CALLABLE = 'accounts.utils.axes_disabled'
+AXES_LOCKOUT_CALLABLE = 'accounts.utils._axes_disabled'

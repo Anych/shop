@@ -12,7 +12,7 @@ def _cart_id(request):
     return cart
 
 
-def move_cart_when_authenticate(request, user):
+def _move_cart_when_authenticate(request, user):
     """
     Move cart items into cart when user is logining
     """

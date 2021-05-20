@@ -24,7 +24,7 @@ def _confirm_email(user, email):
     """
     Confirm email for shopping
     """
-    mail_subject = 'Активация аккаунта'
+    mail_subject = 'Подтверждение почты'
     message = render_to_string('accounts/account_verification_email.html', {
         'user': user,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -36,7 +36,7 @@ def _confirm_email(user, email):
     send_email.send()
 
 
-def axes_disabled(request, credentials, *args, **kwargs):
+def _axes_disabled(request, credentials, *args, **kwargs):
     """
     Disable users who tried many attempts for authorization
     """
@@ -44,7 +44,7 @@ def axes_disabled(request, credentials, *args, **kwargs):
     return redirect('login')
 
 
-def redirect_to_next_page(request):
+def _redirect_to_next_page(request):
     """
     Redirect users to 'next' page
     when they were redirect to login page

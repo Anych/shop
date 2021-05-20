@@ -1,8 +1,8 @@
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
@@ -11,20 +11,33 @@ from django.views import View
 
 from accounts.forms import RegistrationForm, UserForm, UserProfileForm
 from accounts.models import Account, UserProfile
-from accounts.utils import _confirm_email, _profile, redirect_to_next_page, move_cart_when_authenticate
-
-from cart.models import Cart, CartItem
-from cart.views import _cart_id
-import requests
-
+from accounts.utils import _confirm_email, _profile, _redirect_to_next_page
+from cart.utils import _move_cart_when_authenticate
 from orders.models import Order
 
 
-def register(request):
+class RegisterView(View):
 
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+    def get(self, request, *args, **kwargs):
+        """
+        Render the register template
+        """
+        form = RegistrationForm()
+        context = {
+            'form': form,
+        }
+        return render(request, 'accounts/register.html', context)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Register for new user and after create profile
+        for him and sending email. Try to move his cart
+        items to new cart.
+        """
+        form = RegistrationForm(request.POST or None)
+
         if form.is_valid():
+            # create new user
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             phone_number = form.cleaned_data['phone_number']
@@ -34,21 +47,23 @@ def register(request):
             user = Account.objects.create_user(first_name=first_name, last_name=last_name,
                                                email=email, username=username, password=password)
             user.phone_number = phone_number
+
+            # create profile for user and save him
             _profile(user)
             user.save()
 
+            # email confirmation
             _confirm_email(user, email)
 
             user = auth.authenticate(request=request, username=email, password=password)
-            auth.login(request, user)
-            return redirect('store')
-    else:
-        form = RegistrationForm()
 
-    context = {
-        'form': form,
-    }
-    return render(request, 'accounts/register.html', context)
+            # login user and move his cart
+            if user is not None:
+                _move_cart_when_authenticate(request, user)
+                auth.login(request, user)
+                return redirect('store')
+        context = {'form': form}
+        return render(request, 'accounts/register.html', context)
 
 
 class LoginView(View):
@@ -70,11 +85,12 @@ class LoginView(View):
         password = request.POST['password']
         user = auth.authenticate(request=request, username=email, password=password)
 
+        # login user and move his cart
         if user is not None:
-            move_cart_when_authenticate(request, user)
+            _move_cart_when_authenticate(request, user)
             auth.login(request, user)
             try:
-                redirect_to_next_page(request)
+                _redirect_to_next_page(request)
             except:
                 return redirect('store')
 
@@ -83,37 +99,15 @@ class LoginView(View):
             return redirect('login')
 
 
-def login(request):
+class LogoutView(LoginRequiredMixin, View):
 
-    if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
-        user = auth.authenticate(request=request, username=email, password=password)
-        if user is not None:
-            try:
-                cart = Cart.objects.get(cart_id=_cart_id(request))
-                cart_item = CartItem.objects.filter(cart=cart)
-                for item in cart_item:
-                    item.user = user
-                    item.save()
-            except:
-                pass
-
-            auth.login(request, user)
-            url = request.META.get('HTTP_REFERER')
-            try:
-                query = requests.utils.urlparse(url).query
-                params = dict(x.split('=') for x in query.split('&'))
-                if 'next' in params:
-                    nextPage = params['next']
-                    return redirect(nextPage)
-            except:
-                return redirect('store')
-
-        else:
-            messages.error(request, 'Неправильно введена почта или пароль')
-            return redirect('login')
-    return render(request, 'accounts/login.html')
+    def get(self, request, *args, **kwargs):
+        """
+        Logout view, only for has already logged in users
+        """
+        auth.logout(request)
+        messages.success(request, 'Вы успешно вышли из системы')
+        return redirect('login')
 
 
 def confirm_email(request):
@@ -127,13 +121,6 @@ def confirm_email(request):
         return render(request, 'accounts/confirm_email.html')
     else:
         return render(request, 'accounts/confirm_email.html')
-
-
-@login_required(login_url='login')
-def logout(request):
-    auth.logout(request)
-    messages.success(request, 'Вы успешно вышли из системы')
-    return redirect('login')
 
 
 def activate(request, uidb64, token, email):
