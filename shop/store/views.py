@@ -34,7 +34,8 @@ def store(request, category_slug=None):
             paged_products = paginator.get_page(page)
     else:
         category = Category.objects.get(id=1)
-        products = Product.objects.filter(category=category, size__stock__gt=0).\
+        categories = category.get_descendants(include_self=False)
+        products = Product.objects.filter(category__in=categories, size__stock__gt=0).\
             order_by('-is_recommend', '-modified_date').distinct().select_related()
         products_count = products.count()
         paginator = Paginator(products, 6)

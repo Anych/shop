@@ -11,7 +11,7 @@ from django.views import View
 
 from accounts.forms import RegistrationForm, UserForm, UserProfileForm
 from accounts.models import Account, UserProfile
-from accounts.utils import _confirm_email, _profile
+from accounts.utils import _confirm_email, _profile, redirect_to_next_page, move_cart_when_authenticate
 
 from cart.models import Cart, CartItem
 from cart.views import _cart_id
@@ -54,30 +54,27 @@ def register(request):
 class LoginView(View):
 
     def get(self, request, *args, **kwargs):
+        """
+        Render the login template
+        """
         return render(request, 'accounts/login.html')
 
     def post(self, request, *args, **kwargs):
+        """
+        Authentication and authorization code,
+        gets email and password, if authentication
+        success tried to redirect to 'next' page
+        and move a cart to authorized user
+        """
         email = request.POST['email']
         password = request.POST['password']
         user = auth.authenticate(request=request, username=email, password=password)
-        if user is not None:
-            try:
-                cart = Cart.objects.get(cart_id=_cart_id(request))
-                cart_item = CartItem.objects.filter(cart=cart)
-                for item in cart_item:
-                    item.user = user
-                    item.save()
-            except:
-                pass
 
+        if user is not None:
+            move_cart_when_authenticate(request, user)
             auth.login(request, user)
-            url = request.META.get('HTTP_REFERER')
             try:
-                query = requests.utils.urlparse(url).query
-                params = dict(x.split('=') for x in query.split('&'))
-                if 'next' in params:
-                    nextPage = params['next']
-                    return redirect(nextPage)
+                redirect_to_next_page(request)
             except:
                 return redirect('store')
 

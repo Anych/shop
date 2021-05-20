@@ -4,15 +4,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from cart.models import Cart, CartItem
+from cart.utils import _cart_id
 from store.models import Product, Size
-
-
-def _cart_id(request):
-    cart = request.session.session_key
-
-    if not cart:
-        cart = request.session.create()
-    return cart
 
 
 def add_cart(request, product_id, quantity=1):
