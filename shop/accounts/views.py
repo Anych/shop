@@ -178,7 +178,7 @@ def dashboard(request):
 def forgotPassword(request):
     if request.method == 'POST':
         email = request.POST['email']
-        if Account.objects.filter(email=email).exists():
+        if Account.objects.filter(username=email).exists():
             user = Account.objects.get(email__exact=email)
 
             mail_subject = 'Восстановление пароля'
@@ -190,7 +190,6 @@ def forgotPassword(request):
             to_email = email
             send_email = EmailMessage(mail_subject, message, to=[to_email])
             send_email.send()
-
             messages.success(request, 'Письмо с инструкцией отправлено на вашу почту')
             return redirect('login')
         else:

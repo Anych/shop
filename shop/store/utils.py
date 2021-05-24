@@ -1,11 +1,7 @@
 from time import time
-import requests
-from functools import wraps
 
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-from django.conf import settings
-from django.contrib import messages
 
 from uuslug import slugify
 
